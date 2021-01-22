@@ -60,10 +60,21 @@
                   class="form-control shadow" placeholder="Escribe tu correo electrónico">
                 <div class="input-group-prepend">
                   <span class="input-group-text text-uppercase shadow" style="border-radius: 0px 15px 15px 0px;">
-                    <a href="#!" class="text-white">Contáctame</a>
+                    <a href="#!" class="text-white" id="contactButton">Contáctame</a>
                   </span>
                 </div>
               </div>
+
+              <!-- Error message -->
+              <div id="errorMessage" class="alert alert-danger mt-3" role="alert">
+                El correo no es correcto, escríbelo de nuevo con la forma <b>correo@dominio.com</b> o
+                <b>correo@dominio.com.mx</b>
+              </div>
+              <div id="successMessage" class="alert alert-success mt-3" role="alert">
+                <b>¡Gracias!</b>
+                Tu petición fue enviada correctamente, nos pondremos en contacto contigo lo más pronto posible.
+              </div>
+
             </div>
             <div class="col-md-2"></div>
           </div>
@@ -294,8 +305,16 @@
                 </div>
               </div>
               <div class="col-md-12">
-                <button class="btn btn-primary btn-block light-color-bg">Enviar comentario</button>
+                <button id="sendCommentButton" class="btn btn-primary btn-block light-color-bg">Enviar
+                  comentario</button>
               </div>
+            </div>
+            <!-- Error message -->
+            <div id="contactErrorMessage" class="alert alert-danger mt-3" role="alert">
+              <!--  ...  -->
+            </div>
+            <div id="contactSuccessMessage" class="alert alert-success mt-3" role="alert">
+              <!-- ... -->
             </div>
           </div>
         </div>
