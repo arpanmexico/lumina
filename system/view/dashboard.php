@@ -18,20 +18,18 @@ if (!isset($_SESSION['userID'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link href="../../src/css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="../../src/css/admin.css">
-    <title>Panel de Control</title>
+    <title>Panel de Control - Lumina</title>
   </head>
 
   <body>
 
     <div id="wrapper">
-
       <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+          <div class="sidebar-brand-icon">
+            <i class="fas fa-glasses"></i>
           </div>
           <div class="sidebar-brand-text mx-3 text-uppercase">Lumina</div>
         </a>
@@ -39,94 +37,118 @@ if (!isset($_SESSION['userID'])) {
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+        <!-- Análisis de Datos -->
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.php?analisis">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Panel Principal</span></a>
+        </li>
+
+        <!-- Sucursal -->
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.php?sucursal">
+            <i class="fas fa-store-alt"></i>
+            <span>Sucursal</span></a>
         </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <div class="sidebar-heading">
-          Interface
-        </div>
+        <!-- Categorías -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <i class="fas fa-bars"></i>
+            <span>Categorías</span>
+          </a>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="dashboard.php?listarCategorias">Ver todas las categorías</a>
+            </div>
+          </div>
+        </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Doctores -->
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
+            <i class="fas fa-user-md"></i>
+            <span>Doctores</span>
           </a>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Components:</h6>
-              <a class="collapse-item" href="buttons.html">Buttons</a>
-              <a class="collapse-item" href="cards.html">Cards</a>
-            </div>
-          </div>
-        </li>
-
-        <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
-          </a>
-          <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Utilities:</h6>
-              <a class="collapse-item" href="utilities-color.html">Colors</a>
-              <a class="collapse-item" href="utilities-border.html">Borders</a>
-              <a class="collapse-item" href="utilities-animation.html">Animations</a>
-              <a class="collapse-item" href="utilities-other.html">Other</a>
+              <a class="collapse-item" href="buttons.html">Todos los doctores</a>
+              <a class="collapse-item" href="cards.html">Agregar nuevo doctor</a>
             </div>
           </div>
         </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-          Addons
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Pacientes -->
         <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+            <i class="fas fa-user-injured"></i>
+            <span>Pacientes</span>
           </a>
-          <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Login Screens:</h6>
-              <a class="collapse-item" href="login.html">Login</a>
-              <a class="collapse-item" href="register.html">Register</a>
-              <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-              <div class="collapse-divider"></div>
-              <h6 class="collapse-header">Other Pages:</h6>
-              <a class="collapse-item" href="404.html">404 Page</a>
-              <a class="collapse-item" href="blank.html">Blank Page</a>
+              <a class="collapse-item" href="buttons.html">Todos los pacientes</a>
+              <a class="collapse-item" href="cards.html">Agregar nuevo paciente</a>
             </div>
           </div>
         </li>
 
-        <!-- Nav Item - Charts -->
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Productos y catálogo -->
         <li class="nav-item">
-          <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <i class="fas fa-glasses"></i>
+            <span>Productos y Catálogo</span>
+          </a>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="#!">Catalogo de productos</a>
+              <a class="collapse-item" href="#!">Nuevo producto</a>
+            </div>
+          </div>
         </li>
 
-        <!-- Nav Item - Tables -->
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Ventas y Consultas -->
         <li class="nav-item">
-          <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+            <i class="fas fa-fax"></i>
+            <span>Ventas y Consultas</span>
+          </a>
+          <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="buttons.html">Nueva venta</a>
+              <a class="collapse-item" href="cards.html">Nueva consulta</a>
+              <a class="collapse-item" href="cards.html">Ver todo</a>
+            </div>
+          </div>
         </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Agenda de citas -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Agenda de citas</span>
+          </a>
+          <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="buttons.html">Agregar fechas</a>
+              <a class="collapse-item" href="cards.html">Ver citas próximas</a>
+              <a class="collapse-item" href="cards.html">Ver citas pasadas</a>
+            </div>
+          </div>
+        </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -168,7 +190,7 @@ if (!isset($_SESSION['userID'])) {
               <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-bell fa-fw"></i>
-                  <span class="badge badge-danger badge-counter">3+</span> <!-- Counter - Alerts -->
+                  <span class="badge badge-danger badge-counter">1</span> <!-- Counter - Alerts -->
                 </a>
                 <!-- Dropdown - Alerts -->
                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
@@ -194,7 +216,7 @@ if (!isset($_SESSION['userID'])) {
               <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-envelope fa-fw"></i>
-                  <span class="badge badge-danger badge-counter">7</span> <!-- Counter - Messages -->
+                  <span class="badge badge-danger badge-counter">1</span> <!-- Counter - Messages -->
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
@@ -249,54 +271,23 @@ if (!isset($_SESSION['userID'])) {
 
 
 
-          <!-- Begin Page Content -->
+          <!--    <<<<< CONTENIDO >>>>>   -->
           <div class="container-fluid">
 
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <h1 class="h3 mb-0 text-gray-800">Panel de Control</h1>
-            </div>
-
-            <!-- Content Row -->
-            <div class="row">
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                          Administradores</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                          Pacientes</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php
+            if (isset($_GET['analisis'])) {
+              include('analisis.php');
+            } else if (isset($_GET['sucursal'])) {
+              include('sucursal.php');
+            } else if (isset($_GET['listarCategorias'])) {
+              include('categorias/listar_categorias.php');
+            } else {
+              include('analisis.php');
+            }
+            ?>
 
           </div>
           <!-- /.container-fluid -->
-
         </div>
         <!-- End of Main Content -->
 
@@ -304,7 +295,7 @@ if (!isset($_SESSION['userID'])) {
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2020</span>
+              <span>Copyright &copy; Óptica Lumina 2021</span>
             </div>
           </div>
         </footer>
