@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 //include($_SERVER['DOCUMENT_ROOT'] . "/coca-cola/model/database.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
 
@@ -15,14 +19,14 @@ class UserController
         //Open Database
         $database = UserController::getDatabaseConnection();
 
-        $query = "CALL userLogin('" . $data['user'] . "','" . $data['password'] . "')";
+        $query = "CALL userLogin('" . $data['user'] . "','" . hash('sha256', $data['password']) . "')";
         $runQuery = $database->query($query);
 
         if ($runQuery) {
             if ($runQuery->num_rows > 0) {
                 session_start();
-                $_SESSION['username'] = $data['user'];
-                header('Location: ../dashboard.php');
+                $_SESSION['userID'] = $data['user'];
+                header('Location: ../system/view/dashboard.php');
             } else {
                 UserController::getAlerts('error', 'El nombre de usuario o la contraseña son incorrectos, verifica e intenta de nuevo.');
             }

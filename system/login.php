@@ -9,7 +9,6 @@
 
   <title>Inicio de Sesión</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-  <!-- Custom styles for this template-->
   <link href="../src/css/sb-admin-2.css" rel="stylesheet">
   <link rel="stylesheet" href="../src/css/admin.css">
 
@@ -34,12 +33,12 @@
 
                   <form class="user" action="" method="POST">
                     <div class="form-group">
-                      <input name="userName" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Escribe tu nombre de usuario">
+                      <input name="userName" type="number" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Escribe tu usuario">
                     </div>
                     <div class="form-group">
                       <input name="userPassword" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Escribe tu contraseña">
                     </div>
-                    <button type="submit" name="loginBtutton" class="btn btn-primary btn-user btn-block">
+                    <button type="submit" name="loginButton" class="btn btn-primary btn-user btn-block">
                       Iniciar Sesión</button>
                   </form>
 
@@ -51,19 +50,19 @@
                   <br><br><br>
 
                   <?php
-                  include('controller/UserController.php');
-                  $user = new UserController();
+                    include('controller/UserController.php');
+                    $user = new UserController();
 
-                  if (isset($_POST['loginButton'])) {
-                    $userName = $_POST['userName'];
-                    $userPassword = $_POST['userPassword'];
-                    $data = array(
-                      'user' => $userName,
-                      'password' => $userPassword
-                    );
+                    if (isset($_POST['loginButton'])) {
+                      $userName = $_POST['userName'];
+                      $userPassword = $_POST['userPassword'];
+                      $data = array(
+                        'user' => $userName,
+                        'password' => $userPassword
+                      );
 
-                    $user->userLogin($data);
-                  }
+                      $user->userLogin($data);
+                    }
                   ?>
                 </div>
               </div>
