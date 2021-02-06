@@ -62,7 +62,8 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="dashboard.php?listarCategorias">Ver todas las categorías</a>
+              <a class="collapse-item" href="dashboard.php?listarCategoriasProductos">Ver Productos</a>
+              <a class="collapse-item" href="dashboard.php?listarCategoriasEnfermedades">Ver Enfermedades</a>
             </div>
           </div>
         </li>
@@ -77,8 +78,8 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="buttons.html">Todos los doctores</a>
-              <a class="collapse-item" href="cards.html">Agregar nuevo doctor</a>
+              <a class="collapse-item" href="dashboard.php?crearDoctores">Agregar nuevo doctor</a>
+              <a class="collapse-item" href="dashboard.php?listarDoctores">Todos los doctores</a>
             </div>
           </div>
         </li>
@@ -93,8 +94,8 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="buttons.html">Todos los pacientes</a>
-              <a class="collapse-item" href="cards.html">Agregar nuevo paciente</a>
+              <a class="collapse-item" href="dashboard.php?crearPaciente">Agregar nuevo paciente</a>
+              <a class="collapse-item" href="dashboard.php?listarPacientes">Todos los pacientes</a>
             </div>
           </div>
         </li>
@@ -125,9 +126,8 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="buttons.html">Nueva venta</a>
-              <a class="collapse-item" href="cards.html">Nueva consulta</a>
-              <a class="collapse-item" href="cards.html">Ver todo</a>
+              <a class="collapse-item" href="dashboard.php?crearVentas">Nueva venta</a>
+              <a class="collapse-item" href="dashboard.php?listarVentas">Ver todo</a>
             </div>
           </div>
         </li>
@@ -142,9 +142,8 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="buttons.html">Agregar fechas</a>
-              <a class="collapse-item" href="cards.html">Ver citas próximas</a>
-              <a class="collapse-item" href="cards.html">Ver citas pasadas</a>
+              <a class="collapse-item" href="dashboard.php?crearFechas">Agregar fechas</a>
+              <a class="collapse-item" href="dashboard.php?verCitas">Ver citas próximas</a>
             </div>
           </div>
         </li>
@@ -281,6 +280,18 @@ if (!isset($_SESSION['userID'])) {
               include('sucursal.php');
             } else if (isset($_GET['listarCategorias'])) {
               include('categorias/listar_categorias.php');
+            } else if (isset($_GET['listarDoctores'])) {
+              include('doctores/listar_doctores.php');
+            } else if (isset($_GET['crearDoctores'])) {
+              include('doctores/agregar_doctor.php');
+            } else if (isset($_GET['crearPaciente'])) {
+              include('pacientes/agregar_pacientes.php');
+            } else if (isset($_GET['crearPaciente'])) {
+              include('pacientes/listar_pacientes.php');
+            } else if (isset($_GET['crearVentas'])) {
+              include('ventas/crear_venta.php');
+            } else if (isset($_GET['listarVentas'])) {
+              include('ventas/listar_ventas.php');
             } else {
               include('analisis.php');
             }
@@ -309,6 +320,7 @@ if (!isset($_SESSION['userID'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="../../src/js/sb-admin-2.js"></script>
+    <script src="../../src/js/admin.js"></script>
   </body>
 
   </html>
