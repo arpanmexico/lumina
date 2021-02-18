@@ -12,8 +12,7 @@ $sucursal = new BranchController();
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-    <h6 class="m-0 font-weight-bold text-primary">Datos de la Óptica
-    <?php echo $sucursal->getBranchInformation()['id']; ?></h6>
+    <h6 class="m-0 font-weight-bold text-primary">Datos de la Óptica</h6>
   </div>
   <div class="card-body">
     <section class="row text-center">
@@ -54,6 +53,8 @@ $sucursal = new BranchController();
   <!-- Card Body -->
   <div class="card-body">
     <form action="" method="POST">
+      <input type="number" name="idSucursal" value="<?php echo $sucursal->getBranchInformation()['id']; ?>" hidden />
+
       <section class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="form-group">
@@ -111,6 +112,7 @@ $sucursal = new BranchController();
 
     if (isset($_POST['guardarSucursal']) || isset($_POST['actualizarSucursal'])) {
       $data = array(
+        'id' => $_POST['idSucursal'],
         'nombre' => $_POST['nombreSucursal'],
         'direccion' => $_POST['direccionSucursal'],
         'telefono_primario' => $_POST['telefonoSucursal'],

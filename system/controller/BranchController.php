@@ -52,7 +52,7 @@ class BranchController
 
         $runQuery = $database->query($query);
         if ($runQuery) {
-            BranchController::getGlobalController()->getAlerts('success', 'Los datos de la Optica fueron guardados correctamente, <a href="dashboard.php?sucursal">click aquí para recargar los datos</a>');
+            header('Location: dashboard.php?sucursal');
         } else {
             BranchController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos -> ' . $database->error);
         }
