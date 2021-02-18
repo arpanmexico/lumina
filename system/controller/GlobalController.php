@@ -1,4 +1,6 @@
 <?php
+include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+
 class GlobalController
 {
     public function getAlerts($type, $message)
