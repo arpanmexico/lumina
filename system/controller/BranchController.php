@@ -1,7 +1,4 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
-include('GlobalController.php');
-
 class BranchController
 {
     public function getGlobalController()
