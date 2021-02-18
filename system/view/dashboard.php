@@ -1,6 +1,9 @@
 <?php
 ob_start();
 session_start();
+include('../controller/UserController.php');
+$usuario = new UserController();
+
 if (!isset($_SESSION['userID'])) {
   header('Location: ../');
   exit();
@@ -239,7 +242,9 @@ if (!isset($_SESSION['userID'])) {
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Abraham Ayala Padilla</span>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    <?php echo $usuario->getUserName($_SESSION['userID']); ?>
+                  </span>
                   <img class="img-profile rounded-circle" src="https://source.unsplash.com/OjnmCKmzr3A/60x60">
                 </a>
                 <!-- Dropdown - User Information -->

@@ -1,4 +1,5 @@
 <?php
+include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
 include('GlobalController.php');
 
 class UserController
@@ -36,19 +37,6 @@ class UserController
         }
 
         //Close Database
-        $database->close();
-    }
-
-    public function getUserName($userID)
-    {
-        $database = UserController::getDatabaseConnection();
-
-        $query = "SELECT nombre FROM usuarios WHERE id_usuario = " . $userID . "";
-        $runQuery = $database->query($query);
-        $row = $runQuery->fetch_array();
-
-        return $row['nombre'];
-
         $database->close();
     }
 }
