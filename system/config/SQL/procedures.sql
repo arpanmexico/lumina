@@ -1,9 +1,44 @@
-/*   -----   PROCEDIMIENTO PARA INICIAR SESIÓN   -----   */
 USE lumina;
+
+/*   -----   PROCEDIMIENTO PARA INICIAR SESIÓN   -----   */
 DROP PROCEDURE IF EXISTS userLogin;
 DELIMITER $$
     CREATE PROCEDURE userLogin(IN _user_id bigint(10), IN _user_pass varchar(255))
     BEGIN
-        SELECT id_user FROM users WHERE id_user = _user_id AND user_pass = _user_pass;
+        SELECT id_usuario FROM usuarios WHERE id_usuario = _user_id AND acceso = _user_pass;
     END;
+DELIMITER $$
+
+/*   -----   PROCEDIMIENTO PARA GUARDAR COMENTARIOS DEL LANDING PAGE   -----   */
+DROP PROCEDURE IF EXISTS saveLandingComments;
+DELIMITER $$
+    CREATE PROCEDURE saveLandingComments(IN _user_name char(255), IN _user_email varchar(255),
+        IN _subject char(200), IN _message text)
+    BEGIN
+        INSERT INTO comentarios(nombre, correo, asunto, mensaje) VALUES (_user_name, _user_email, _subject, _message);
+    END ;
+DELIMITER $$
+
+/*   -----  PROCEDIMIENTOS PARA ADMINISTRAR LA SECCIÓN << SUCURSAL >>   -----   */
+DROP PROCEDURE IF EXISTS manageBranch;
+DELIMITER $$
+    CREATE PROCEDURE manageBranch(IN _id_branch bigint(10), IN _name char(150), IN _address varchar(255),
+        IN _primary_phone bigint(10), IN _secondary_phone bigint(10), IN _email varchar(255),
+        IN _medical_check_price float, IN _accion int(1))
+    BEGIN
+        IF _accion = 1 THEN # INSERT DATA
+            INSERT INTO sucursal(nombre, direccion, telefono_primario, telefono_secundario, correo, costo_consulta)
+                VALUES (_name, _address, _primary_phone, _secondary_phone, _email, _medical_check_price);
+
+        ELSEIF _accion = 2 THEN # UPDATE DATA
+            UPDATE sucursal SET nombre = _name, direccion = _address, telefono_primario = _primary_phone,
+                                telefono_secundario = _secondary_phone, correo = _email,
+                                costo_consulta = _medical_check_price WHERE id_sucursal = _id_branch;
+
+        ELSEIF _accion = 3 THEN # DELETE DATA
+            DELETE FROM sucursal WHERE id_sucursal = _id_branch;
+        ELSE
+            SELECT 'No seleccionaste una accion' AS message;
+        END IF ;
+    END ;
 DELIMITER $$

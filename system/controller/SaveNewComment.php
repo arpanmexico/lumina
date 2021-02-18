@@ -4,12 +4,9 @@ if (isset($_POST['data'])) {
 
     $database = new Database();
 
-    $query = "INSERT INTO comments(user_name, user_email, subject, message) VALUES(
-        '" . ucwords($_POST['data']['user_name']) . "',
-        '" . $_POST['data']['user_email'] . "',
-        '" . ucfirst($_POST['data']['subject']) . "',
-        '" . ucfirst($_POST['data']['message']) . "'
-        )";
+    $query = "CALL saveLandingComments('" . ucwords($_POST['data']['user_name']) . "',
+    '" . $_POST['data']['user_email'] . "','" . ucfirst($_POST['data']['subject']) . "',
+    '" . ucfirst($_POST['data']['message']) . "')";
     $runQuery = $database->query($query);
 
     if ($runQuery)

@@ -1,9 +1,6 @@
 <?php
 ob_start();
 session_start();
-include('../controller/UserController.php');
-$user = new UserController();
-
 if (!isset($_SESSION['userID'])) {
   header('Location: ../');
   exit();
