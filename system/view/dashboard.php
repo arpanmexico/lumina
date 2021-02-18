@@ -62,8 +62,25 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="dashboard.php?listarCategoriasProductos">Ver Productos</a>
-              <a class="collapse-item" href="dashboard.php?listarCategoriasEnfermedades">Ver Enfermedades</a>
+              <a class="collapse-item" href="dashboard.php?listarCategoriasProductos">Ver tipos de Lente</a>
+              <a class="collapse-item" href="dashboard.php?listarMarcas">Ver Marcas</a>
+              <a class="collapse-item" href="dashboard.php?listarEnfermedades">Ver Enfermedades</a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Productos y catálogo -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <i class="fas fa-glasses"></i>
+            <span>Armazones</span>
+          </a>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="#!">Catalogo de productos</a>
+              <a class="collapse-item" href="#!">Nuevo producto</a>
             </div>
           </div>
         </li>
@@ -96,22 +113,6 @@ if (!isset($_SESSION['userID'])) {
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="dashboard.php?crearPaciente">Agregar nuevo paciente</a>
               <a class="collapse-item" href="dashboard.php?listarPacientes">Todos los pacientes</a>
-            </div>
-          </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-        <!-- Productos y catálogo -->
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-            <i class="fas fa-glasses"></i>
-            <span>Productos y Catálogo</span>
-          </a>
-          <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="#!">Catalogo de productos</a>
-              <a class="collapse-item" href="#!">Nuevo producto</a>
             </div>
           </div>
         </li>
@@ -280,10 +281,14 @@ if (!isset($_SESSION['userID'])) {
               include('analisis.php');
             } else if (isset($_GET['sucursal'])) {
               include('sucursal.php');
-            } else if (isset($_GET['listarCategorias'])) {
+            } else if (isset($_GET['listarCategoriasProductos'])) {
               include('categorias/listar_categorias.php');
+            } else if (isset($_GET['listarEnfermedades'])) {
+              include('categorias/listar_enfermedades.php');
             } else if (isset($_GET['listarDoctores'])) {
               include('doctores/listar_doctores.php');
+            } else if (isset($_GET['listarMarcas'])) {
+              include('doctores/listar_marcas.php');
             } else if (isset($_GET['crearDoctores'])) {
               include('doctores/agregar_doctor.php');
             } else if (isset($_GET['crearPaciente'])) {
