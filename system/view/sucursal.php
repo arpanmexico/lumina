@@ -12,7 +12,8 @@ $sucursal = new BranchController();
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-    <h6 class="m-0 font-weight-bold text-primary">Datos de la Óptica</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Datos de la Óptica
+    <?php echo $sucursal->getBranchInformation()['id']; ?></h6>
   </div>
   <div class="card-body">
     <section class="row text-center">
@@ -107,10 +108,22 @@ $sucursal = new BranchController();
     </form>
     <br>
     <?php
-    if (isset($_POST['guardarSucursal'])) {
-      $sucursal->manageBranchInformation($data, 1);
-    } else if (isset($_POST['actualizarSucursal'])) {
-      $sucursal->manageBranchInformation($data, 2);
+
+    if (isset($_POST['guardarSucursal']) || isset($_POST['actualizarSucursal'])) {
+      $data = array(
+        'nombre' => $_POST['nombreSucursal'],
+        'direccion' => $_POST['direccionSucursal'],
+        'telefono_primario' => $_POST['telefonoSucursal'],
+        'telefono_secundario' => $_POST['telefonoSecundarioSucursal'],
+        'correo' => $_POST['correoSucursal'],
+        'costo_consulta' => $_POST['costoConsulta']
+      );
+
+      if (isset($_POST['guardarSucursal'])) {
+        $sucursal->manageBranchInformation($data, 1);
+      } else if (isset($_POST['actualizarSucursal'])) {
+        $sucursal->manageBranchInformation($data, 2);
+      }
     }
     ?>
   </div>
