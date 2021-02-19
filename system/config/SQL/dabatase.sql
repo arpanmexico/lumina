@@ -46,15 +46,18 @@ CREATE TABLE categorias(
 DROP TABLE IF EXISTS armazones;
 CREATE TABLE armazones(
     id_armazon bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
-    marca varchar(20) NOT NULL, #Llave foranea
+    id_marca varchar(20) NOT NULL, #Llave foranea
     modelo varchar(200) NOT NULL,
     color char(200) NOT NULL,
     descripcion text NOT NULL,
     precio float NOT NULL,
     existencias int(5) NOT NULL,
-    proveedor varchar(20) NOT NULL, #Llave foranea
+    id_proveedor varchar(20) NOT NULL, #Llave foranea
+    consignacion bool NOT NULL,
 
     ingresado timestamp NOT NULL,
     actualizado timestamp NOT NULL,
 
-):
+    FOREIGN KEY (id_marca) REFERENCES categorias(id_categoria) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_proveedor) REFERENCES categorias(id_categoria) ON DELETE CASCADE ON UPDATE CASCADE
+);

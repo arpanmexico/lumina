@@ -21,7 +21,7 @@ $categorias = new CategoryController();
     </form>
     <br>
     <?php
-    // 1 => Lente, 2 => Marca, 3 => Enfermedad
+    // 1 => Lente, 2 => Marca, 3 => Enfermedad, 4 => Proveedor
     if (isset($_POST['guardarEnfermedad'])) {
       $data = array(
         'type' => 3,

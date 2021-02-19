@@ -64,7 +64,7 @@ class CategoryController
       case 3:
         $category = 'Enfermedad';
         break;
-      case 3:
+      case 4:
         $category = 'Proveedor';
         break;
     }
