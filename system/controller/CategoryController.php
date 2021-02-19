@@ -1,0 +1,76 @@
+<?php
+class CategoryController
+{
+  public function getGlobalController()
+  {
+    return new GlobalController();
+  }
+
+  public function getDatabaseConnection()
+  {
+    return new Database();
+  }
+
+  public function createNewCategory($data)
+  {
+    $database = CategoryController::getDatabaseConnection();
+
+    switch ($data['type']) {
+      case 1:
+        $query = "CALL categoriesManager(null, '" . ucwords($data['name']) . "', 'Lente', 1)";
+        break;
+      case 2:
+        $query = "CALL categoriesManager(null, '" . ucwords($data['name']) . "', 'Marca', 1)";
+        break;
+      case 3:
+        $query = "CALL categoriesManager(null, '" . ucwords($data['name']) . "', 'Enfermedad', 1)";
+        break;
+    }
+    $runQuery = $database->query($query);
+    if ($runQuery)
+      header('Location: dashboard.php?listarCategoriasProductos');
+    else
+      CategoryController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar la categoría -> ' . $database->error);
+
+    $database->close();
+  }
+
+  public function getAllCategoryInformation($type)
+  {
+    $database = CategoryController::getDatabaseConnection();
+    switch ($type) {
+      case 1:
+        $category = 'Lente';
+        break;
+      case 2:
+        $category = 'Marca';
+        break;
+      case 3:
+        $category = 'Enfermedad';
+        break;
+    }
+
+    $query = "SELECT * FROM categorias WHERE tipo = '" . $category . "'";
+    $runQuery = $database->query($query);
+
+    if ($runQuery->num_rows > 0) {
+      while ($row = $runQuery->fetch_array()) {
+        echo '
+        <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
+          <div class="card shadow" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">' . $row['nombre'] . '</h5>
+              <a href="../controller/DeleteData.php?categoryID=' . $row['id_categoria'] . '" class="card-link text-danger">Eliminar</a>
+            </div>
+          </div>
+        </div>
+        ';
+      }
+    } else {
+      CategoryController::getGlobalController()->getAlerts('warning', 'No se encontraron categorías registradas en este apartado.');
+    }
+
+
+    $database->close();
+  }
+}

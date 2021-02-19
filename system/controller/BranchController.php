@@ -41,10 +41,10 @@ class BranchController
 
         switch ($action) {
             case 1:
-                $query = "CALL manageBranch(null,'" . $data['nombre'] . "','" . $data['direccion'] . "','" . $data['telefono_primario'] . "','" . $data['telefono_secundario'] . "','" . $data['correo'] . "','" . $data['costo_consulta'] . "', 1)";
+                $query = "CALL branchManager(null,'" . $data['nombre'] . "','" . $data['direccion'] . "','" . $data['telefono_primario'] . "','" . $data['telefono_secundario'] . "','" . $data['correo'] . "','" . $data['costo_consulta'] . "', 1)";
                 break;
             case 2:
-                $query = "CALL manageBranch(" . $data['id'] . ",'" . $data['nombre'] . "','" . $data['direccion'] . "','" . $data['telefono_primario'] . "','" . $data['telefono_secundario'] . "','" . $data['correo'] . "','" . $data['costo_consulta'] . "', 2)";
+                $query = "CALL branchManager(" . $data['id'] . ",'" . $data['nombre'] . "','" . $data['direccion'] . "','" . $data['telefono_primario'] . "','" . $data['telefono_secundario'] . "','" . $data['correo'] . "','" . $data['costo_consulta'] . "', 2)";
                 break;
         }
 

@@ -15,17 +15,17 @@ CREATE TABLE comentarios(
 /*   -----  TABLA PARA ALMACENAR ADMINISTRADORES   -----   */
 DROP TABLE IF EXISTS usuarios;
 CREATE TABLE usuarios(
-    id_usuario bigint(10) UNIQUE PRIMARY KEY,
+    id_usuario bigint(20) UNIQUE PRIMARY KEY,
     nombre char(255) UNIQUE NOT NULL,
     acceso varchar(255) UNIQUE NOT NULL
 );
 INSERT INTO usuarios VALUES('1806141918','Abraham Ayala Padilla',
                          '2e61971a2c1d98b2a46466b0970b4d7d874a325fda7bf0e552863b1e60c9e2db');
 
-/*   -----  TABLA PARA CREAR LA SUCURSAL -----   */
+/*   -----  TABLA PARA ADMINISTRAR LA SUCURSAL -----   */
 DROP TABLE IF EXISTS sucursal;
 CREATE TABLE sucursal(
-    id_sucursal bigint(10) PRIMARY KEY AUTO_INCREMENT,
+    id_sucursal bigint(20) PRIMARY KEY AUTO_INCREMENT,
     nombre char(150) NOT NULL,
     direccion varchar(255) NOT NULL,
     telefono_primario bigint(10) UNIQUE NOT NULL,
@@ -34,7 +34,12 @@ CREATE TABLE sucursal(
     costo_consulta float NOT NULL
 );
 
-/*   -----  TABLA PARA  -----   */
-
+/*   -----  TABLA PARA ADMINISTRAR LOS TIPOS DE LENTES, ENFERMEDADES, MARCAS -----   */
+DROP TABLE IF EXISTS categorias;
+CREATE TABLE categorias(
+    id_categoria varchar(20) PRIMARY KEY NOT NULL, #El id se define desde un procedimiento
+    nombre char(200) UNIQUE NOT NULL,
+    tipo enum('Lente','Marca','Enfermedad') NOT NULL
+);
 
 /*   -----  TABLA PARA    -----   */
