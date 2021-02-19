@@ -49,7 +49,7 @@ DELIMITER ;
     CREATE PROCEDURE categoriesManager(IN _id_category varchar(20), IN _name char(200),
         IN _type enum('Lente','Marca','Enfermedad'), IN _action int(1))
     BEGIN
-        SET @category_key = CONCAT('LUM',UPPER(SUBSTR(_name, 1, 3)), second(CURRENT_TIME));
+        SET @category_key = CONCAT('LUM',UPPER(SUBSTR(_type, 1, 3)), second(CURRENT_TIME));
 
         IF _action = 1 THEN # INSERT DATA
             INSERT INTO categorias(id_categoria, nombre, tipo) VALUES (@category_key, _name, _type);

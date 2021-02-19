@@ -70,7 +70,7 @@ class CategoryController
           <div class="card shadow">
             <div class="card-body">
               <h5 class="card-title">' . $row['nombre'] . '</h5>
-              <a href="../controller/DeleteData.php?categoryID=' . $row['id_categoria'] . '" class="card-link text-danger">Eliminar</a>
+              <a href="../controller/DeleteData.php?categoryID=' . $row['id_categoria'] . '&categoryType=' . $row['tipo'] . '" class="card-link text-danger">Eliminar</a>
             </div>
           </div>
         </div>
