@@ -3,7 +3,7 @@ include('../controller/CategoryController.php');
 $categorias = new CategoryController();
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Categorías</h1>
+  <h1 class="h3 mb-0 text-gray-800">Categorías - Lentes</h1>
 </div>
 <p class="text-muted">Bienvenido al módulo de categorías, acá puede realizar operaciones como agregar nuevos tipos de lentes, <br> ver la lista de categorías, actualizar datos de una categoría y eliminar una categoría del sistema.</p>
 
@@ -14,7 +14,7 @@ $categorias = new CategoryController();
   <div class="card-body">
     <form action="" method="post">
       <div class="form-group">
-        <label for="direccionSucursal">Titulo de la categoría</label>
+        <label for="nombreLente">Titulo de la categoría</label>
         <input type="text" name="nombreLente" class="form-control" id="nombreLente" placeholder="Ej. Lentes de Sol">
       </div>
       <button type="submit" name="guardarLente" class="btn btn-info btn-block mt-3">Crear categoría</button>
@@ -25,7 +25,7 @@ $categorias = new CategoryController();
     if (isset($_POST['guardarLente'])) {
       $data = array(
         'type' => 1,
-        'name' => $_POST['nombreLente']
+        'name' => strtolower($_POST['nombreLente'])
       );
       $categorias->createNewCategory($data);
     }

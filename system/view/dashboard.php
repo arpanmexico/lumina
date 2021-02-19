@@ -288,7 +288,7 @@ if (!isset($_SESSION['userID'])) {
             } else if (isset($_GET['listarDoctores'])) {
               include('doctores/listar_doctores.php');
             } else if (isset($_GET['listarMarcas'])) {
-              include('doctores/listar_marcas.php');
+              include('categorias/listar_marcas.php');
             } else if (isset($_GET['crearDoctores'])) {
               include('doctores/agregar_doctor.php');
             } else if (isset($_GET['crearPaciente'])) {

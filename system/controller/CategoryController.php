@@ -28,7 +28,17 @@ class CategoryController
     }
     $runQuery = $database->query($query);
     if ($runQuery)
-      header('Location: dashboard.php?listarCategoriasProductos');
+      switch ($data['type']) {
+        case 1:
+          header('Location: dashboard.php?listarCategoriasProductos');
+          break;
+        case 2:
+          header('Location: dashboard.php?listarMarcas');
+          break;
+        case 3:
+          header('Location: dashboard.php?listarEnfermedades');
+          break;
+      }
     else
       CategoryController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar la categoría -> ' . $database->error);
 
@@ -57,7 +67,7 @@ class CategoryController
       while ($row = $runQuery->fetch_array()) {
         echo '
         <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
-          <div class="card shadow" style="width: 18rem;">
+          <div class="card shadow">
             <div class="card-body">
               <h5 class="card-title">' . $row['nombre'] . '</h5>
               <a href="../controller/DeleteData.php?categoryID=' . $row['id_categoria'] . '" class="card-link text-danger">Eliminar</a>
