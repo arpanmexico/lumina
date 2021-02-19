@@ -25,6 +25,9 @@ class CategoryController
       case 3:
         $query = "CALL categoriesManager(null, '" . ucwords($data['name']) . "', 'Enfermedad', 1)";
         break;
+      case 4:
+        $query = "CALL categoriesManager(null, '" . ucwords($data['name']) . "', 'Proveedor', 1)";
+        break;
     }
     $runQuery = $database->query($query);
     if ($runQuery)
@@ -37,6 +40,9 @@ class CategoryController
           break;
         case 3:
           header('Location: dashboard.php?listarEnfermedades');
+          break;
+        case 4:
+          header('Location: dashboard.php?listarProveedores');
           break;
       }
     else
@@ -57,6 +63,9 @@ class CategoryController
         break;
       case 3:
         $category = 'Enfermedad';
+        break;
+      case 3:
+        $category = 'Proveedor';
         break;
     }
 

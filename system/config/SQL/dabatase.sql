@@ -37,9 +37,24 @@ CREATE TABLE sucursal(
 /*   -----  TABLA PARA ADMINISTRAR LOS TIPOS DE LENTES, ENFERMEDADES, MARCAS -----   */
 DROP TABLE IF EXISTS categorias;
 CREATE TABLE categorias(
-    id_categoria varchar(20) PRIMARY KEY NOT NULL, #El id se define desde un procedimiento
+    id_categoria varchar(20) UNIQUE PRIMARY KEY NOT NULL, #El id se define desde un procedimiento
     nombre char(200) UNIQUE NOT NULL,
-    tipo enum('Lente','Marca','Enfermedad') NOT NULL
+    tipo enum('Lente','Marca','Enfermedad', 'Proveedor') NOT NULL
 );
 
-/*   -----  TABLA PARA    -----   */
+/*   -----  TABLA PARA ADMINISTRAR LOS ARMAZONES   -----   */
+DROP TABLE IF EXISTS armazones;
+CREATE TABLE armazones(
+    id_armazon bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
+    marca varchar(20) NOT NULL, #Llave foranea
+    modelo varchar(200) NOT NULL,
+    color char(200) NOT NULL,
+    descripcion text NOT NULL,
+    precio float NOT NULL,
+    existencias int(5) NOT NULL,
+    proveedor varchar(20) NOT NULL, #Llave foranea
+
+    ingresado timestamp NOT NULL,
+    actualizado timestamp NOT NULL,
+
+):

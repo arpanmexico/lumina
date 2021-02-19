@@ -17,6 +17,9 @@ if (isset($_GET['categoryID']) && isset($_GET['categoryType'])) {
             case 'Enfermedad':
                 header('Location: ../view/dashboard.php?listarEnfermedades');
                 break;
+            case 'Proveedor':
+                header('Location: ../view/dashboard.php?listarProveedores');
+                break;
         }
     else
         echo $database->error;

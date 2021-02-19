@@ -79,8 +79,9 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="#!">Catalogo de productos</a>
-              <a class="collapse-item" href="#!">Nuevo producto</a>
+              <a class="collapse-item" href="dashboard.php?listarProveedores">Ver de proveedores</a>
+              <a class="collapse-item" href="dashboard.php?listarArmazones">Catalogo de productos</a>
+              <a class="collapse-item" href="dashboard.php?crearArmazon">Nuevo producto</a>
             </div>
           </div>
         </li>
@@ -285,6 +286,12 @@ if (!isset($_SESSION['userID'])) {
               include('categorias/listar_categorias.php');
             } else if (isset($_GET['listarEnfermedades'])) {
               include('categorias/listar_enfermedades.php');
+            } else if (isset($_GET['listarProveedores'])) {
+              include('armazones/listar_proveedores.php');
+            } else if (isset($_GET['listarArmazones'])) {
+              include('armazones/listar_armazones.php');
+            } else if (isset($_GET['crearArmazon'])) {
+              include('armazones/crear_armazon.php');
             } else if (isset($_GET['listarDoctores'])) {
               include('doctores/listar_doctores.php');
             } else if (isset($_GET['listarMarcas'])) {

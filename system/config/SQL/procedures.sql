@@ -47,7 +47,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS categoriesManager;
 DELIMITER ;
     CREATE PROCEDURE categoriesManager(IN _id_category varchar(20), IN _name char(200),
-        IN _type enum('Lente','Marca','Enfermedad'), IN _action int(1))
+        IN _type enum('Lente','Marca','Enfermedad', 'Proveedor'), IN _action int(1))
     BEGIN
         SET @category_key = CONCAT('LUM',UPPER(SUBSTR(_type, 1, 3)), second(CURRENT_TIME));
 
