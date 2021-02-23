@@ -69,7 +69,7 @@ class CategoryController
         break;
     }
 
-    $query = "SELECT * FROM categorias WHERE tipo = '" . $category . "'";
+    $query = "SELECT id_categoria, nombre, tipo FROM categorias WHERE tipo = '" . $category . "' ORDER BY nombre";
     $runQuery = $database->query($query);
 
     if ($runQuery->num_rows > 0) {

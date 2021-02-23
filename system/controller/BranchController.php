@@ -15,7 +15,7 @@ class BranchController
     public function getBranchInformation()
     {
         $database = BranchController::getDatabaseConnection();
-        $query = "SELECT * FROM sucursal";
+        $query = "SELECT id_sucursal, nombre, direccion, telefono_primario, telefono_secundario, correo, costo_consulta FROM sucursal";
         $runQuery = $database->query($query);
 
         if ($runQuery->num_rows > 0) {
