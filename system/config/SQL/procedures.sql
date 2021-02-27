@@ -9,6 +9,7 @@ DELIMITER $$
     END;
 DELIMITER $$
 
+
 /*   -----   PROCEDIMIENTO PARA GUARDAR COMENTARIOS DEL LANDING PAGE   -----   */
 DROP PROCEDURE IF EXISTS saveLandingComments;
 DELIMITER $$
@@ -18,6 +19,7 @@ DELIMITER $$
         INSERT INTO comentarios(nombre, correo, asunto, mensaje) VALUES (_user_name, _user_email, _subject, _message);
     END ;
 DELIMITER $$
+
 
 /*   -----  PROCEDIMIENTO PARA ADMINISTRAR LA SECCIÓN << SUCURSAL >>   -----   */
 DROP PROCEDURE IF EXISTS branchManager;
@@ -43,13 +45,15 @@ DELIMITER $$
     END ;
 DELIMITER $$
 
+
 /*   -----  PROCEDIMIENTO PARA ADMINISTRAR LA SECCIÓN << CATEGORÍAS >>   -----   */
 DROP PROCEDURE IF EXISTS categoriesManager;
 DELIMITER ;
     CREATE PROCEDURE categoriesManager(IN _id_category varchar(20), IN _name char(200),
         IN _type enum('Lente','Marca','Enfermedad', 'Proveedor'), IN _action int(1))
     BEGIN
-        SET @category_key = CONCAT('LUM',UPPER(SUBSTR(_type, 1, 3)), second(CURRENT_TIME));
+        SET @category_key = CONCAT('LUM',UPPER(SUBSTR(_type, 1, 3)),
+                CONCAT(FLOOR(RAND() * (100 - 5 + 1) + 5), SECOND(CURRENT_TIME)));
 
         IF _action = 1 THEN # INSERT DATA
             INSERT INTO categorias(id_categoria, nombre, tipo) VALUES (@category_key, _name, _type);
@@ -62,6 +66,7 @@ DELIMITER ;
         END IF ;
     END ;
 DELIMITER ;
+
 
 /*   -----  PROCEDIMIENTO PARA ADMINISTRAR LA SECCIÓN << ARMAZONES >>   -----   */
 DROP PROCEDURE IF EXISTS framesManager;

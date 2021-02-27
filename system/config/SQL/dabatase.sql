@@ -61,3 +61,5 @@ CREATE TABLE armazones(
     FOREIGN KEY (id_marca) REFERENCES categorias(id_categoria) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_proveedor) REFERENCES categorias(id_categoria) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+DROP TABLE IF EXISTS doctores;
