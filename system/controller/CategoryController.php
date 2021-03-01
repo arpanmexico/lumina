@@ -92,4 +92,78 @@ class CategoryController
 
     $database->close();
   }
+
+  public function getCategoryInformationByType($type)
+  {
+    $database = CategoryController::getDatabaseConnection();
+    switch ($type) {
+      case 1:
+        $category = 'Lente';
+        break;
+      case 2:
+        $category = 'Marca';
+        break;
+      case 3:
+        $category = 'Enfermedad';
+        break;
+      case 4:
+        $category = 'Proveedor';
+        break;
+    }
+
+    $query = "SELECT id_categoria, nombre FROM categorias WHERE tipo = '" . $category . "' ORDER BY nombre";
+    $runQuery = $database->query($query);
+    $data = array();
+
+    if ($runQuery->num_rows > 0) {
+      while ($row = $runQuery->fetch_array()) {
+        $data['id'] .= $row['id_categoria'] . ",";
+        $data['nombre'] .= $row['nombre'] . ",";
+      }
+    }
+
+    return $data;
+
+    $database->close();
+  }
+
+  public function getSuppliers()
+  {
+    $database = CategoryController::getDatabaseConnection();
+    $query = "SELECT id_categoria, nombre FROM categorias WHERE tipo = 'Proveedor'";
+    $runQuery = $database->query($query);
+    $data = array();
+
+    if ($runQuery->num_rows > 0) {
+      while ($row = $runQuery->fetch_array()) {
+        $data['id'] .= $row['id_categoria'] . ",";
+        $data['nombre'] .= $row['nombre'] . ",";
+      }
+    } else {
+      CategoryController::getGlobalController()->getAlerts('warning', 'No se encontraron proveedores registrados en este apartado.');
+    }
+
+    return $data;
+
+    $database->close();
+  }
+
+  public function createNewFrame($data)
+  {
+    if (move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto'])) {
+      $database = CategoryController::getDatabaseConnection();
+      $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', 1)";
+
+      $runQuery = $database->query($query);
+      if ($runQuery) {
+        header('Location: ?listarArmazones');
+      } else {
+        CategoryController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos, intenta <a href="?crearArmazon">Recargar la página</a>, si el problema persiste escribe a <a href="mailto:contacto@arpan.com.mx">contacto@arpan.com.mx</a>');
+      }
+
+      $database->close();
+    }else{
+      echo "Ocurrió un error";
+    }
+  }
 }

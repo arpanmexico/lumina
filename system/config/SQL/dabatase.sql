@@ -46,14 +46,14 @@ CREATE TABLE categorias(
 DROP TABLE IF EXISTS armazones;
 CREATE TABLE armazones(
     id_armazon bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
-    id_marca varchar(20) NOT NULL, #Llave foranea
+    id_marca varchar(20) NOT NULL, # Llave foranea
     modelo varchar(200) NOT NULL,
     color char(200) NOT NULL,
     descripcion text NOT NULL,
     precio float NOT NULL,
     existencias int(5) NOT NULL,
-    id_proveedor varchar(20) NOT NULL, #Llave foranea
-    consignacion bool NOT NULL,
+    id_proveedor varchar(20) NOT NULL, # Llave foranea
+    foto text NULL,
 
     ingresado timestamp NOT NULL,
     actualizado timestamp NOT NULL,
