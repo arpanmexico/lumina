@@ -306,6 +306,8 @@ if (!isset($_SESSION['userID'])) {
                             include('ventas/crear_venta.php');
                         } else if (isset($_GET['listarVentas'])) {
                             include('ventas/listar_ventas.php');
+                        } else if (isset($_GET['detallesArmazon'])){
+                            include('armazones/detalles_armazon.php');
                         } else {
                             include('analisis.php');
                         }

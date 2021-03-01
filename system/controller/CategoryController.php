@@ -179,6 +179,7 @@ class CategoryController
     proveedor, foto FROM categorias, armazones";
 
     $runQuery = $database->query($query);
+    $data = array();
 
     if ($runQuery->num_rows > 0) {
       while ($row = $runQuery->fetch_array()) {
@@ -191,10 +192,26 @@ class CategoryController
           $stockMsg = "<span class='text-danger'>" . $row['existencias'] . " en existencia ";
         }
 
+        $array = array(
+          'id' => $row['id_armazon'],
+          'marca' => $row['marca'],
+          'modelo' => $row['modelo'],
+          'color' => $row['color'],
+          'descripcion' => $row['descripcion'],
+          'precio' => $row['precio'],
+          'existencias' => $row['existencias'],
+          'proveedor' => $row['proveedor'],
+          'foto' => $row['foto']
+        );
+
+        $serialized_array = serialize($array);
+        $url = urlencode($serialized_array);
+        
+
         echo "
-        <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
+            <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
                 <div class='card shadow'>
-                    <a href='?detallesArmazon=" . $row['id_armazon'] . "'>
+                    <a href='?detallesArmazon=" . $url . "'>
                       <img src='../../src/catalog/" . $row['foto'] . "' class='card-img-top'>
                     </a>
                     <div class='card-body'>
@@ -214,12 +231,6 @@ class CategoryController
     } else {
       CategoryController::getGlobalController()->getAlerts('warning', 'No se encontraron productos registrados, <br> <a class="font-weight-bolder" href="?crearArmazon">Aregar un nuevo producto</a>');
     }
-
-    $database->close();
-  }
-
-  public function getFrameDetailsByID($id){
-    $database = CategoryController::getDatabaseConnection();
 
     $database->close();
   }
