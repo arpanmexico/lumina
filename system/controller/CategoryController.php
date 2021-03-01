@@ -148,11 +148,12 @@ class CategoryController
     $database->close();
   }
 
-  public function createNewFrame($data)
+  public function manageFrames($data, $action)
   {
     if (move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto'])) {
       $database = CategoryController::getDatabaseConnection();
-      $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', 1)";
+      $database = CategoryController::getDatabaseConnection();
+      $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', $action)";
 
       $runQuery = $database->query($query);
       if ($runQuery) {
@@ -162,8 +163,64 @@ class CategoryController
       }
 
       $database->close();
-    }else{
+    } else {
       echo "Ocurrió un error";
     }
+  }
+
+  public function getAllFramesInformacion()
+  {
+    $database = CategoryController::getDatabaseConnection();
+
+    $query = "SELECT DISTINCT id_armazon, 
+    (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
+    modelo, color, descripcion, precio, existencias,
+    (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
+    proveedor, foto FROM categorias, armazones";
+
+    $runQuery = $database->query($query);
+
+    if ($runQuery->num_rows > 0) {
+      while ($row = $runQuery->fetch_array()) {
+
+        if ($row['existencias'] >= 5) {
+          $stockMsg = "<span class='text-success'>" . $row['existencias'] . " en existencia ";
+        } else if ($row['existencias'] < 5 && $row['existencias'] > 3) {
+          $stockMsg = "<span class='text-warning'>" . $row['existencias'] . " en existencia ";
+        } else if ($row['existencias'] <= 2) {
+          $stockMsg = "<span class='text-danger'>" . $row['existencias'] . " en existencia ";
+        }
+
+        echo "
+        <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
+                <div class='card shadow'>
+                    <a href='?detallesArmazon=" . $row['id_armazon'] . "'>
+                      <img src='../../src/catalog/" . $row['foto'] . "' class='card-img-top'>
+                    </a>
+                    <div class='card-body'>
+                        <h5 class='card-title'>ID: " . $row['id_armazon'] . "</h5>
+                        <h5 class='font-weight-bolder'>$" . $row['precio'] . " - " . $stockMsg . "</span></h5>
+
+                        <small>" . $row['marca'] . "</small>
+                    </div>
+                    <div class='card-footer'>
+                      <a href='#' class='card-link text-warning'>Modificar</a>
+                      <a href='#' class='card-link text-danger'>Eliminar Producto</a>
+                    </div>
+                </div>
+            </div>
+        ";
+      }
+    } else {
+      CategoryController::getGlobalController()->getAlerts('warning', 'No se encontraron productos registrados, <br> <a class="font-weight-bolder" href="?crearArmazon">Aregar un nuevo producto</a>');
+    }
+
+    $database->close();
+  }
+
+  public function getFrameDetailsByID($id){
+    $database = CategoryController::getDatabaseConnection();
+
+    $database->close();
   }
 }

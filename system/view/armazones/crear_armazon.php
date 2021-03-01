@@ -1,9 +1,6 @@
 <?php
 include('../controller/CategoryController.php');
 $categorias = new CategoryController();
-
-
-
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Armazones - Agregar Armazón</h1>
@@ -14,8 +11,8 @@ $categorias = new CategoryController();
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Agregar un nuevo armazón</h6>
     </div>
-    <div class="card-body">
 
+    <div class="card-body">
         <?php
         $ids_armazones = explode(",", $categorias->getCategoryInformationByType(2)['id']);
         $nombres_armazones = explode(",", $categorias->getCategoryInformationByType(2)['nombre']);
@@ -98,24 +95,24 @@ $categorias = new CategoryController();
 
             <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3">Guardar Armazón</button>
         </form>
-        <?php 
-            if(isset($_POST['guardarArmazon'])){
-                $data = array(
-                    'codigo' => $_POST['codigoBarras'],
-                    'marca' => $_POST['marcaArmazon'],
-                    'modelo' => $_POST['modeloArmazon'],
-                    'color' => strtolower($_POST['colorArmazon']),
-                    'descripcion' => ucfirst($_POST['descripcionArmazon']),
-                    'precio' => $_POST['precioArmazon'],
-                    'existencias' => $_POST['existenciaArmazon'],
-                    'proveedor' => $_POST['proveedorArmazon'],
-                    'foto' => $_FILES['fotoArmazon']['name'],
-                    'foto_tmp' => $_FILES['fotoArmazon']['tmp_name']
-                );
+        <?php
+        if (isset($_POST['guardarArmazon'])) {
+            $data = array(
+                'codigo' => $_POST['codigoBarras'],
+                'marca' => $_POST['marcaArmazon'],
+                'modelo' => $_POST['modeloArmazon'],
+                'color' => strtolower($_POST['colorArmazon']),
+                'descripcion' => ucfirst($_POST['descripcionArmazon']),
+                'precio' => $_POST['precioArmazon'],
+                'existencias' => $_POST['existenciaArmazon'],
+                'proveedor' => $_POST['proveedorArmazon'],
+                'foto' => $_FILES['fotoArmazon']['name'],
+                'foto_tmp' => $_FILES['fotoArmazon']['tmp_name']
+            );
 
-                $categorias->createNewFrame($data);
-            }
+            // 1 => INSERT
+            $categorias->manageFrames($data, 1);
+        }
         ?>
     </div>
 </div>
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Id praesentium ullam facilis, quam minima earum. Voluptas, ratione beatae, eligendi numquam fuga consequuntur vitae aspernatur nemo, quod accusantium delectus facilis! Vero
