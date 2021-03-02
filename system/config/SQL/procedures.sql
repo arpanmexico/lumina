@@ -76,11 +76,12 @@ DELIMITER ;
         IN _picture text, IN _action int(1))
     BEGIN
         SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+        SET @_color = CONCAT(UCASE(LOWER(LEFT(_color, 1))), SUBSTRING(LOWER(_color), 2));
+        SET @_description = CONCAT(UCASE(LOWER(LEFT(_description, 1))), SUBSTRING(LOWER(_description), 2));
 
         IF _action = 1 THEN # INSERT DATA
             INSERT INTO armazones(id_armazon, id_marca, modelo, color, descripcion, precio, existencias,
-                id_proveedor, foto, ingresado, actualizado) VALUES (_id_frame, _id_brand, _model, _color,
-                    _description, _price, _stock, _id_supplier, _picture, @current_time_mx, @current_time_mx);
+                id_proveedor, foto, ingresado, actualizado) VALUES (_id_frame, _id_brand, _model, @_color, @_description, _price, _stock, _id_supplier, _picture, @current_time_mx, @current_time_mx);
         ELSEIF _action = 2 THEN # UPDATE DATA
             UPDATE armazones SET id_armazon = _id_frame, id_marca = _id_brand, modelo = _model, color = _color,
                 descripcion = _description, precio = _price, existencias = _stock, id_proveedor = _id_supplier,

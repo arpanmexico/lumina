@@ -48,7 +48,7 @@ CREATE TABLE armazones(
     id_armazon bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
     id_marca varchar(20) NOT NULL, # Llave foranea
     modelo varchar(200) NOT NULL,
-    color char(200) NOT NULL,
+    color varchar(255) NOT NULL,
     descripcion text NOT NULL,
     precio float NOT NULL,
     existencias int(5) NOT NULL,

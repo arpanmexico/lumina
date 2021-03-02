@@ -176,7 +176,7 @@ class CategoryController
     (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
     modelo, color, descripcion, precio, existencias,
     (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
-    proveedor, foto FROM categorias, armazones";
+    proveedor, foto FROM categorias, armazones ORDER BY marca";
 
     $runQuery = $database->query($query);
     $data = array();
@@ -221,8 +221,7 @@ class CategoryController
                         <small>" . $row['marca'] . "</small>
                     </div>
                     <div class='card-footer'>
-                      <a href='#' class='card-link text-warning'>Modificar</a>
-                      <a href='#' class='card-link text-danger'>Eliminar Producto</a>
+                      <a href='?detallesArmazon=" . $url . "' class='card-link text-info'>Ver más información</a>
                     </div>
                 </div>
             </div>

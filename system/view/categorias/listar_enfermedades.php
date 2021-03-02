@@ -15,7 +15,7 @@ $categorias = new CategoryController();
     <form action="" method="post">
       <div class="form-group">
         <label for="enfermedad">Titulo de la enfermedad</label>
-        <input type="text" name="enfermedad" class="form-control" id="enfermedad" placeholder="Ej. Levis">
+        <input type="text" name="enfermedad" class="form-control" id="enfermedad" placeholder="Ej. Diabetes">
       </div>
       <button type="submit" name="guardarEnfermedad" class="btn btn-info btn-block mt-3">Agregar Marca</button>
     </form>
