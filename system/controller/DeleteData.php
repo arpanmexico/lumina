@@ -23,6 +23,22 @@ if (isset($_GET['categoryID']) && isset($_GET['categoryType'])) {
         }
     else
         echo $database->error;
+} else if (isset($_GET['idArmazon']) && isset($_GET['accionArmazon'])) {
+
+    switch ($_GET['accionArmazon']) {
+        case 'suspend':
+            $frameQuery = "CALL framesManager(" . $_GET['idArmazon'] . ",null, null, null, null,null, null, null, null, 4)";
+            break;
+        case 'restore':
+            $frameQuery = "CALL framesManager(" . $_GET['idArmazon'] . ",null, null, null, null,null, null, null, null, 5)";
+            break;
+    }
+    $frameResult = $database->query($frameQuery);
+
+    if ($frameResult)
+        header('Location: ../view/dashboard.php?listarArmazones');
+
+    echo $database->error;
 }
 
 $database->close();

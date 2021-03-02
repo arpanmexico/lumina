@@ -54,6 +54,7 @@ CREATE TABLE armazones(
     existencias int(5) NOT NULL,
     id_proveedor varchar(20) NOT NULL, # Llave foranea
     foto text NULL,
+    suspendido bool NOT NULL,
 
     ingresado timestamp NOT NULL,
     actualizado timestamp NOT NULL,

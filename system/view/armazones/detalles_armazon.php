@@ -97,6 +97,9 @@ $categorias = new CategoryController();
                             </div>
                         </div>
                         <button type="submit" name="actualizarArmazon" class="btn btn-info btn-block">Actualizar Datos</button>
+                        <div class="ml-auto mx-auto mt-3">
+                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id']; ?>&accionArmazon=suspend" class="text-danger">Eliminar Armazón</a>
+                        </div>
                     </div>
                 </div>
             </div>

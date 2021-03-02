@@ -173,10 +173,9 @@ class CategoryController
     (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
     modelo, color, descripcion, precio, existencias,
     (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
-    proveedor, foto FROM categorias, armazones ORDER BY marca";
+    proveedor, foto FROM categorias, armazones WHERE suspendido = 0 ORDER BY marca";
 
     $runQuery = $database->query($query);
-    $data = array();
 
     if ($runQuery->num_rows > 0) {
       while ($row = $runQuery->fetch_array()) {
@@ -225,6 +224,49 @@ class CategoryController
       }
     } else {
       CategoryController::getGlobalController()->getAlerts('warning', 'No se encontraron productos registrados, <br> <a class="font-weight-bolder" href="?crearArmazon">Aregar un nuevo producto</a>');
+    }
+    $database->close();
+  }
+
+  public function getSuspendedFramesInformacion()
+  {
+    $database = CategoryController::getDatabaseConnection();
+
+    $query = "SELECT DISTINCT id_armazon, 
+    (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
+    modelo, color, descripcion, precio, existencias,
+    (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
+    proveedor, foto FROM categorias, armazones WHERE suspendido = 1 ORDER BY marca";
+
+    $runQuery = $database->query($query);
+
+    if ($runQuery->num_rows > 0) {
+      while ($row = $runQuery->fetch_array()) {
+        if ($row['existencias'] >= 5) {
+          $stockMsg = "<span class='text-success'>" . $row['existencias'] . " en existencia ";
+        } else if ($row['existencias'] < 5 && $row['existencias'] > 3) {
+          $stockMsg = "<span class='text-warning'>" . $row['existencias'] . " en existencia ";
+        } else if ($row['existencias'] <= 2) {
+          $stockMsg = "<span class='text-danger'>" . $row['existencias'] . " en existencia ";
+        }
+
+        echo "
+            <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
+                <div class='card shadow'>
+                    <img src='../../src/catalog/" . $row['foto'] . "' class='card-img-top'>
+                    <div class='card-body'>
+                        <h5 class='card-title'>ID: " . $row['id_armazon'] . "</h5>
+                        <h5 class='font-weight-bolder'>$" . $row['precio'] . " - " . $stockMsg . "</span></h5>
+
+                        <small>" . $row['marca'] . "</small>
+                    </div>
+                    <div class='card-footer'>
+                      <a href='../controller/DeleteData.php?idArmazon=".$row['id_armazon']."&accionArmazon=restore' class='card-link text-warning'>Recuperar producto</a>
+                    </div>
+                </div>
+            </div>
+        ";
+      }
     }
 
     $database->close();
