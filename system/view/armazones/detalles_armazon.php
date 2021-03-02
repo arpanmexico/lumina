@@ -30,8 +30,8 @@ $categorias = new CategoryController();
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="codigoBarras">Código de Barras del Armazon</label>
-                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras" value="<?php echo $array['id']; ?>">
+                                <label for="codigoBarras">Código de Barras <span class="text-danger">(No se puede cambiar)</span></label>
+                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras" value="<?php echo $array['id']; ?>" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -101,5 +101,34 @@ $categorias = new CategoryController();
                 </div>
             </div>
         </form>
+        <div class="container-fluid mt-4">
+            <?php
+            if (isset($_POST['actualizarArmazon'])) {
+                $data = array(
+                    'codigo' => $array['id'],
+                    'marca' => $_POST['marcaArmazon'],
+                    'modelo' => $_POST['modeloArmazon'],
+                    'color' => strtolower($_POST['colorArmazon']),
+                    'descripcion' => ucfirst($_POST['descripcionArmazon']),
+                    'precio' => $_POST['precioArmazon'],
+                    'existencias' => $_POST['existenciaArmazon'],
+                    'proveedor' => $_POST['proveedorArmazon'],
+                    'foto' => 'NA'
+                );
+                // 2 => UPDATE
+                if ($categorias->manageFrames($data, 2)) {
+                    //header("Refresh: 0");
+                    echo "<div class='alert alert-success'>
+                    Los datos han sido actualizados correctamente, por favor vuelve a la lista de armazones para que los cambios sean reflejados. <br>
+                    <a href='?listarArmazones'>Volver a la lista de armazones</a>
+                     </div>";
+                } else {
+                    echo "<div class='alert alert-danger'>
+                    Ocurrió un error al guardar los datos, intenta <a href='?crearArmazon'>Recargar la página</a>, si el problema persiste escribe a <a href='mailto:contacto@arpan.com.mx'>contacto@arpan.com.mx</a>
+                     </div>";
+                }
+            }
+            ?>
+        </div>
     </div>
 </div>

@@ -83,13 +83,12 @@ DELIMITER ;
             INSERT INTO armazones(id_armazon, id_marca, modelo, color, descripcion, precio, existencias,
                 id_proveedor, foto, ingresado, actualizado) VALUES (_id_frame, _id_brand, _model, @_color, @_description, _price, _stock, _id_supplier, _picture, @current_time_mx, @current_time_mx);
         ELSEIF _action = 2 THEN # UPDATE DATA
-            UPDATE armazones SET id_armazon = _id_frame, id_marca = _id_brand, modelo = _model, color = _color,
-                descripcion = _description, precio = _price, existencias = _stock, id_proveedor = _id_supplier,
-                foto = _picture, actualizado = @current_time_mx WHERE id_armazon = _id_frame;
-        ELSEIF _action = 3 THEN # DELETE DATA
+            UPDATE armazones SET id_marca = _id_brand, modelo = _model, color = _color,
+                descripcion = _description, precio = _price, existencias = _stock, id_proveedor = _id_supplier, actualizado = @current_time_mx WHERE id_armazon = _id_frame;
+        ELSEIF _action = 3 THEN # UPDATE STOCK
+            UPDATE armazones SET existencias = _stock WHERE id_armazon = _id_frame;
+        ELSEIF _action = 4 THEN # DELETE DATA
             DELETE FROM armazones WHERE  id_armazon = _id_frame;
-        ELSEIF _action = 4 THEN # UPDATE STOCK
-            UPDATE armazones SET existencias = _stock WHERE id_armazon = _stock;
         ELSE
             SELECT 'No seleccionaste una accion' AS message;
         END IF;

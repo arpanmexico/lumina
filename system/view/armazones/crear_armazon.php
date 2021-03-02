@@ -111,7 +111,11 @@ $categorias = new CategoryController();
             );
 
             // 1 => INSERT
-            $categorias->manageFrames($data, 1);
+            if ($categorias->manageFrames($data, 1)) {
+                header('Location: ?listarArmazones');
+            } else {
+                CategoryController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos, intenta <a href="?crearArmazon">Recargar la página</a>, si el problema persiste escribe a <a href="mailto:contacto@arpan.com.mx">contacto@arpan.com.mx</a>');
+            }
         }
         ?>
     </div>

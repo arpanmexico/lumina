@@ -150,22 +150,19 @@ class CategoryController
 
   public function manageFrames($data, $action)
   {
-    if (move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto'])) {
-      $database = CategoryController::getDatabaseConnection();
-      $database = CategoryController::getDatabaseConnection();
-      $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', $action)";
+    $database = CategoryController::getDatabaseConnection();
+    $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', $action)";
 
-      $runQuery = $database->query($query);
-      if ($runQuery) {
-        header('Location: ?listarArmazones');
-      } else {
-        CategoryController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos, intenta <a href="?crearArmazon">Recargar la página</a>, si el problema persiste escribe a <a href="mailto:contacto@arpan.com.mx">contacto@arpan.com.mx</a>');
-      }
+    move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto']);
 
-      $database->close();
+    $runQuery = $database->query($query);
+    if ($runQuery) {
+      return true;
     } else {
-      echo "Ocurrió un error";
+      return false;
     }
+
+    $database->close();
   }
 
   public function getAllFramesInformacion()
@@ -206,7 +203,6 @@ class CategoryController
 
         $serialized_array = serialize($array);
         $url = urlencode($serialized_array);
-        
 
         echo "
             <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
