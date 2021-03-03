@@ -39,6 +39,21 @@ if (isset($_GET['categoryID']) && isset($_GET['categoryType'])) {
         header('Location: ../view/dashboard.php?listarArmazones');
 
     echo $database->error;
+} else if (isset($_GET['idDoctor']) && isset($_GET['accionDoctor'])) {
+
+    switch ($_GET['accionDoctor']) {
+        case 'suspend':
+            $doctorQuery = "CALL doctorsManager(" . $_GET['idDoctor'] . ", null, null, null, null, null, 3)";
+            break;
+        case 'restore':
+            $doctorQuery = "CALL doctorsManager(" . $_GET['idDoctor'] . ", null, null, null, null, null, 4)";
+            break;
+    }
+    $doctorResult = $database->query($doctorQuery);
+
+    if($doctorResult){
+        header('Location: ../view/dashboard.php?listarDoctores');
+    }
 }
 
 $database->close();

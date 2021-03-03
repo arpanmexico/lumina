@@ -64,3 +64,15 @@ CREATE TABLE armazones(
 );
 
 DROP TABLE IF EXISTS doctores;
+CREATE TABLE doctores(
+    id_doctor bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
+    nombre char(200) NOT NULL,
+    apellido char(200) NOT NULL,
+    telefono bigint(15) NOT NULL,
+    especialidad text NOT NULL,
+    estado enum('Activo', 'Inactivo') NOT NULL,
+    suspendido bool NOT NULL,
+
+    ingresado timestamp NOT NULL,
+    actualizado timestamp NOT NULL
+);

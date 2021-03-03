@@ -27,7 +27,7 @@ if (!isset($_SESSION['userID'])) {
       <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#!">
           <div class="sidebar-brand-icon">
             <i class="fas fa-glasses"></i>
           </div>
@@ -310,6 +310,10 @@ if (!isset($_SESSION['userID'])) {
               include('armazones/detalles_armazon.php');
             } else if (isset($_GET['armazonesSuspendidos'])) {
               include('armazones/armazones_suspendidos.php');
+            } else if (isset($_GET['detallesDoctor'])) {
+              include('doctores/detalles_doctor.php');
+            } else if (isset($_GET['doctoresSuspendidos'])) {
+              include('doctores/doctores_suspendidos.php');
             } else {
               include('analisis.php');
             }

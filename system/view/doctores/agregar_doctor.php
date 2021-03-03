@@ -1,5 +1,10 @@
+<?php
+include('../controller/DoctorController.php');
+$doctores = new DoctorController();
+?>
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Doctores</h1>
+  <h1 class="h3 mb-0 text-gray-800">Doctores - Agregar Información</h1>
 </div>
 <p class="text-muted">Bienvenido al módulo de doctores acá puedes realizar operaciones como agregar nuevos doctores, <br> ver el listado de doctores, actualizar datos de doctores y eliminar un doctor del sistema.</p>
 
@@ -52,8 +57,23 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-info btn-block mt-3">Guardar doctor</button>
+        <button type="submit" name="guardarDoctor" class="btn btn-info btn-block mt-3">Guardar doctor</button>
       </section>
     </form>
+    <?php
+    if (isset($_POST['guardarDoctor'])) {
+      $data = array(
+        'codigo' => $_POST['codigoDoctor'],
+        'estado' => $_POST['estadoDoctor'],
+        'nombre' => ucwords(strtolower($_POST['nombreDoctor'])),
+        'apellido' => ucwords(strtolower($_POST['apellidoDoctor'])),
+        'telefono' => $_POST['telefonoDoctor'],
+        'especialidad' => ucwords(strtolower($_POST['especialidadDoctor']))
+      );
+
+      // 1 => Insertar
+      $doctores->doctorsManager($data, 1);
+    }
+    ?>
   </div>
 </div>

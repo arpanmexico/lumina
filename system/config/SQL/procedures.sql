@@ -96,3 +96,28 @@ DELIMITER ;
         END IF;
     END;
 DELIMITER ;
+
+/*  -----   PROCEDIMIENTO PARA ADMINISTRAR DOCTORES -----   */
+DROP PROCEDURE IF EXISTS doctorsManager;
+DELIMITER ;
+    CREATE PROCEDURE doctorsManager(IN _id_doctor bigint(20), IN _nombre char(200), IN _apellido char(200), IN _telefono bigint(15), IN _especialidad text, IN _estado enum('Activo', 'Inactivo'), IN _accion int(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _accion = 1 THEN # INSERT DATA
+            INSERT INTO doctores(id_doctor, nombre, apellido, telefono, especialidad, estado, suspendido, ingresado, actualizado) VALUES (_id_doctor, _nombre, _apellido, _telefono, _especialidad, _estado, 0, @current_time_mx, @current_time_mx);
+
+        ELSEIF _accion = 2 THEN # UPDATE DATA
+            UPDATE doctores SET nombre = _nombre, apellido = _apellido, telefono = _telefono, especialidad = _especialidad, estado = _estado, actualizado = @current_time_mx WHERE id_doctor = _id_doctor;
+
+        ELSEIF _accion = 3 THEN # SUSPEND DATA
+            UPDATE doctores SET suspendido = 1 WHERE id_doctor = _id_doctor;
+
+        ELSEIF _accion = 4 THEN # RESTORE DATA
+            UPDATE doctores SET suspendido = 0 WHERE id_doctor = _id_doctor;
+
+        ELSE
+            SELECT 'No seleccionaste una accion' AS message;
+        END IF;
+    END ;
+DELIMITER ;
