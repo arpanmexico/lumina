@@ -2,7 +2,11 @@
 include('../config/database.php');
 $database = new Database();
 
-if (isset($_GET['categoryID']) && isset($_GET['categoryType'])) {
+if (isset($_GET['cerrarSesion'])) {
+    session_start();
+    session_destroy();
+    header('Location: ../index.php');
+} else if (isset($_GET['categoryID']) && isset($_GET['categoryType'])) {
     $queryCategoryID = "CALL categoriesManager('" . $_GET['categoryID'] . "', null, null, 3)";
     $deleteCategory = $database->query($queryCategoryID);
 
@@ -51,7 +55,7 @@ if (isset($_GET['categoryID']) && isset($_GET['categoryType'])) {
     }
     $doctorResult = $database->query($doctorQuery);
 
-    if($doctorResult){
+    if ($doctorResult) {
         header('Location: ../view/dashboard.php?listarDoctores');
     }
 }

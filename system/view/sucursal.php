@@ -1,7 +1,6 @@
 <?php
 include('../controller/BranchController.php');
 $sucursal = new BranchController();
-
 ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
