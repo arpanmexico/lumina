@@ -58,14 +58,7 @@ $pacientes = new PatientController();
                 <select class="form-control" id="mesNacimientoPaciente" name="mesNacimientoPaciente">
                   <option disabled selected>Selecciona el día</option>
                   <?php
-                  $months = array(
-                    '1' => 'Enero', '2' => 'Febrero', '3' => 'Marzo',
-                    '4' => 'Abril', '5' => 'Mayo', '6' => 'Junio',
-                    '7' => 'Julio', '8' => 'Agosto', '9' => 'Septiembre',
-                    '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
-                  );
-
-                  foreach ($months as $key => $value) {
+                  foreach ($pacientes->getGlobalController()->getMonths() as $key => $value) {
                     echo "<option value='" . $key . "'>" . $value . "</option>";
                   }
                   ?>

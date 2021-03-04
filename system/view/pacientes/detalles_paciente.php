@@ -26,10 +26,10 @@ $nacimiento = explode("-", $array['nacimiento']);
             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                 <img src="../../src/img/heart.png" class="img-fluid">
                 <p class="font-weight-bolder">
-                    Última Fecha de Actualización:
+                    Última Fecha de Actualización del Paciente:
                 </p>
-                <?php 
-                    echo $array['actualizado'];
+                <?php
+                echo $pacientes->getGlobalController()->getFormattedDate($array['actualizado']);
                 ?>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-12 align-self-center">
@@ -82,19 +82,15 @@ $nacimiento = explode("-", $array['nacimiento']);
                                         <select class="form-control" id="mesNacimientoPaciente" name="mesNacimientoPaciente">
                                             <option disabled selected>Selecciona el día</option>
                                             <?php
-                                            $months = array(
-                                                '1' => 'Enero', '2' => 'Febrero', '3' => 'Marzo',
-                                                '4' => 'Abril', '5' => 'Mayo', '6' => 'Junio',
-                                                '7' => 'Julio', '8' => 'Agosto', '9' => 'Septiembre',
-                                                '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
-                                            );
 
-                                            foreach ($months as $key => $value) {
+                                            foreach ($pacientes->getGlobalController()->getMonths() as $key => $value) {
                                                 if ($nacimiento[1] == $key)
                                                     echo "<option value='" . $key . "' selected>" . $value . "</option>";
                                                 else
                                                     echo "<option value='" . $key . "'>" . $value . "</option>";
                                             }
+
+
                                             ?>
                                         </select>
                                     </div>
