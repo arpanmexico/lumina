@@ -39,4 +39,6 @@ class GlobalController
 
         file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
     }
+
+    
 }

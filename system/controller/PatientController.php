@@ -41,7 +41,7 @@ class PatientController
     public function getAllPatientsInformation()
     {
         $database = PatientController::getDatabaseConnection();
-        $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes";
+        $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0";
 
         $runQuery = $database->query($query);
 
@@ -102,7 +102,7 @@ class PatientController
                                 <div class='col-md-2'></div>
                             </div>
                             <hr>
-                            <a type='button' href='../controller/DeleteData.php?idPaciente=" . $row['id_paciente'] . "&accionDoctor=suspend' class='text-danger'>Borrar Paciente</a>
+                            <a type='button' href='../controller/DeleteData.php?idPaciente=" . $row['id_paciente'] . "&accionPaciente=suspend' class='text-danger'>Borrar Paciente</a>
                         </div>
                     </div>
                 </div>
@@ -113,5 +113,59 @@ class PatientController
             PatientController::getGlobalController()->getAlerts('warning', 'Oops! Parece que no hay ningún paciente registrado, <br><a href="?crearPaciente">Registrar un nuevo paciente</a>');
 
         $database->close();
+    }
+
+    public function getSuspendedPatientsInformacion()
+    {
+        $database = PatientController::getDatabaseConnection();
+        $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 1";
+
+        $runQuery = $database->query($query);
+
+        if ($runQuery->num_rows > 0) {
+            while ($row = $runQuery->fetch_array()) {
+                echo "
+                <div class='col-lg-3 col-md-3 col-sm-12'>
+                <div class='card shadow-sm'>
+                    <div class='card-body'>
+                        <div class='row mb-2'>
+                            <div class='col-7'>
+                                <small><i class='far fa-clock'></i> " . $row['ingresado'] . "</small>
+                            </div>
+                            <div class='col-5 text-right'>
+                                ...
+                            </div>
+                        </div>
+                        <div class='text-center'>
+                            <div class='row'>
+                                <div class='col-6 mx-auto'>
+                                    <img src='../../src/img/heart.png' width='130' class='img-fluid'>
+                                </div>
+                                <div class='col-12'>
+                                    <h5>" . $row['nombre'] . " " . $row['apellido_paterno'] . " " . $row['apellido_materno'] . "</h5>
+                                </div>
+                            </div>
+                            <p class='text-muted'>" . $row['correo'] . "</p>
+                            <div class='row'>
+                                <div class='col-md-2'></div>
+                                <div class='col-md-4'>
+                                    <p class='text-muted'>" . $row['telefono_primario'] . "</p>
+                                </div>
+                                <div class='col-md-4'>
+                                    <p class='text-muted'>" . $row['telefono_secundario'] . "</p>
+                                </div>
+                                <div class='col-md-2'></div>
+                            </div>
+                            <hr>
+                            <a type='button' href='../controller/DeleteData.php?idPaciente=" . $row['id_paciente'] . "&accionPaciente=restore' class='text-warning'>Recuperar Paciente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                ";
+            }
+        } else {
+            PatientController::getGlobalController()->getAlerts('warning', 'No existe ningún paciente eliminado');
+        }
     }
 }

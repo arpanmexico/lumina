@@ -304,6 +304,8 @@ if (!isset($_SESSION['userID'])) {
               include('pacientes/listar_pacientes.php');
             } else if (isset($_GET['detallesPaciente'])) {
               include('pacientes/detalles_paciente.php');
+            } else if (isset($_GET['pacientesSuspendidos'])) {
+              include('pacientes/pacientes_suspendidos.php');
             } else if (isset($_GET['crearVentas'])) {
               include('ventas/crear_venta.php');
             } else if (isset($_GET['listarVentas'])) {

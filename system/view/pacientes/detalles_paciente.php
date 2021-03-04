@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 include('../controller/PatientController.php');
 $pacientes = new PatientController();
@@ -26,12 +23,18 @@ $nacimiento = explode("-", $array['nacimiento']);
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                 <img src="../../src/img/heart.png" class="img-fluid">
+                <p class="font-weight-bolder">
+                    Última Fecha de Actualización:
+                </p>
+                <?php 
+                    echo $array['actualizado'];
+                ?>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-12 align-self-center">
                 <form action="" method="post">
-                    
+
                     <section class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12 mt-3">
                             <div class="form-group">
