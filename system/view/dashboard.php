@@ -300,8 +300,10 @@ if (!isset($_SESSION['userID'])) {
               include('doctores/agregar_doctor.php');
             } else if (isset($_GET['crearPaciente'])) {
               include('pacientes/agregar_pacientes.php');
-            } else if (isset($_GET['crearPaciente'])) {
+            } else if (isset($_GET['listarPacientes'])) {
               include('pacientes/listar_pacientes.php');
+            } else if (isset($_GET['detallesPaciente'])) {
+              include('pacientes/detalles_paciente.php');
             } else if (isset($_GET['crearVentas'])) {
               include('ventas/crear_venta.php');
             } else if (isset($_GET['listarVentas'])) {

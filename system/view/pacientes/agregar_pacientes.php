@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include('../controller/PatientController.php');
 $pacientes = new PatientController();
 ?>
@@ -161,7 +157,8 @@ $pacientes = new PatientController();
         'telefono_movil' => $_POST['telefonoMovilPaciente']
       );
 
-      $pacientes->patientsManager($data);
+      // 1 => INSERT
+      $pacientes->patientsManager($data, 1);
     }
     ?>
   </div>

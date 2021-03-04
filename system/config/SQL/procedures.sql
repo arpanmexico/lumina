@@ -135,7 +135,7 @@ DELIMITER ;
             INSERT INTO pacientes(id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, suspendido, ingresado, actualizado) VALUES (@patient_key, _nombre, _apellido_paterno, _apellido_materno, _nacimiento, _correo, _ocupacion, _direccion, _genero, _telefono_primario, _telefono_secundario, 0, @current_time_mx, @current_time_mx);
 
         ELSEIF _accion = 2 THEN # UPDATE DATA
-            UPDATE pacientes SET nombre = _nombre, apellido_paterno = _apellido_paterno, apellido_materno = _apellido_materno, correo = _correo,  direccion = _direccion, telefono_primario = _telefono_primario, telefono_secundario = _telefono_secundario, actualizado = @current_time_mx WHERe id_paciente = _id_paciente;
+            UPDATE pacientes SET nombre = _nombre, apellido_paterno = _apellido_paterno, apellido_materno = _apellido_materno, nacimiento = _nacimiento, ocupacion = _ocupacion, correo = _correo, direccion = _direccion, genero = _genero, telefono_primario = _telefono_primario, telefono_secundario = _telefono_secundario, actualizado = @current_time_mx WHERe id_paciente = _id_paciente;
 
         ELSEIF _accion = 3 THEN # SUSPEND DATA
             UPDATE pacientes SET suspendido = 1 WHERE id_paciente = _id_paciente;
