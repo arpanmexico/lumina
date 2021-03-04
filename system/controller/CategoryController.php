@@ -173,7 +173,7 @@ class CategoryController
     (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
     modelo, color, descripcion, precio, existencias,
     (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
-    proveedor, foto FROM categorias, armazones WHERE suspendido = 0 ORDER BY marca";
+    proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 ORDER BY marca";
 
     $runQuery = $database->query($query);
 
@@ -197,6 +197,8 @@ class CategoryController
           'precio' => $row['precio'],
           'existencias' => $row['existencias'],
           'proveedor' => $row['proveedor'],
+          'ingresado' => $row['ingresado'],
+          'actualizado' => $row['actualizado'],
           'foto' => $row['foto']
         );
 
@@ -213,7 +215,8 @@ class CategoryController
                         <h5 class='card-title'>ID: " . $row['id_armazon'] . "</h5>
                         <h5 class='font-weight-bolder'>$" . $row['precio'] . " - " . $stockMsg . "</span></h5>
 
-                        <small>" . $row['marca'] . "</small>
+                        <p>" . $row['marca'] . "</p>
+                        
                     </div>
                     <div class='card-footer'>
                       <a href='?detallesArmazon=" . $url . "' class='card-link text-info'>Ver más información</a>
@@ -261,7 +264,7 @@ class CategoryController
                         <small>" . $row['marca'] . "</small>
                     </div>
                     <div class='card-footer'>
-                      <a href='../controller/DeleteData.php?idArmazon=".$row['id_armazon']."&accionArmazon=restore' class='card-link text-warning'>Recuperar producto</a>
+                      <a href='../controller/DeleteData.php?idArmazon=" . $row['id_armazon'] . "&accionArmazon=restore' class='card-link text-warning'>Recuperar producto</a>
                     </div>
                 </div>
             </div>

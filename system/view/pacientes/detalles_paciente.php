@@ -25,6 +25,7 @@ $nacimiento = explode("-", $array['nacimiento']);
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                 <img src="../../src/img/heart.png" class="img-fluid">
+                
                 <p class="font-weight-bolder">
                     Última Fecha de Actualización del Paciente:
                 </p>

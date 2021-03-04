@@ -21,8 +21,21 @@ $categorias = new CategoryController();
 
         <form action="" method="post" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-lg-5 col-sm-6 col-sm-12 align-self-center">
+                <div class="col-lg-5 col-sm-6 col-sm-12 align-self-center text-center">
                     <img src='../../src/catalog/<?php echo $array['foto']; ?>' class="img-fluid">
+                    <p class="font-weight-bolder">
+                        Fecha de Creación del Armazón:
+                    </p>
+                    <?php
+                    echo $categorias->getGlobalController()->getFormattedDate($array['ingresado']);
+                    ?>
+                    <hr>
+                    <p class="font-weight-bolder">
+                        Última Fecha de Actualización del Armazón:
+                    </p>
+                    <?php
+                    echo $categorias->getGlobalController()->getFormattedDate($array['actualizado']);
+                    ?>
                 </div>
                 <div class=" col-lg-7 col-sm-6 col-sm-12">
                     <div class="row">
