@@ -63,6 +63,7 @@ CREATE TABLE armazones(
     FOREIGN KEY (id_proveedor) REFERENCES categorias(id_categoria) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+/*   -----  TABLA PARA ADMINISTRAR LOS DOCTORES   -----   */
 DROP TABLE IF EXISTS doctores;
 CREATE TABLE doctores(
     id_doctor bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
@@ -71,6 +72,26 @@ CREATE TABLE doctores(
     telefono bigint(15) NOT NULL,
     especialidad text NOT NULL,
     estado enum('Activo', 'Inactivo') NOT NULL,
+    suspendido bool NOT NULL,
+
+    ingresado timestamp NOT NULL,
+    actualizado timestamp NOT NULL
+);
+
+/*   -----  TABLA PARA ADMINISTRAR LOS PACIENTES   -----   */
+DROP TABLE IF EXISTS pacientes;
+CREATE TABLE pacientes(
+    id_paciente varchar(20) PRIMARY KEY NOT NULL, # Codigo Autogenerado
+    nombre char(200) NOT NULL,
+    apellido_paterno char(200) NOT NULL,
+    apellido_materno char(200) NOT NULL,
+    nacimiento varchar(12) NOT NULL,
+    correo varchar(255) NOT NULL,
+    ocupacion char(200) NOT NULL,
+    direccion varchar(255) NOT NULL,
+    genero enum('M','F') NOT NULL,
+    telefono_primario bigint(10) UNIQUE NOT NULL,
+    telefono_secundario bigint(10) UNIQUE NOT NULL,
     suspendido bool NOT NULL,
 
     ingresado timestamp NOT NULL,

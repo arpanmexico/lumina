@@ -121,3 +121,27 @@ DELIMITER ;
         END IF;
     END ;
 DELIMITER ;
+
+/*  -----   PROCEDIMIENTO PARA ADMINISTRAR PACIENTES -----   */
+DROP PROCEDURE IF EXISTS patientsManager;
+DELIMITER ;
+    CREATE PROCEDURE patientsManager(IN _id_paciente varchar(20), IN _nombre char(200), IN _apellido_paterno char(200), IN _apellido_materno char(200), IN _nacimiento varchar(12), IN _correo varchar(255), IN _ocupacion char(200), IN _direccion varchar(255), IN _genero enum('M','F'), IN _telefono_primario bigint(10), IN _telefono_secundario bigint(10), IN _accion int(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        SET @patient_key = CONCAT(UPPER(SUBSTR(_nombre, 1, 2)), UPPER(SUBSTR(_apellido_paterno, 1, 2)), UPPER(SUBSTR(_apellido_materno, 1, 2)), FLOOR(RAND() * (100 - 5 + 1) + 5), SECOND(CURRENT_TIME));
+
+        IF _accion = 1 THEN # INSERT DATA
+            INSERT INTO pacientes(id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, suspendido, ingresado, actualizado) VALUES (@patient_key, _nombre, _apellido_paterno, _apellido_materno, _nacimiento, _correo, _ocupacion, _direccion, _genero, _telefono_primario, _telefono_secundario, 0, @current_time_mx, @current_time_mx);
+
+        ELSEIF _accion = 2 THEN # UPDATE DATA
+            UPDATE pacientes SET nombre = _nombre, apellido_paterno = _apellido_paterno, apellido_materno = _apellido_materno, correo = _correo,  direccion = _direccion, telefono_primario = _telefono_primario, telefono_secundario = _telefono_secundario, actualizado = @current_time_mx WHERe id_paciente = _id_paciente;
+
+        ELSEIF _accion = 3 THEN # SUSPEND DATA
+            UPDATE pacientes SET suspendido = 1 WHERE id_paciente = _id_paciente;
+
+        ELSEIF _accion = 4 THEN # RESTORE DATA
+            UPDATE pacientes SET suspendido = 0 WHERE id_paciente = _id_paciente;
+        END IF;
+    END ;
+DELIMITER ;
