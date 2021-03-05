@@ -57,7 +57,7 @@ $categorias = new CategoryController();
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="descripcionArmazon">Descripción del Armazon</label>
-                        <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon" rows="3" placeholder="Escribe en esra zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."></textarea>
+                        <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon" rows="3" placeholder="Escribe en esta zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."></textarea>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
