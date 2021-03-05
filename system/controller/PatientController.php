@@ -68,15 +68,12 @@ class PatientController
 
 
                 echo "
-                <div class='col-lg-3 col-md-3 col-sm-12'>
+                <div class='col-lg-3 col-md-6 col-sm-12'>
                 <div class='card shadow-sm'>
                     <div class='card-body'>
                         <div class='row mb-2'>
-                            <div class='col-7'>
+                            <div class='col-12'>
                                 <small><i class='far fa-clock'></i> " . $row['ingresado'] . "</small>
-                            </div>
-                            <div class='col-5 text-right'>
-                                ...
                             </div>
                         </div>
                         <div class='text-center'>
@@ -92,14 +89,12 @@ class PatientController
                             </div>
                             <p class='text-muted'>" . $row['correo'] . "</p>
                             <div class='row'>
-                                <div class='col-md-2'></div>
-                                <div class='col-md-4'>
+                                <div class='col-md-6 text-right'>
                                     <p class='text-muted'>" . $row['telefono_primario'] . "</p>
                                 </div>
-                                <div class='col-md-4'>
+                                <div class='col-md-6 text-left'>
                                     <p class='text-muted'>" . $row['telefono_secundario'] . "</p>
                                 </div>
-                                <div class='col-md-2'></div>
                             </div>
                             <hr>
                             <a type='button' href='../controller/DeleteData.php?idPaciente=" . $row['id_paciente'] . "&accionPaciente=suspend' class='text-danger'>Borrar Paciente</a>

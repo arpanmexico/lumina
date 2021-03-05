@@ -58,15 +58,12 @@ class DoctorController
                     $estado = "<small id='businessImgText1' class='text-danger font-weight-bold'>Inactivo</small>";
 
                 echo "
-                <div class='col-lg-3 col-md-3 col-sm-12'>
-                    <div class='card shadow-sm'>
+                <div class='col-lg-3 col-md-6 col-sm-12'>
+                    <div class='card  h-100 shadow-sm'>
                         <div class='card-body'>
                             <div class='row mb-2'>
-                                <div class='col-7'>
+                                <div class='col-12'>
                                     <small><i class='far fa-clock'></i> " . $row['ingresado'] . "</small>
-                                </div>
-                                <div class='col-5 text-right'>
-                                    " . $estado . "
                                 </div>
                             </div>
                             <div class='text-center'>

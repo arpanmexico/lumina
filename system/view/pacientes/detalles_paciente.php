@@ -17,6 +17,7 @@ $nacimiento = explode("-", $array['nacimiento']);
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Pacientes - Información del paciente</h1>
 </div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <a href="?listarPacientes"><i class="fas fa-chevron-left"></i> Volver a la lista de pacientes</a>
@@ -25,7 +26,7 @@ $nacimiento = explode("-", $array['nacimiento']);
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
                 <img src="../../src/img/heart.png" class="img-fluid">
-                
+
                 <p class="font-weight-bolder">
                     Última Fecha de Actualización del Paciente:
                 </p>
@@ -195,5 +196,16 @@ $nacimiento = explode("-", $array['nacimiento']);
                 ?>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Historiales Clínicos Registrados <i class="fas fa-arrow-right ml-2 mr-2"></i>
+        <a href="?crearHistorial=<?php echo $array['id']; ?>&accionHistorial=1" class="btn btn-info"><i class="fas fa-plus-circle"></i> Crear Revisión</a>
+        </h6>
+    </div>
+    <div class="card-body">
+        Inserte aki los historiales kjhasdhkjhdk
     </div>
 </div>

@@ -18,7 +18,7 @@ $doctores = new DoctorController();
     <div class="card-body">
         <div class="row">
             <?php
-            $doctores->getAllDoctorsInformation();
+                $doctores->getAllDoctorsInformation();
             ?>
         </div>
     </div>
