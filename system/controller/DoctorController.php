@@ -141,4 +141,20 @@ class DoctorController
 
         $database->close();
     }
+
+    public function createNewHistory($data)
+    {
+        $database = DoctorController::getDatabaseConnection();
+
+        $query = "CALL clinicalHistory(null, '" . $data['id_paciente'] . "' ,'" . $data['antecedentes_pat_generales'] . "','" . $data['antecedentes_pat_oculares'] . "','" . $data['motivo_consulta'] . "','" . $data['ultimo_examen'] . "','" . $data['odAVLejosSRX'] . "','" . $data['odCVLejos'] . "','" . $data['odAVCercaSRX'] . "','" . $data['odAVLejosRX'] . "','" . $data['odAVCercaRX'] . "','" . $data['ioAVLejosSRX'] . "','" . $data['ioCVLejos'] . "','" . $data['ioAVCercaSRX'] . "','" . $data['ioAVLejosRX'] . "','" . $data['ioAVCercaRX'] . "','" . $data['rxodEsfera'] . "','" . $data['rxodCilindro'] . "','" . $data['rxodEje'] . "','" . $data['rxodAdd'] . "','" . $data['rxodDip'] . "','" . $data['rxioEsfera'] . "','" . $data['rxioCilindro'] . "','" . $data['rxioEje'] . "','" . $data['rxioAdd'] . "','" . $data['rxioDip'] . "','" . $data['observaciones'] . "','" . $data['tipo_vision'] . "','" . $data['tipo_lente'] . "', '" . $data['folio'] . "' ,'" . $data['validacion_medico'] . "','" . $data['valicacion_paciente'] . "', 1)";
+
+        $runQuery = $database->query($query);
+
+        if ($runQuery)
+            header('Location: ?listarPacientes');
+        else
+            DoctorController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos, intenta de nuevo, si el problema persiste escribe a <a href="mailto:contacto@arpan.com.mx">contacto@arpan.com.mx</a> -> ' . $database->error);
+
+        $database->close();
+    }
 }

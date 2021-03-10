@@ -97,3 +97,47 @@ CREATE TABLE pacientes(
     ingresado timestamp NOT NULL,
     actualizado timestamp NOT NULL
 );
+
+/*   -----  TABLA PARA ADMINISTRAR LOS HISTORIALES   -----   */
+DROP TABLE IF EXISTS historiales;
+CREATE TABLE historiales(
+    id_historial varchar(20) PRIMARY KEY NOT NULL, # Codigo Autogenerado
+    id_paciente varchar(20) NOT NULL,
+    antecedentes_pat_generales text,
+    antecedentes_pat_oculares text,
+    motivo_consulta text,
+    ultimo_examen text,
+    odAVLejosSRX float,
+    odCVLejos float,
+    odAVCercaSRX float,
+    odAVLejosRX float,
+    odAVCercaRX float,
+    ioAVLejosSRX float,
+    ioCVLejos float,
+    ioAVCercaSRX float,
+    ioAVLejosRX float,
+    ioAVCercaRX float,
+    rxodEsfera float,
+    rxodCilindro float,
+    rxodEje float,
+    rxodAdd float,
+    rxodDip float,
+    rxioEsfera float,
+    rxioCilindro float,
+    rxioEje float,
+    rxioAdd float,
+    rxioDip float,
+    observaciones text,
+    tipo_vision float,
+    tipo_lente float,
+    folio varchar(50) NOT NULL,
+
+    validacion_medico bool NOT NULL,
+    validacion_paciente bool NOT NULL,
+
+    ingresado timestamp NOT NULL,
+    actualizado timestamp NOT NULL,
+
+    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

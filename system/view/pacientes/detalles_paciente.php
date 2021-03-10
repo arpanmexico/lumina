@@ -200,12 +200,16 @@ $nacimiento = explode("-", $array['nacimiento']);
 </div>
 
 <div class="card shadow mb-4">
-<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Historiales Clínicos Registrados <i class="fas fa-arrow-right ml-2 mr-2"></i>
-        <a href="?crearHistorial=<?php echo $array['id']; ?>&accionHistorial=1" class="btn btn-info"><i class="fas fa-plus-circle"></i> Crear Revisión</a>
+            <a href="?crearHistorial=<?php echo $array['id']; ?>&accionHistorial=1" class="btn btn-info"><i class="fas fa-plus-circle"></i> Crear Revisión</a>
         </h6>
     </div>
     <div class="card-body">
-        Inserte aki los historiales kjhasdhkjhdk
+        <div class="row">
+            <?php
+                $pacientes->getAllHistoriesByIdentifier($array['id']);
+            ?>
+        </div>
     </div>
 </div>
