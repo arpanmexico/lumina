@@ -5,11 +5,13 @@ USE lumina;
 /*   -----   TABLA PARA COMENTARIOS DE LA PÁGINA PRINCIPAL   -----   */
 DROP TABLE IF EXISTS comentarios;
 CREATE TABLE comentarios(
-    id_commentario int(5) PRIMARY KEY AUTO_INCREMENT,
+    id_comentario int(5) PRIMARY KEY AUTO_INCREMENT,
     nombre char(255) NOT NULL,
     correo varchar(255) NOT NULL,
     asunto char(200) NOT NULL,
-    mensaje text NOT NULL
+    mensaje text NOT NULL,
+    ingresado timestamp NOT NULL,
+    respondido timestamp NOT NULL
 );
 
 /*   -----  TABLA PARA ALMACENAR ADMINISTRADORES   -----   */
@@ -140,4 +142,6 @@ CREATE TABLE historiales(
 
     FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
 

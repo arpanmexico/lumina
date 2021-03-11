@@ -2,6 +2,7 @@ $('#errorMessage').hide();
 $('#successMessage').hide();
 $('#contactErrorMessage').hide();
 $('#contactSuccessMessage').hide();
+$('#contactInfoMessage').hide();
 
 $(document).ready(function () {
     initScrollAnimations();
@@ -72,8 +73,13 @@ function saveComment(data) {
         method: 'POST',
         url: 'system/controller/SaveNewComment.php',
         data: { data: data },
+        beforeSend: function(){
+            $('#contactInfoMessage').show();
+        },
         success: function (response) {
+            console.log(response);
             var jsonObject = JSON.parse(response);
+            $('#contactInfoMessage').hide();
             $('#contactSuccessMessage').show();
             $('#contactSuccessMessage').html(jsonObject.response.body);
         },

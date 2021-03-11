@@ -332,6 +332,11 @@ $sucursal = new BranchController();
                   comentario</button>
               </div>
             </div>
+            <!-- Info Message -->
+            <div id="contactInfoMessage" class="alert alert-info mt-3" role="alert">
+              Estamos enviando tus datos, por favor espera...
+            </div>
+
             <!-- Error message -->
             <div id="contactErrorMessage" class="alert alert-danger mt-3" role="alert">
               <!--  ...  -->

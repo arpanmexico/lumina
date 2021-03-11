@@ -4,9 +4,10 @@ if (isset($_POST['data'])) {
 
     $database = new Database();
 
-    $query = "CALL saveLandingComments('" . ucwords($_POST['data']['user_name']) . "',
+    $query = "CALL saveLandingComments(null, '" . ucwords($_POST['data']['user_name']) . "',
     '" . $_POST['data']['user_email'] . "','" . ucfirst($_POST['data']['subject']) . "',
-    '" . ucfirst($_POST['data']['message']) . "')";
+    '" . ucfirst($_POST['data']['message']) . "', 1)";
+
     $runQuery = $database->query($query);
 
     if ($runQuery)

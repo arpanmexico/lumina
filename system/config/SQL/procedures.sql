@@ -13,10 +13,15 @@ DELIMITER $$
 /*   -----   PROCEDIMIENTO PARA GUARDAR COMENTARIOS DEL LANDING PAGE   -----   */
 DROP PROCEDURE IF EXISTS saveLandingComments;
 DELIMITER $$
-    CREATE PROCEDURE saveLandingComments(IN _user_name char(255), IN _user_email varchar(255),
-        IN _subject char(200), IN _message text)
+    CREATE PROCEDURE saveLandingComments(IN _id_comentario int(5), IN _user_name char(255), IN _user_email varchar(255), IN _subject char(200), IN _message text, IN _action int)
     BEGIN
-        INSERT INTO comentarios(nombre, correo, asunto, mensaje) VALUES (_user_name, _user_email, _subject, _message);
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _action = 1 THEN # INSERT DATA
+            INSERT INTO comentarios(nombre, correo, asunto, mensaje, ingresado, respondido) VALUES (_user_name, _user_email, _subject, _message, @current_time_mx, @current_time_mx);
+        ELSEIF _action = 2 THEN # UPDATE DATA
+            UPDATE comentarios SET respondido = @current_time_mx WHERE id_comentario = _id_comentario;
+        END IF;
     END ;
 DELIMITER $$
 
