@@ -23,3 +23,11 @@ Contraseña => Lumina0102.
 4. Cada que un usuario haga algo en la plataforma deberá guardarse un registro en una tabla estadísiticas, esta tendrá accion, timestamp, sección.  
   
 5. En el panel principal agregar un análisis de estas estadísticas.  
+
+## Imagenes de Referencia Ventas y consultas  
+  
+Diagrama de Ventana de Ventas
+![alt text](src/img/VentaPresupuesto.png)  
+  
+Fotografía de referencia al diagrama  
+![alt text](src/img/Software.png)
