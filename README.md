@@ -30,4 +30,4 @@ Diagrama de Ventana de Ventas
 ![alt text](src/img/VentaPresupuesto.png)  
   
 Fotografía de referencia al diagrama  
-![alt text](src/img/Software.png)
+![alt text](src/img/Software.jpg)
