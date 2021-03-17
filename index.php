@@ -41,6 +41,9 @@ $sucursal = new BranchController();
             <a class="nav-link title mr-3" href="#!">Tienda en línea</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link title mr-3" href="#booking">Agenda tu cita</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link title" href="#contact">Contáctanos</a>
           </li>
         </ul>
@@ -234,6 +237,17 @@ $sucursal = new BranchController();
       </div>
     </div>
     <a href="#!" class="mt-5 btn btn-lg btn-primary btn-block light-color-bg">Visita nuestra tienda en línea</a>
+  </section>
+
+  <section class="container mb-5">
+    <h1 class="title text-center" id="contact">Agenda tu cita</h1>
+    <p class="quote">
+      Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur
+      velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis
+      commodi quidem hic quas
+    </p>
+
+    <!-- Insertar aquí el calendario para visualizar fechas/horas reservadas y disponibles -->
   </section>
 
   <section class="container mb-5">
