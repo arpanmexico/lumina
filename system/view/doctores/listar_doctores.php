@@ -16,10 +16,9 @@ $doctores = new DoctorController();
     </div>
 
     <div class="card-body">
+        <h6 id="search-title" class="text-muted"></h6>
+        <section id="search" class="mb-5"></section>
         <div id="data" class="">
-            <?php
-                //$doctores->getAllDoctorsInformation();
-            ?>
         </div>
     </div>
 </div>

@@ -166,9 +166,15 @@ if (!isset($_SESSION['userID'])) {
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
               <i class="fa fa-bars"></i>
             </button>
-
+            <div class="input-group my-auto col-lg-4" id="search-content">
+              <input class="form-control py-2 border-right-0 border" type="search" id="search-input">
+              <span class="input-group-append">
+                  <label for="search-input" class="input-group-text text-info bg-transparent"><i class="fa fa-search"></i></label>
+              </span>
+            </div>
+            <h6 id="search-msg" class="text-success small my-auto font-weight-bold">Presiona ENTER para realizar la busqueda.</h6>
             <ul class="navbar-nav ml-auto">
-
+            
               <!-- ALERTS -->
               <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -331,7 +337,7 @@ if (!isset($_SESSION['userID'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="../../src/js/sb-admin-2.js"></script>
     <script src="../../src/js/admin.js"></script>
-    <script src="../../src/js/pagination.js"></script>
+    <script src="../../src/js/utilities.js"></script>
   </body>
 
   </html>

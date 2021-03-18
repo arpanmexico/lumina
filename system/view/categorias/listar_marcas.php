@@ -39,10 +39,9 @@ $categorias = new CategoryController();
     </div>
 
     <div class="card-body">
+        <h6 id="search-title" class="text-muted"></h6>
+        <section id="search" class="mb-5"></section>
         <section id="data" class="">
-            <?php
-            //$categorias->getAllCategoryInformation(2);
-            ?>
         </section>
     </div>
 </div>

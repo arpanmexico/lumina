@@ -54,7 +54,7 @@ if(isset($_POST['type'])){
             $query2 = "SELECT count(id_paciente) FROM pacientes WHERE suspendido = 0";
             pagination($query, $query2, $database, $page, $items, 'pac'); 
             break;           
-        default: // Learner
+        default: 
             
             break;    
     }
@@ -117,6 +117,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                     );
                     
                     echo docCard($data);
+                    break;
                 case 'pac':
                     $data = array(
                         'id' => $row['id_paciente'],
@@ -135,6 +136,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                     );
                     
                     echo patientCard($data);
+                    break;
                 default:
                     break;    
             }
@@ -158,7 +160,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                         <li class="page-item';
                             echo $page <= 1?' disabled':'';
                             echo'">
-                            <a class="page-link num-page mx-1 rounded-circle bg-light text-white font-weight-bold" href="#" tabindex="-1"'; 
+                            <a class="page-link num-page mx-1 rounded-circle bg-light text-white font-weight-bold" href="#!" tabindex="-1"'; 
                             if ( $page > 1 ) {
                                 echo 'onClick="linkClick('.$back.');"';
                             }  echo' ><i class="text-primary fas fa-arrow-left">
@@ -172,7 +174,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                                     echo 'active';
                                 }
                                 echo'">
-                                        <a class="page-link num-page" onClick="linkClick(1);" href="#">1</a>
+                                        <a class="page-link num-page" onClick="linkClick(1);" href="#!">1</a>
                                 </li><li class="page-item"><h4 class="mt-3"><i class="fas fa-ellipsis-h"></i></h4></li>';
                                 
                             }
@@ -185,7 +187,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                                 echo 'active';
                             }
                             echo'">
-                                    <a class="page-link num-page" onClick="linkClick('.$num.');" href="#">'.$num.'</a>
+                                    <a class="page-link num-page" onClick="linkClick('.$num.');" href="#!">'.$num.'</a>
                         </li>
                                 ';
 
@@ -198,7 +200,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                                     echo 'active';
                                 }
                                 echo'">
-                                        <a class="page-link num-page" onClick="linkClick('.$num_pages.');" href="#">'.$num_pages.'</a>
+                                        <a class="page-link num-page" onClick="linkClick('.$num_pages.');" href="#!">'.$num_pages.'</a>
                             </li>';
                             }
 
@@ -208,7 +210,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                             echo'">
                                 <a class="page-link mx-1 num-page bg-light rounded-circle text-white font-weight-bold"'; if ( $page >= 1 ) {
                                     echo 'onClick="linkClick('.$next.');"';
-                                }  echo'href="#"><i class="text-primary fas fa-arrow-right">
+                                }  echo'href="#!"><i class="text-primary fas fa-arrow-right">
                                 
                                 </i></a>
                         </li>

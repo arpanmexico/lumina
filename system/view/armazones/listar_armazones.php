@@ -15,11 +15,10 @@ $categorias = new CategoryController();
         </h6>
     </div>
     <div class="card-body">
-        <div id="data" class="">
-            <?php
-                //$categorias->getAllFramesInformacion();
-            ?>
-        </div>
+    <h6 id="search-title" class="text-muted"></h6>
+    <section id="search" class="mb-5"></section>
+    <div id="data" class="">
+    </div>
     </div>
 </div>
  
