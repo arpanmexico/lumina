@@ -16,9 +16,9 @@ $pacientes = new PatientController();
     </div>
 
     <div class="card-body">
-        <div class="row">
+        <div id="data" class="">
             <?php
-                $pacientes->getAllPatientsInformation();    
+                //$pacientes->getAllPatientsInformation();    
             ?>
         </div>
     </div>

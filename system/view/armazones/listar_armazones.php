@@ -15,9 +15,9 @@ $categorias = new CategoryController();
         </h6>
     </div>
     <div class="card-body">
-        <div class="row">
+        <div id="data" class="">
             <?php
-                $categorias->getAllFramesInformacion();
+                //$categorias->getAllFramesInformacion();
             ?>
         </div>
     </div>

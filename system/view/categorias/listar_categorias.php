@@ -39,9 +39,9 @@ $categorias = new CategoryController();
   </div>
 
   <div class="card-body">
-    <section class="row">
+    <section id="data" class="">
       <?php
-        $categorias->getAllCategoryInformation(1);
+        //$categorias->getAllCategoryInformation(1);
       ?>
     </section>
   </div>
