@@ -143,5 +143,16 @@ CREATE TABLE historiales(
     FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+/*   -----   TABLA PARA ADMINITRAR LA AGENDA DE CITAS   -----   */
+DROP TABLE IF EXISTS citas;
+CREATE TABLE citas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL, 
+    apellidos VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    fecha DATETIME NOT NULL,  
+    color VARCHAR(15) DEFAULT '#673AB7' 
+);
+
 
 

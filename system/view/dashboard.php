@@ -18,6 +18,9 @@ if (!isset($_SESSION['userID'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link href="../../src/css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="../../src/css/admin.css">
+    <link rel="stylesheet" href="../../src/libs/fullcalendar/lib/main.min.css">
+    <link rel="stylesheet" href="../../src/libs/clockpicker/src/clockpicker.css">
+    
     <title>Panel de Control - Lumina</title>
   </head>
 
@@ -138,16 +141,10 @@ if (!isset($_SESSION['userID'])) {
         <hr class="sidebar-divider">
         <!-- Agenda de citas -->
         <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+          <a class="nav-link" href="dashboard.php?calendario">
             <i class="fas fa-calendar-alt"></i>
             <span>Agenda de citas</span>
           </a>
-          <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="dashboard.php?crearFechas">Agregar fechas</a>
-              <a class="collapse-item" href="dashboard.php?verCitas">Ver citas próximas</a>
-            </div>
-          </div>
         </li>
 
 
@@ -308,6 +305,8 @@ if (!isset($_SESSION['userID'])) {
               include('doctores/detalles_doctor.php');
             } else if (isset($_GET['doctoresSuspendidos'])) {
               include('doctores/doctores_suspendidos.php');
+            } else if (isset($_GET['calendario'])) {
+              include('citas/calendario.php');
             } else {
               include('analisis.php');
             }
@@ -338,6 +337,11 @@ if (!isset($_SESSION['userID'])) {
     <script src="../../src/js/sb-admin-2.js"></script>
     <script src="../../src/js/admin.js"></script>
     <script src="../../src/js/utilities.js"></script>
+    <script src="../../src/libs/fullcalendar/lib/main.js"></script>
+    <script src="../../src/libs/fullcalendar/lib/locales-all.min.js"></script>
+    <script src="../../src/libs/clockpicker/src/clockpicker.js"></script>
+    <script src="../../src/js/calendar.js"></script>
+    
   </body>
 
   </html>
