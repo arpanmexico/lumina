@@ -1,11 +1,17 @@
 $(document).ready(function () {
     let route = String(window.location.search);
     let rol = route.split("=", 2)[0];
-    page = 1;
     let searchBar = $('#search-input');
     let searchContent = $('#search-content');
     let searchMsg = $('#search-msg');
+    let pacMsg = $('#search-msg-pac');
+    let searchPac = $('#search-input-pac');
+    page = 1;
     searchMsg.hide();
+    pacMsg.hide();
+    
+    
+    
     switch(rol){
         case '?listarMarcas':
             searchContent.fadeIn(800);
@@ -56,6 +62,13 @@ $(document).ready(function () {
             ext = "";
             saveLocalStorage(ext, type, page)
             break;         
+        case '?listarVentas':
+            searchContent.fadeIn(800);
+            searchBar.attr("placeholder", "Escribe para buscar ventas");
+            type = "ven";
+            ext = 1;
+            saveLocalStorage(ext, type, page)
+            break;         
         case '?sucursal':
             searchContent.fadeOut(800);
             type = "";
@@ -68,6 +81,18 @@ $(document).ready(function () {
             ext = "";
             saveLocalStorage(ext, type, page)
             break;
+        case '?crearVentas':
+            localStorage.setItem('products', '');
+            localStorage.setItem('models', '');
+            localStorage.setItem('brands', '');
+            localStorage.setItem('prices', '');
+            localStorage.setItem('stock', '');
+            localStorage.setItem('type', '');
+            localStorage.setItem('quantity', '');
+            type = "ven";
+            ext = 2;
+            saveLocalStorage(ext, type, page)
+            break;    
         default:
             searchContent.fadeOut(800);
 
@@ -86,10 +111,26 @@ $(document).ready(function () {
             searchMsg.fadeOut(800);
         }
     });
+    searchPac.on("input", function(){
+        if (searchPac.val() != ""){
+            pacMsg.fadeIn(600);
+        }else{
+            pacMsg.fadeOut(800);
+        }
+    });
 
     searchBar.on("keypress", function(e){
         if(e.which == 13){
             let text = searchBar.val();
+            ext = localStorage.getItem("ext");
+            type = localStorage.getItem("pagType");
+            search(text, type, ext);
+        }
+    });
+
+    searchPac.on("keypress", function(e){
+        if(e.which == 13){
+            let text = searchPac.val();
             ext = localStorage.getItem("ext");
             type = localStorage.getItem("pagType");
             search(text, type, ext);
@@ -184,5 +225,7 @@ function search(text, type, ext){
         },
     });
 }
+
+
 
 

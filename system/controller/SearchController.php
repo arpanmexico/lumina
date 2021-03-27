@@ -34,7 +34,8 @@ if(isset($_POST["text"])){
                     break;
                 case 'arm': // Armazones
                     $query = "SELECT DISTINCT id_armazon, 
-                        (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
+                        (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca,
+                        (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria )AS tipo,  
                         modelo, color, descripcion, precio, existencias,
                         (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
                         proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 AND (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) LIKE '".$search."%' OR suspendido = 0 AND id_armazon LIKE '".$search."%' ORDER BY marca";  
@@ -45,6 +46,19 @@ if(isset($_POST["text"])){
                 case 'pac': // Pacientes
                     $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 AND nombre LIKE '".$search."%' OR suspendido = 0 AND id_paciente LIKE '".$search."%'";
                     break;           
+                case 'ven': // Pacientes en ventas
+                    $ext = $_POST['ext'];
+                    switch($ext){
+                        case 1:
+                            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total FROM ventas WHERE fecha LIKE '%".$search."%' OR id_venta LIKE '".$search."%' OR id_paciente LIKE '".$search."%' OR nombre LIKE '".$search."%' ORDER BY fecha";
+                            $type = 'vent';
+                            break;
+                        default:
+                            $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 AND nombre LIKE '".$search."%' OR suspendido = 0 AND id_paciente LIKE '".$search."%'";
+                            $type = "ven";
+                            break;    
+                    }
+                    break;        
                 default: 
                     break;    
             }
@@ -90,6 +104,7 @@ function search($query, $database, $view){
                     $data = array(
                         'id_armazon' => $row['id_armazon'],
                         'marca' => $row['marca'],
+                        'tipo' => $row['tipo'],
                         'modelo' => $row['modelo'],
                         'color' => $row['color'],
                         'descripcion' => $row['descripcion'],
@@ -136,6 +151,34 @@ function search($query, $database, $view){
                     
                     echo patientCard($data);
                     break;        
+                case 'ven':
+                    $data = array(
+                        'id' => $row['id_paciente'],
+                        'nombre' => $row['nombre'],
+                        'ingresado' => $row['ingresado'],  
+                        'correo' => $row['correo'],  
+                        'apellido_paterno' => $row['apellido_paterno'],
+                        'apellido_materno' => $row['apellido_materno'],
+                    );
+                    
+                    echo sellPatientCard($data);
+                    break;
+                case 'vent':
+                    $data = array(
+                        'id_venta' => $row['id_venta'],
+                        'id_paciente' => $row['id_paciente'],
+                        'nombre' => $row['nombre'],
+                        'apellidos' => $row['apellidos'],
+                        'fecha' => $row['fecha'],
+                        'tipo_pago' => $row['tipo_pago'],
+                        'modalidad_pago' => $row['modalidad_pago'],
+                        'mensualidades' => $row['mensualidades'],
+                        'precio_mes' => $row['precio_mes'],
+                        'interes' => $row['interes'],
+                        'total' => $row['total'],
+                    );  
+                    echo sellCard($data);
+                    break;            
             }
         }
     }else{
@@ -280,4 +323,99 @@ function patientCard($data){
     </div>
     ";
  return $response;
+}
+
+function sellPatientCard($data){
+    $response = "
+    <div class='col-lg-3 col-md-6 col-sm-12'>
+    <div class='card shadow-sm border-info text-info'>
+        <div class='card-body'>
+            <div class='row mb-2'>
+                <div class='col-12'>
+                    <small><i class='far fa-clock'></i> " . $data['ingresado'] . "</small>
+                </div>
+            </div>
+            <div class='text-center'>
+                <div class='row'>
+                    <div class='col-12'>
+                        <h5 class='font-weight-bold'>" . $data['nombre'] . " " . $data['apellido_paterno'] . " " . $data['apellido_materno'] . "</h5>
+                    </div>
+                </div>
+                <p class='text-muted'>" . $data['correo'] . "</p>
+                <a class='text-muted text-decoration-none small stretched-link' onClick= 'selectPatient("; $response .= '"'.$data['id'].'","'.$data['nombre'].'","'.$data['apellido_paterno'].' '.$data['apellido_materno'].'"'; $response.=")'>Click para seleccionar este paciente</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    ";
+
+    return $response;
+}
+
+function sellCard($data){
+    $date = explode(' ', $data['fecha']);
+    $tipoPago = $data['tipo_pago'];
+    $modalidadPago = $data['modalidad_pago'];
+    $mensualidades = $data['mensualidades'];
+    $precioMes = $data['precio_mes'];
+    $interes = $data['interes'];
+    $image = "";
+
+    switch($tipoPago){
+        case 'E':
+            $tipoPago = 'En efectivo';
+            $image = "dollar.svg";
+            break;
+        case 'T':
+            $tipoPago = "Con tarjeta" ;
+            $image = "credit_card.svg";
+            break;   
+    }
+
+    switch($modalidadPago){
+        case 'C':
+            $modalidadPago = 'Pago de contado';
+            $mostrarPrecioMes = "d-none";
+            $mostrarInteres = "d-none";
+            $mostrarMensualidad = "d-none";
+            break;
+        case 'MSI':
+            $modalidadPago = 'Pago a meses sin interes';
+            $mostrarPrecioMes = "d-block";
+            $mostrarInteres = "d-none";
+            $mostrarMensualidad = "d-none";
+            break;
+        case 'MCI':
+            $modalidadPago = 'Pago a meses con intereses';
+            $mostrarPrecioMes = "d-block";
+            $mostrarInteres = "d-block";
+            $mostrarMensualidad = "d-none";
+            break;    
+    }
+
+    $response = '
+        <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
+            <div class="card shadow" style="min-height: 255px;">
+                <div class="card-header px-1">
+                    <div class="row m-0">
+                        <div class="col my-auto">
+                            <p class="text-muted small my-auto font-weight-bold">'.$date[0].'</p>
+                        </div>
+                        <div class="col text-right my-auto">
+                            <p class="text-primary font-weight-bold my-auto">$ '.floatval($data['total']).'</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <img src="../../src/img/'.$image.'" class="card-img mb-2" height="80px">
+                    <p class="text-success font-weight-bold small">'.$modalidadPago.' '.$tipoPago.'</p>
+                    <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo('; $response .= "'".$data['id_venta']."','".ucwords($data['nombre'])."','".ucwords($data['apellidos'])."','".$data['fecha']."','".$tipoPago."','".$modalidadPago."','".$mensualidades."','".$precioMes."','".$interes."',".floatval($data['total']).""; $response .= ');">Ver información completa</a>
+                </div>
+            </div>
+        
+        </div>
+    ';
+
+    return $response;
 }

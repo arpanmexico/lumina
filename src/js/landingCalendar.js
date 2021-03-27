@@ -4,7 +4,6 @@ $(document).ready(function(){
         align: 'left',
         autoclose: true
     });
-
     $('#txtPhone').on('input', function(){
         if($('#txtPhone').val().length > 10 || $('#txtPhone').val().length < 10){
             $('#phoneValidation').fadeIn(800);
@@ -12,27 +11,15 @@ $(document).ready(function(){
             $('#phoneValidation').hide();
         }
     });
-
-
     $('label').addClass('font-weight-bold text-muted');
     $('#phoneValidation').hide();
+
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-            right: 'prev,next today',
-            center: 'title',
-            left: 'dayGridMonth,timeGridWeek,timeGridDay'
-          },
         initialView: 'dayGridMonth',
         themeSystem: 'bootstrap',
         locale: 'es',
-        events:'http://localhost:9000/lumina/system/controller/CalendarController.php?action=',
-        select: function(start, end) {
-            if(start.isBefore(moment())) {
-                calendar.unselect();
-                return false;
-            }
-        },
+        events:'http://localhost:9000/lumina/system/controller/CalendarController.php?action=landing',
         dateClick:function(info){
             clear();
             $('#eventTitle').html("Agregar una nueva cita: " + info.dateStr);
@@ -45,40 +32,16 @@ $(document).ready(function(){
             $('#wrongDate').hide();
             $('#eventModal').modal();
         },
-        eventClick:function(info){
-            $('#eventTitle').html(info.event.title);
-            $('#eventId').val(info.event.id);
-            $('#txtName').val(info.event.extendedProps.nombre);
-            $('#txtLastName').val(info.event.extendedProps.apellidos);
-            $('#colorContent').hide();
-            $('#txtDescription').val(info.event.extendedProps.descripcion);
-            $('#txtPhone').val(info.event.extendedProps.telefono);
-            $('#emptyField').hide();
-            $('#wrongDate').hide();
-
-           DateTime = info.event.startStr.split("T");
-           console.log(DateTime);
-            $('#txtDate').val(DateTime[0]);
-            $('#txtTime').val(DateTime[1].split("-")[0]);
-            $('#btnAdd').hide();
-            $('#btnDelete').show();
-            $('#btnUpdate').show();
-            $('#eventModal').modal();
-        },
         eventTimeFormat: { // like '14:30:00'
-            hour: 'numeric',
-            minute: '2-digit',
-            meridiem: 'short'
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: 'short'
         }
         
     });
     calendar.render();
     var event;
-
-    $('#btnDelete').click(function(){
-        getDataFromUI();
-        setData('drop', event);
-    });
+    
     $('#btnAdd').click(function(){
         getDataFromUI();
         if(validate()){
@@ -86,13 +49,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#btnUpdate').click(function(){
-        getDataFromUI();
-        if(validate()){
-            setData('update', event);
-        }
-    });
-
+    
     function getDataFromUI(){
         event = {
             id:$('#eventId').val(),
@@ -103,7 +60,7 @@ $(document).ready(function(){
             title:$('#txtName').val() + " " + $('#txtLastName').val(),
             date:$('#txtDate').val() + " " + $('#txtTime').val(),
             textColor:"#FFFFFF",
-            color: $('#txtColor').val()
+            color: "#EF6C00"
         };
     }
 
@@ -126,7 +83,6 @@ $(document).ready(function(){
         $('#eventId').val("");
         $('#txtName').val("");
         $('#txtLastName').val("");
-        $('#txtColor').val("");
         $('#txtTime').val("12:00");
         $('#txtDescription').val("");
         $('#txtPhone').val("");
@@ -135,7 +91,7 @@ $(document).ready(function(){
     function validate(){
         let name= $('#txtName').val();
         let lastName = $('#txtLastName').val();
-        let color = $('#txtColor').val();
+        
         let time = $('#txtTime').val();
         let date = $('#txtDate').val();
         let phone = $('#txtPhone').val();
@@ -146,7 +102,7 @@ $(document).ready(function(){
         var newDate = new Date(selectDate.setDate(selectDate.getDate() + 1));
         
 
-        if(name == "" || lastName == "" || color == "" || time == "" || phone == ""){
+        if(name == "" || lastName == "" || time == "" || phone == ""){
             console.log("Campos vacios");
             emptyField.fadeIn(800);
             return false;

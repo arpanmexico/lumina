@@ -3,9 +3,9 @@ include('../controller/CategoryController.php');
 $categorias = new CategoryController();
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Armazones - Lista de Productos</h1>
+    <h1 class="h3 mb-0 text-gray-800">Productos - Catálogo</h1>
 </div>
-<p class="text-muted">Bienvenido al módulo de armazones, acá puede realizar operaciones como agregar nuevos proveedores, <br> ver la lista de armazones, actualizar datos y eliminar una categoría del sistema.</p>
+<p class="text-muted">Bienvenido al módulo de productos, acá puede realizar operaciones como agregar nuevos proveedores y productos, <br> ver la lista de produtcos, actualizar datos y eliminar productos y/o categorias del sistema.</p>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

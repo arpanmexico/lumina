@@ -34,6 +34,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: none;
 }
 
+.scroll {
+    max-height: 59vh;
+    min-height: 59vh;
+    overflow-y: auto;
+}
+
+.card.shadow-sm.border-info:hover{
+    cursor: pointer !important;
+    background-color: #36b8cc81 !important;
+    color: white !important;
+}
+
+.product-row:hover{
+    cursor: pointer;
+}
+
+.row-selected{
+    background-color: #4E73DF !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
 @keyframes spin{
     0%{
         transform: rotate(0deg);

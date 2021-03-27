@@ -3,19 +3,21 @@ include('../controller/CategoryController.php');
 $categorias = new CategoryController();
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Armazones - Agregar Armazón</h1>
+    <h1 class="h3 mb-0 text-gray-800">Productos - Agregar Producto</h1>
 </div>
-<p class="text-muted">Bienvenido al módulo de armazones, acá puede realizar operaciones como agregar nuevos proveedores, <br> ver la lista de armazones, actualizar datos y eliminar una categoría del sistema.</p>
+<p class="text-muted">Bienvenido al módulo de productos, acá puede realizar operaciones como agregar nuevos proveedores y productos, <br> ver la lista de produtcos, actualizar datos y eliminar productos y/o categorias del sistema.</p>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Agregar un nuevo armazón</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Agregar un nuevo producto</h6>
     </div>
 
     <div class="card-body">
         <?php
         $ids_armazones = explode(",", $categorias->getCategoryInformationByType(2)['id']);
         $nombres_armazones = explode(",", $categorias->getCategoryInformationByType(2)['nombre']);
+        $ids_tipos = explode(",", $categorias->getCategoryInformationByType(1)['id']);
+        $nombres_tipos = explode(",", $categorias->getCategoryInformationByType(1)['nombre']);
 
         $ids_proveedores = explode(",", $categorias->getSuppliers()['id']);
         $nombres_proveedores = explode(",", $categorias->getSuppliers()['nombre']);
@@ -25,8 +27,8 @@ $categorias = new CategoryController();
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">
-                        <label for="codigoBarras">Código de Barras del Armazon</label>
-                        <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras">
+                        <label for="codigoBarras">Código de Barras</label>
+                        <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras del producto">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -42,22 +44,35 @@ $categorias = new CategoryController();
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="form-group">
-                        <label for="modeloArmazon">Módelo del Armazon</label>
-                        <input type="text" name="modeloArmazon" class="form-control" id="modeloArmazon" placeholder="Escribe aquí el módelo del armazon">
+                        <label for="tipoProducto">Tipo</label>
+                        <select class="form-control" id="tipoProducto" name="tipoProducto">
+                            <option disabled selected>Selecciona el tipo de producto</option>
+                            <?php
+                            for ($i = 0; $i < count($ids_tipos); $i++) {
+                                echo "<option value='" . $ids_tipos[$i] . "'>" . $nombres_tipos[$i] . "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="form-group">
-                        <label for="colorArmazon">Color del Armazon</label>
-                        <input type="text" name="colorArmazon" class="form-control" id="colorArmazon" placeholder="Escribe aquí el/los colores del armazon">
+                        <label for="modeloArmazon">Modelo</label>
+                        <input type="text" name="modeloArmazon" class="form-control" id="modeloArmazon" placeholder="Escribe aquí el módelo del producto">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label for="colorArmazon">Color</label>
+                        <input type="text" name="colorArmazon" class="form-control" id="colorArmazon" placeholder="Escribe aquí el/los colores del producto">
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
-                        <label for="descripcionArmazon">Descripción del Armazon</label>
-                        <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon" rows="3" placeholder="Escribe en esta zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."></textarea>
+                        <label for="descripcionArmazon">Descripción</label>
+                        <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon" rows="3" placeholder="Escribe en esta zona todo lo que puedas del producto, ésta será la misma descripción que se mostrará en la tienda en línea..."></textarea>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -93,13 +108,14 @@ $categorias = new CategoryController();
                 </div>
             </div>
 
-            <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3">Guardar Armazón</button>
+            <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3">Guardar Producto</button>
         </form>
         <?php
         if (isset($_POST['guardarArmazon'])) {
             $data = array(
                 'codigo' => $_POST['codigoBarras'],
                 'marca' => $_POST['marcaArmazon'],
+                'tipo' => $_POST['tipoProducto'],
                 'modelo' => $_POST['modeloArmazon'],
                 'color' => strtolower($_POST['colorArmazon']),
                 'descripcion' => ucfirst($_POST['descripcionArmazon']),

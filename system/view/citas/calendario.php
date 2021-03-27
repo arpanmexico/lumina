@@ -39,9 +39,18 @@
                    </div>
                    
 
-                    <div class="form-group">
-                        <label for="txtDescription">Detalles</label>
-                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                    <div class="form-group row">
+
+                        <div class="col">
+                            <label for="txtDescription">Detalles</span></label>
+                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="col">
+                            <label for="txtPhone">Teléfono (10 digitos)<span class="text-danger font-weight-bold"> *</label>
+                            <input type="number" name="" id="txtPhone" class="form-control">
+                            <span class="text-danger font-weight-bold small" id="phoneValidation">Tiene que ser un teléfono con 10 dígitos, sin espacios ni guiones.</span>
+                        </div>
+                        
                     </div>
 
                     <div class="form-group row">

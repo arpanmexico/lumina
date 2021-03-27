@@ -8,11 +8,12 @@
     {
         static function addEvent(){
             $response = false;
-            $query = "INSERT INTO citas (nombre, apellidos, descripcion, title, date, color) VALUES (:nombre, :apellidos, :descripcion, :title, :date, :color)";
+            $query = "INSERT INTO citas (nombre, apellidos, telefono, descripcion, title, date, color) VALUES (:nombre, :apellidos, :telefono, :descripcion, :title, :date, :color)";
             $runQuery = $GLOBALS['pdo']->prepare($query);
             $result = $runQuery->execute(array(
                 "nombre" => ucwords($_POST['nombre']), 
                 "apellidos" => ucwords($_POST['apellidos']),
+                "telefono" => ucwords($_POST['telefono']),
                 "descripcion" => ucfirst($_POST['descripcion']), 
                 "title" => ucwords($_POST['title']), 
                 "date" => $_POST['date'],
@@ -49,6 +50,7 @@
                 $query = "UPDATE citas SET
                 nombre =:nombre,
                 apellidos =:apellidos,
+                telefono =:telefono,
                 descripcion =:descripcion,
                 title =:title,
                 date=:date
@@ -58,6 +60,7 @@
                 $result = $runQuery->execute(array(
                     "nombre" => ucwords($_POST['nombre']), 
                     "apellidos" => ucwords($_POST['apellidos']),
+                    "telefono" => $_POST['telefono'],
                     "descripcion" => ucfirst($_POST['descripcion']), 
                     "title" => ucwords($_POST['title']), 
                     "date" => $_POST['date'],

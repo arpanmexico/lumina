@@ -14,6 +14,8 @@ $categorias = new CategoryController();
 
         $ids_armazones = explode(",", $categorias->getCategoryInformationByType(2)['id']);
         $nombres_armazones = explode(",", $categorias->getCategoryInformationByType(2)['nombre']);
+        $ids_tipo = explode(",", $categorias->getCategoryInformationByType(1)['id']);
+        $nombres_tipo = explode(",", $categorias->getCategoryInformationByType(1)['nombre']);
 
         $ids_proveedores = explode(",", $categorias->getSuppliers()['id']);
         $nombres_proveedores = explode(",", $categorias->getSuppliers()['nombre']);
@@ -56,6 +58,22 @@ $categorias = new CategoryController();
                                             echo "<option value='" . $ids_armazones[$i] . "' selected>" . $nombres_armazones[$i] . "</option>";
                                         else
                                             echo "<option value='" . $ids_armazones[$i] . "'>" . $nombres_armazones[$i] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="tipoProducto">Tipo</label>
+                                <select class="form-control" id="tipoProducto" name="tipoProducto">
+                                    <option disabled selected>Selecciona el tipo de producto</option>
+                                    <?php
+                                    for ($i = 0; $i < count($ids_tipo); $i++) {
+                                        if ($nombres_tipo[$i] == $array['tipo'])
+                                            echo "<option value='" . $ids_tipo[$i] . "' selected>" . $nombres_tipo[$i] . "</option>";
+                                        else
+                                            echo "<option value='" . $ids_tipo[$i] . "'>" . $nombres_tipo[$i] . "</option>";
                                     }
                                     ?>
                                 </select>

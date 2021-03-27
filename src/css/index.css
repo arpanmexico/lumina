@@ -124,6 +124,10 @@ nav ul li a:hover {
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+.modal .form-control{
+  border: 1px solid #e4e4e4 !important;
+}
+
 .shadow {
   box-shadow: 0 .5rem 1rem rgba(173, 173, 173, .25) !important;
 }
@@ -182,4 +186,37 @@ input, select {
 
 .footer {
   background-color: #f5f5f5;
+}
+
+.fc-daygrid-day-frame:hover{
+  background-color: beige !important;
+  cursor: pointer !important;
+}
+
+.fc-day-today .fc-daygrid-day-frame{
+  background-color: rgb(50, 112, 204) !important;
+  color: white !important;
+}
+
+.fc-toolbar-title{
+  text-transform:capitalize !important;
+}
+
+.fc-event-title{
+  display: none !important;
+}
+
+.fc-daygrid-event{
+  background-color: rgb(211, 72, 72) !important;
+}
+
+.fc-daygrid-event-dot{
+  display: none !important;
+}
+.fc-event-time{
+  color: white !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: none;
 }

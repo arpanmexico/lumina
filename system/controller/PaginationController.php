@@ -38,6 +38,7 @@ if(isset($_POST['type'])){
         case 'arm': // Armazones
             $query = "SELECT DISTINCT id_armazon, 
                 (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
+                (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria )AS tipo, 
                 modelo, color, descripcion, precio, existencias,
                 (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
                 proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 ORDER BY marca LIMIT $start, $items";
@@ -53,6 +54,11 @@ if(isset($_POST['type'])){
             $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 LIMIT $start, $items";
             $query2 = "SELECT count(id_paciente) FROM pacientes WHERE suspendido = 0";
             pagination($query, $query2, $database, $page, $items, 'pac'); 
+            break;           
+        case 'ven': // Pacientes
+            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total FROM ventas ORDER BY fecha DESC LIMIT $start, $items ";
+            $query2 = "SELECT count(id_venta) FROM ventas";
+            pagination($query, $query2, $database, $page, $items, 'ven'); 
             break;           
         default: 
             
@@ -92,6 +98,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                     $data = array(
                         'id_armazon' => $row['id_armazon'],
                         'marca' => $row['marca'],
+                        'tipo' => $row['tipo'],
                         'modelo' => $row['modelo'],
                         'color' => $row['color'],
                         'descripcion' => $row['descripcion'],
@@ -137,6 +144,23 @@ function pagination($query, $query2, $database, $page, $items, $card){
                     
                     echo patientCard($data);
                     break;
+                case 'ven':
+                    $data = array(
+                        'id_venta' => $row['id_venta'],
+                        'id_paciente' => $row['id_paciente'],
+                        'nombre' => $row['nombre'],
+                        'apellidos' => $row['apellidos'],
+                        'fecha' => $row['fecha'],
+                        'tipo_pago' => $row['tipo_pago'],
+                        'modalidad_pago' => $row['modalidad_pago'],
+                        'mensualidades' => $row['mensualidades'],
+                        'precio_mes' => $row['precio_mes'],
+                        'interes' => $row['interes'],
+                        'total' => $row['total'],
+                        'productos' => $row['productos']
+                    );  
+                    echo sellCard($data);
+                    break;    
                 default:
                     break;    
             }
@@ -383,5 +407,74 @@ function patientCard($data){
     </div>
     ";
  return $response;
+}
+
+function sellCard($data){
+    $date = explode(' ', $data['fecha']);
+    $tipoPago = $data['tipo_pago'];
+    $modalidadPago = $data['modalidad_pago'];
+    $mensualidades = $data['mensualidades'];
+    $precioMes = $data['precio_mes'];
+    $interes = $data['interes'];
+    $productos = $data['productos'];
+    $image = "";
+
+    switch($tipoPago){
+        case 'E':
+            $tipoPago = 'En efectivo';
+            $image = "dollar.svg";
+            break;
+        case 'T':
+            $tipoPago = "Con tarjeta" ;
+            $image = "credit_card.svg";
+            break;   
+    }
+
+    switch($modalidadPago){
+        case 'C':
+            $modalidadPago = 'Pago de contado';
+            $mostrarPrecioMes = "d-none";
+            $mostrarInteres = "d-none";
+            $mostrarMensualidad = "d-none";
+            break;
+        case 'MSI':
+            $modalidadPago = 'Pago a meses sin interes';
+            $mostrarPrecioMes = "d-block";
+            $mostrarInteres = "d-none";
+            $mostrarMensualidad = "d-none";
+            break;
+        case 'MCI':
+            $modalidadPago = 'Pago a meses con intereses';
+            $mostrarPrecioMes = "d-block";
+            $mostrarInteres = "d-block";
+            $mostrarMensualidad = "d-none";
+            break;    
+    }
+
+    $response = '
+        <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
+            <div class="card shadow" style="min-height: 255px;">
+                <div class="card-header px-1">
+                    <div class="row m-0">
+                        <div class="col my-auto">
+                            <p class="text-muted small my-auto font-weight-bold">'.$date[0].'</p>
+                        </div>
+                        <div class="col text-right my-auto">
+                            <p class="text-primary font-weight-bold my-auto">$ '.floatval($data['total']).'</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <img src="../../src/img/'.$image.'" class="card-img mb-2" height="80px">
+                    <p class="text-success font-weight-bold small">'.$modalidadPago.' '.$tipoPago.'</p>
+                    <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo('; $response .= "'".$data['id_venta']."','".ucwords($data['nombre'])."','".ucwords($data['apellidos'])."','".$data['fecha']."','".$tipoPago."','".$modalidadPago."','".$mensualidades."','".$precioMes."','".$interes."',".floatval($data['total']).",'".$productos."'"; $response .= ');">Ver información completa</a>
+                </div>
+            </div>
+        
+        </div>
+    ';
+
+    return $response;
 }
 

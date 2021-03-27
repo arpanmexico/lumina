@@ -49,6 +49,7 @@ DROP TABLE IF EXISTS armazones;
 CREATE TABLE armazones(
     id_armazon bigint(20) PRIMARY KEY NOT NULL, # Codigo de barra
     id_marca varchar(20) NOT NULL, # Llave foranea
+    id_tipo varchar(20) NOT NULL,  # es el mismo que id de marca pero será para los productos variossin ser foraneo parano hacer conflicto
     modelo varchar(200) NOT NULL,
     color varchar(255) NOT NULL,
     descripcion text NOT NULL,
@@ -149,10 +150,30 @@ CREATE TABLE citas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL, 
     apellidos VARCHAR(100) NOT NULL,
+    telefono bigint(10) NOT NULL,
     descripcion TEXT,
-    fecha DATETIME NOT NULL,  
+    title VARCHAR(160),
+    date DATETIME NOT NULL,  
     color VARCHAR(15) DEFAULT '#673AB7' 
 );
 
+/* ---- TABLA PARA ADMINISTRAR LAS VENTAS -----   */
+DROP TABLE IF EXISTS ventas;
+CREATE TABLE ventas(
+    id_venta INT AUTO_INCREMENT PRIMARY KEY,
+    id_paciente VARCHAR(20),
+    productos TEXT, #ID de los productos vendidos
+    nombre VARCHAR(200) NOT NULL, 
+    apellidos VARCHAR(200) NOT NULL,
+    fecha DATETIME NOT NULL,
+    tipo_pago enum('E', 'T') NOT NULL, 
+    modalidad_pago enum('C', 'MSI', 'MCI') NOT NULL,
+    mensualidades INT(10) DEFAULT 0,
+    precio_mes FLOAT(15) DEFAULT 0.0,
+    interes FLOAT(10) DEFAULT 0.0,
+    total FLOAT(10) NOT NULL,
+    creado TIMESTAMP NOT NULL,
+    actualizado TIMESTAMP
+);
 
 

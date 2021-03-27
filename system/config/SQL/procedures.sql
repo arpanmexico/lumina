@@ -76,7 +76,7 @@ DELIMITER ;
 /*   -----  PROCEDIMIENTO PARA ADMINISTRAR LA SECCIÓN << ARMAZONES >>   -----   */
 DROP PROCEDURE IF EXISTS framesManager;
 DELIMITER ;
-    CREATE PROCEDURE framesManager(IN _id_frame bigint(20), IN _id_brand varchar(20), IN _model varchar(20),
+    CREATE PROCEDURE framesManager(IN _id_frame bigint(20), IN _id_brand varchar(20), IN _id_tipo varchar(20), IN _model varchar(20),
         IN _color char(20), IN _description text, IN _price float, IN _stock int(5), IN _id_supplier varchar(20),
         IN _picture text, IN _action int(1))
     BEGIN
@@ -85,10 +85,10 @@ DELIMITER ;
         SET @_description = CONCAT(UCASE(LOWER(LEFT(_description, 1))), SUBSTRING(LOWER(_description), 2));
 
         IF _action = 1 THEN # INSERT DATA
-            INSERT INTO armazones(id_armazon, id_marca, modelo, color, descripcion, precio, existencias,
-                id_proveedor, foto, suspendido, ingresado, actualizado) VALUES (_id_frame, _id_brand, _model, @_color, @_description, _price, _stock, _id_supplier, _picture, 0, @current_time_mx, @current_time_mx);
+            INSERT INTO armazones(id_armazon, id_marca, id_tipo, modelo, color, descripcion, precio, existencias,
+                id_proveedor, foto, suspendido, ingresado, actualizado) VALUES (_id_frame, _id_brand, _id_tipo, _model, @_color, @_description, _price, _stock, _id_supplier, _picture, 0, @current_time_mx, @current_time_mx);
         ELSEIF _action = 2 THEN # UPDATE DATA
-            UPDATE armazones SET id_marca = _id_brand, modelo = _model, color = _color,
+            UPDATE armazones SET id_marca = _id_brand, id_tipo = _id_tipo, modelo = _model, color = _color,
                 descripcion = _description, precio = _price, existencias = _stock, id_proveedor = _id_supplier, actualizado = @current_time_mx WHERE id_armazon = _id_frame;
         ELSEIF _action = 3 THEN # UPDATE STOCK
             UPDATE armazones SET existencias = _stock WHERE id_armazon = _id_frame;
@@ -168,4 +168,70 @@ DELIMITER ;
             INSERT INTO historiales(id_historial, id_paciente, antecedentes_pat_generales, antecedentes_pat_oculares, motivo_consulta, ultimo_examen, odAVLejosSRX, odCVLejos, odAVCercaSRX, odAVLejosRX, odAVCercaRX, ioAVLejosSRX, ioCVLejos, ioAVCercaSRX, ioAVLejosRX, ioAVCercaRX, rxodEsfera, rxodCilindro, rxodEje, rxodAdd, rxodDip, rxioEsfera, rxioCilindro, rxioEje, rxioAdd, rxioDip, observaciones, tipo_vision, tipo_lente, folio, validacion_medico, validacion_paciente, ingresado, actualizado) VALUES (@history_key, _id_paciente, _antecedentes_pat_generales, _antecedentes_pat_oculares, _motivo_consulta, _ultimo_examen, _odAVLejosSRX, _odCVLejos, _odAVCercaSRX, _odAVLejosRX, _odAVCercaRX, _ioAVLejosSRX, _ioCVLejos, _ioAVCercaSRX, _ioAVLejosRX, _ioAVCercaRX, _rxodEsfera, _rxodCilindro, _rxodEje, _rxodAdd, _rxodDip, _rxioEsfera, _rxioCilindro, _rxioEje, _rxioAdd, _rxioDip, _observaciones, _tipo_vision, _tipo_lente, _folio, _validacion_medico, _validacion_paciente, @current_time_mx, @current_time_mx);
         END IF;
     END ;
+DELIMITER ;
+
+
+/*   -----  PROCEDIMIENTO PARA ADMINISTRAR LA SECCIÓN << VENTAS >>   -----   */
+DROP PROCEDURE IF EXISTS sellsManager;
+DELIMITER ;
+    CREATE PROCEDURE sellsManager(IN _id_paciente varchar(20), IN _productos TEXT, IN _nombre varchar(200), IN _apellidos varchar(200), IN _fecha DATETIME, IN _tipo_pago enum('E', 'T'), IN _modalidad_pago enum('C', 'MSI', 'MCI'), IN _mensualidaes INT(10), IN _precio_mes FLOAT(15), IN _interes FLOAT(10), IN _total FLOAT(10), IN _cantidad TEXT, IN _action INT(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _action = 1 THEN # INSERT DATA
+            INSERT INTO ventas(id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total, creado) VALUES (_id_paciente, _productos, _nombre, _apellidos, _fecha, _tipo_pago, _modalidad_pago, _mensualidaes, _precio_mes, _interes, _total, @current_time_mx);
+        END IF;
+    END;
+DELIMITER ;
+
+/*   -----  PROCEDIMIENTO PARA ACTUALIZAR EL STOCK << VENTAS >>   -----   */
+DROP PROCEDURE IF EXISTS updateStock;
+DELIMITER ;
+    CREATE PROCEDURE updateStock(IN _producto bigint(20), IN _cantidad INT(5))
+    BEGIN
+        UPDATE armazones SET existencias = armazones.existencias - _cantidad WHERE id_armazon = _producto;
+    END;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getSoldByMonthByYear;
+DELIMITER ;
+CREATE PROCEDURE getSoldByMonthByYear(IN _year varchar(20))
+BEGIN
+   SELECT (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 01) AND year(fecha) = _year) AS `enero`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 02) AND year(fecha) = _year) AS `febrero`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 03) AND year(fecha) = _year) AS `marzo`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 04) AND year(fecha) = _year) AS `abril`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 05) AND year(fecha) = _year) AS `mayo`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 06) AND year(fecha) = _year) AS `junio`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 07) AND year(fecha) = _year) AS `julio`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 08) AND year(fecha) = _year) AS `agosto`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 09) AND year(fecha) = _year) AS `septiembre`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 10) AND year(fecha) = _year) AS `octubre`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 11) AND year(fecha) = _year) AS `noviembre`,
+       (SELECT  SUM(total)
+        FROM ventas
+        WHERE (month(fecha) = 12) AND year(fecha) = _year) AS `diciembre`;
+END;
 DELIMITER ;

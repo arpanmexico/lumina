@@ -20,7 +20,8 @@ if (!isset($_SESSION['userID'])) {
     <link rel="stylesheet" href="../../src/css/admin.css">
     <link rel="stylesheet" href="../../src/libs/fullcalendar/lib/main.min.css">
     <link rel="stylesheet" href="../../src/libs/clockpicker/src/clockpicker.css">
-    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  
     <title>Panel de Control - Lumina</title>
   </head>
 
@@ -65,7 +66,7 @@ if (!isset($_SESSION['userID'])) {
           </a>
           <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="dashboard.php?listarCategoriasProductos">Ver tipos de Lente</a>
+              <a class="collapse-item" href="dashboard.php?listarCategoriasProductos">Ver tipos de producto</a>
               <a class="collapse-item" href="dashboard.php?listarMarcas">Ver Marcas</a>
               <a class="collapse-item" href="dashboard.php?listarEnfermedades">Ver Enfermedades</a>
             </div>
@@ -78,11 +79,11 @@ if (!isset($_SESSION['userID'])) {
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
             <i class="fas fa-glasses"></i>
-            <span>Armazones</span>
+            <span>Productos</span>
           </a>
           <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="dashboard.php?listarProveedores">Ver de proveedores</a>
+              <a class="collapse-item" href="dashboard.php?listarProveedores">Proveedores</a>
               <a class="collapse-item" href="dashboard.php?crearArmazon">Nuevo producto</a>
               <a class="collapse-item" href="dashboard.php?listarArmazones">Catalogo de productos</a>
             </div>
@@ -335,12 +336,15 @@ if (!isset($_SESSION['userID'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="../../src/js/sb-admin-2.js"></script>
-    <script src="../../src/js/admin.js"></script>
     <script src="../../src/js/utilities.js"></script>
+    <script src="../../src/js/sells.js"></script>
     <script src="../../src/libs/fullcalendar/lib/main.js"></script>
     <script src="../../src/libs/fullcalendar/lib/locales-all.min.js"></script>
     <script src="../../src/libs/clockpicker/src/clockpicker.js"></script>
     <script src="../../src/js/calendar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+    <script src="../../src/js/admin.js"></script>
     
   </body>
 

@@ -12,7 +12,7 @@
                      <div class="col mr-2">
                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                              Administradores</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $usuario -> getCountAdmin()?></div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -29,7 +29,7 @@
                      <div class="col mr-2">
                          <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                              Pacientes</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $usuario -> getCountPatients(); ?></div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -38,4 +38,39 @@
              </div>
          </div>
      </div>
+ </div>
+
+ <div class="row my-4">
+    <div class="col col-sm-12 col-md-12 col-lg-12 card border-left-primary shadow">
+        <div class="card-header bg-white">
+            <div class="row">
+                <div class="col-6">
+                    <h6 class="text-primary my-0 font-weight-bold">Ingresos por mes</h6>
+                </div>
+                <div class="col-6">
+                    <select name="" id="selectYear" class="form-control">
+                        <?php
+                            $currentYear = date("Y");
+                            echo '
+                            <option value="'.$currentYear.'" selected>'.$currentYear.'</option>
+                            '; 
+                           
+                            for($i = 1; $i < 5; $i++){
+                                echo '
+                                <option value="'.($currentYear - $i).'" class="">'.($currentYear - $i) .'</option>
+                                ';
+                            }
+                        ?>
+
+                        
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+        <div id="soldMsg"></div>
+            <canvas id="soldChart"></canvas>
+        </div>
+    </div>
+    
  </div>

@@ -113,7 +113,7 @@ class CategoryController
 
     $query = "SELECT id_categoria, nombre FROM categorias WHERE tipo = '" . $category . "' ORDER BY nombre";
     $runQuery = $database->query($query);
-    $data = array();
+    $data = array('id' => '', 'nombre' => '');
 
     if ($runQuery->num_rows > 0) {
       while ($row = $runQuery->fetch_array()) {
@@ -132,7 +132,7 @@ class CategoryController
     $database = CategoryController::getDatabaseConnection();
     $query = "SELECT id_categoria, nombre FROM categorias WHERE tipo = 'Proveedor'";
     $runQuery = $database->query($query);
-    $data = array();
+    $data = array('id' => '', 'nombre' => '');
 
     if ($runQuery->num_rows > 0) {
       while ($row = $runQuery->fetch_array()) {
@@ -151,7 +151,7 @@ class CategoryController
   public function manageFrames($data, $action)
   {
     $database = CategoryController::getDatabaseConnection();
-    $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', $action)";
+    $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '". $data['tipo'] ."', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', $action)";
 
     move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto']);
 

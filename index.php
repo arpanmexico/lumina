@@ -15,6 +15,8 @@ $sucursal = new BranchController();
   <link rel="stylesheet" href="src/css/normalize.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="src/css/index.css">
+  <link rel="stylesheet" href="src/libs/fullcalendar/lib/main.min.css">
+  <link rel="stylesheet" href="src/libs/clockpicker/src/clockpicker.css">
   <title>Óptica Lumina</title>
 </head>
 
@@ -240,12 +242,33 @@ $sucursal = new BranchController();
   </section>
 
   <section class="container mb-5">
-    <h1 class="title text-center" id="contact">Agenda tu cita</h1>
+    <h1 class="title text-center" id="booking">Agenda tu cita</h1>
     <p class="quote">
       Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur
       velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis
       commodi quidem hic quas
     </p>
+    
+
+    <div class="row" data-aos="fade-left">
+      <div class="col-md-10 mx-auto">
+        <div class="card shadow p-2">
+          <div id="calendar" class="m-2"></div>
+        </div>   
+      </div>
+
+      <div class="col-2 mx-auto mt-5">
+
+      <div class="col">
+        <p class="small text-muted font-weight-bold">Da click en el día en que quieres agendar tu cita.</p>
+      </div>
+      <div class="col">
+        <p class="small text-muted font-weight-bold">Cinta del estilo <span class="fc-daygrid-event fc-daygrid-dot-event fc-event my-auto" style="width: 10vh";></span> indica que el horario no está disponible.</p>
+        
+      </div>
+    </div>
+   
+    </div>
 
     <!-- Insertar aquí el calendario para visualizar fechas/horas reservadas y disponibles -->
   </section>
@@ -376,10 +399,92 @@ $sucursal = new BranchController();
   </footer>
 
 
+  <!-- Modal para agendar cita -->
+  <div class="modal fade" id="eventModal" tabindex="-1" data-backdrop="static" aria-labelledby="eventModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title font-weight-bold" id="eventTitle"></h5>
+                  <button type="button" class="close none-btn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group row">
+                  <input type="text" id="eventId" class="d-none">
+                      <div class="col">
+                          <label for="txtName">Nombre del paciente <span class="text-danger font-weight-bold"> *</span></label>
+                          <input type="text" id="txtName" class="form-control">
+                      </div>
+                      <div class="col">
+                          <label for="txtLastName">Apellidos del paciente <span class="text-danger font-weight-bold"> *</span></label>
+                          <input type="text" id="txtLastName" class="form-control">
+                      </div>
+                  </div>
+                  
+
+                  <div class="form-group row">
+
+                        <div class="col">
+                            <label for="txtDescription">Detalles</span></label>
+                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="col">
+                            <label for="txtPhone">Teléfono (10 digitos)<span class="text-danger font-weight-bold"> *</label>
+                            <input type="number" name="" id="txtPhone" class="form-control">
+                            <span class="text-danger font-weight-bold small" id="phoneValidation">Tiene que ser un teléfono con 10 dígitos, sin espacios ni guiones.</span>
+                        </div>
+                        
+                    </div>
+
+                  <div class="form-group row">
+                          <div class="col-12 col-sm-12 col-md-4">
+                              <label for="txtDate">Fecha <span class="text-danger font-weight-bold"> *</span></label>
+                              <div class="input-group">
+                                  <input type="date" id="txtDate" class="form-control">
+                                  <span class="input-group-append">
+                                      <label for="txtDate" class="input-group-text bg-transparent"><i class="fa fa-calendar"></i></label>
+                                  </span>
+                              </div>
+                              
+                          </div>
+                          <div class="col-12 col-sm-12 col-md-4 clockpicker">
+                              <label for="txtTime">Hora <span class="text-danger font-weight-bold"> *</span></label>
+                              <div class="input-group">
+                                  <input type="text" id="txtTime" class="form-control">
+                                  <span class="input-group-append">
+                                      <label for="txtTime" class="input-group-text bg-transparent"><i class="fa fa-clock"></i></label>
+                                  </span>
+                              </div>
+                              
+                              
+                          </div>
+                  </div>
+
+                  <div class="alert alert-warning" role="alert" id="emptyField">
+                      Por favor, llene los campos obigatorios marcados con un <span class="text-danger font-weight-bold"> * </span>
+                  </div>
+                  <div class="alert alert-warning" role="alert" id="wrongDate">
+                      Lo sentimos, esta fecha no es accesible, elija una fecha a partir del día de hoy.
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" id="btnAdd" class="btn btn-success">Agregar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script src="src/js/index.js"></script>
+  <script src="src/libs/fullcalendar/lib/main.js"></script>
+  <script src="src/libs/fullcalendar/lib/locales-all.min.js"></script>
+  <script src="src/libs/clockpicker/src/clockpicker.js"></script>
+  <script src="src/js/landingCalendar.js"></script>
 </body>
 
 </html>
