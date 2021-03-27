@@ -106,6 +106,94 @@ class UserController
 
         
     }
+
+    public function getViewsBySection(){
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT * FROM getViewsBySection";
+        $runQuery = $database->query($query);
+        
+        while ($row = $runQuery->fetch_array()) {
+            $jsonObject = array(
+                'Inicio' => $row['inicio'],
+                'Quienes Somos' => $row['quienes somos'],
+                'Servicios' => $row['servicios'],
+                'Tienda en linea' => $row['tienda'],
+                'Calendario de citas' => $row['calendario'],
+                'Contacto' => $row['contacto'],
+
+            );
+        }
+      
+        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    }
+
+    public function getClicksBySection(){
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT * FROM getClicksBySection";
+        $runQuery = $database->query($query);
+        
+        while ($row = $runQuery->fetch_array()) {
+            $jsonObject = array(
+                'Inicio' => $row['inicio'],
+                'Quienes Somos' => $row['quienes somos'],
+                'Servicios' => $row['servicios'],
+                'Tienda en linea' => $row['tienda'],
+                'Calendario de citas' => $row['calendario'],
+                'Contacto' => $row['contacto'],
+
+            );
+        }
+      
+        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    }
+
+    public function getQuotesByHour(){
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT * FROM getQuotesByHour";
+        $runQuery = $database->query($query);
+        
+        $jsonObject = array();
+        while($row = $runQuery -> fetch_array()){
+            $jsonObject[$row['hora'].':00 hrs.'] = $row['citas'];
+        }
+        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        
+       
+        
+    }
+    public function getContactsByHour(){
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT * FROM getContactByHour";
+        $runQuery = $database->query($query);
+        
+        $jsonObject = array();
+        while($row = $runQuery -> fetch_array()){
+            $jsonObject[$row['hora'].':00 hrs.'] = $row['correos'];
+        }
+        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        
+       
+        
+    }
+    public function getCommentsByHour(){
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT * FROM getCommentsByHour";
+        $runQuery = $database->query($query);
+        
+        $jsonObject = array();
+        while($row = $runQuery -> fetch_array()){
+            $jsonObject[$row['hora'].':00 hrs.'] = $row['comentarios'];
+        }
+        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        
+       
+        
+    }
 }
 
 
@@ -114,4 +202,30 @@ if(isset($_POST['year'])){
     header('Content-Type: application/json');
     $user = new UserController();
     $user -> getIncomeByMonthByYear($_POST['year']);
+}
+
+if(isset($_POST['view'])){
+    $view = $_POST['view'];
+    header('Content-Type: application/json');
+    $user = new UserController();
+    switch ($view){
+        case 'view':
+            $user -> getViewsBySection();
+            break;
+        case 'click':
+            $user -> getClicksBySection();
+            break;
+        case 'quote':
+            $user -> getQuotesByHour();
+            break;        
+        case 'contact':
+            $user -> getContactsByHour();
+            break;        
+        case 'comment':
+            $user -> getCommentsByHour();
+            break;        
+    }
+    
+    
+    
 }

@@ -74,3 +74,72 @@
     </div>
     
  </div>
+
+ <div class="row my-4">
+    <div class="col px-0 mr-2">
+        <div class="card shadow border-left-success">
+            <div class="card-header">
+                <h6 class="text-success font-weight-bold my-0">Visitas por sección</h6>
+            </div>
+            <div class="card-body">
+                <div id="viewMsg"></div>
+                <canvas id="viewsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col px-0">
+        <div class="card shadow border-left-warning">
+            
+            <div class="card-header">
+                <h6 class="text-warning font-weight-bold my-0">Clicks por sección</h6>
+            </div>
+            <div class="card-body">
+                <div id="clickMsg"></div>
+                <canvas id="clicksChart"></canvas>
+            </div>
+            
+        </div>
+    </div>
+ </div>
+
+ <div class="row my-4">
+    <div class="col px-0 mr-2">
+        <div class="card shadow border-left-danger">
+            <div class="card-header">
+                <h6 class="text-danger font-weight-bold my-0">Horas frecuentes en las que se registra una cita</h6>
+            </div>
+            <div class="card-body">
+                <div id="quoteMsg"></div>
+                <canvas id="quoteChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col px-0">
+        <div class="card shadow border-left-dark">
+            
+            <div class="card-header">
+                <h6 class="text-dark font-weight-bold my-0">Horas fecuentes en las que se realiza un contacto</h6>
+            </div>
+            <div class="card-body">
+                <div id="contactMsg"></div>
+                <canvas id="contactChart"></canvas>
+            </div>
+            
+        </div>
+    </div>
+ </div>
+
+ <div class="row my-4">
+    <div class="col col-md-6 px-0 mr-2">
+        <div class="card shadow border-left-info">
+            <div class="card-header">
+                <h6 class="text-info font-weight-bold my-0">Horas frecuentes en las que se realiza un comentario</h6>
+            </div>
+            <div class="card-body">
+                <div id="commentMsg"></div>
+                <canvas id="commentChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+ </div>

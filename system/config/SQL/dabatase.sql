@@ -176,4 +176,14 @@ CREATE TABLE ventas(
     actualizado TIMESTAMP
 );
 
+/* ---- TABLA PARA LAS ESTADISTICAS DEL LANDING PAGE -----   */
+DROP TABLE IF EXISTS estadisticas;
+CREATE TABLE estadisticas(
+    id_estadistica INT AUTO_INCREMENT PRIMARY KEY,
+    accion enum('click', 'visita', 'comentario', 'cita', 'correo'), 
+    seccion enum('index', 'quienes_somos', 'servicios', 'tienda', 'agenda', 'contacto'),
+    creado TIMESTAMP NOT NULL,
+    actualizado TIMESTAMP
+);
+
 

@@ -46,6 +46,7 @@ $(document).ready(function(){
         getDataFromUI();
         if(validate()){
             setData('add', event);
+            insertStat('cita', 'agenda');
         }
     });
 
@@ -114,4 +115,6 @@ $(document).ready(function(){
             return true;
         }
     }
+
+    
 });

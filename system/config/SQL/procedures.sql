@@ -235,3 +235,16 @@ BEGIN
         WHERE (month(fecha) = 12) AND year(fecha) = _year) AS `diciembre`;
 END;
 DELIMITER ;
+
+/*   -----  PROCEDIMIENTO PARA REGISTRAR LAS ESTADISTICAS   -----   */
+DROP PROCEDURE IF EXISTS manageStats;
+DELIMITER ;
+    CREATE PROCEDURE manageStats(IN _accion enum('click', 'visita', 'comentario', 'cita', 'correo'), IN _seccion enum('index', 'quienes_somos', 'servicios', 'tienda', 'agenda', 'contacto'), IN _action INT(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _action = 1 THEN # INSERT DATA
+            INSERT INTO estadisticas(accion, seccion, creado) VALUES (_accion, _seccion, @current_time_mx);
+        END IF;
+    END;
+DELIMITER ;

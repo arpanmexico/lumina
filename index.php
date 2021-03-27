@@ -34,19 +34,19 @@ $sucursal = new BranchController();
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link title mr-3" href="#about">Quienes somos</a>
+            <a class="nav-link title mr-3" href="#about" id="quienes_somos_link">Quienes somos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link title mr-3" href="#services">Servicios</a>
+            <a class="nav-link title mr-3" href="#services" id="servicios_link">Servicios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link title mr-3" href="#!">Tienda en línea</a>
+            <a class="nav-link title mr-3" href="#!" id="tienda_link">Tienda en línea</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link title mr-3" href="#booking">Agenda tu cita</a>
+            <a class="nav-link title mr-3" href="#booking" id="cita_link">Agenda tu cita</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link title" href="#contact">Contáctanos</a>
+            <a class="nav-link title" href="#contact" id="contacto_link">Contáctanos</a>
           </li>
         </ul>
       </div>

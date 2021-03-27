@@ -24,7 +24,7 @@ class SellController
         }
       }
     }else{
-      $response = msyql_error($database);
+      $response = mysqli_error($database);
     }
 
     echo $response;

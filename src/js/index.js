@@ -9,10 +9,45 @@ $(document).ready(function () {
     scrollAnimation();
     readScroll();
 
+    let quienesSomosLink = $('#quienes_somos_link');
+    let serviciosLink = $('#servicios_link');
+    let tiendaLink = $('#tienda_link');
+    let citaLink = $('#cita_link');
+    let contactoLink = $('#contacto_link');
+
+    quienesSomosLink.click(function(){
+        accion = 'click';
+        seccion = 'quienes_somos';
+        insertStat(accion, seccion);
+    });
+    serviciosLink.click(function(){
+        accion = 'click';
+        seccion = 'servicios';
+        insertStat(accion, seccion);
+    });
+    tiendaLink.click(function(){
+        accion = 'click';
+        seccion = 'tienda';
+        insertStat(accion, seccion);
+    });
+    citaLink.click(function(){
+        accion = 'click';
+        seccion = 'agenda';
+        insertStat(accion, seccion);
+    });
+    contactoLink.click(function(){
+        accion = 'click';
+        seccion = 'contacto';
+        insertStat(accion, seccion);
+    });
+
+    insertStat('visita', 'index');
+
     $('#contactButton').click(function () {
         if (validateEmail($('[name=correo]').val())) {
             $('#errorMessage').hide();
             sendEmail({ 'id': 1, 'user_email': $('[name=correo]').val() }, 1);
+            insertStat('correo', 'contacto');
         } else {
             $('#errorMessage').show();
         }
@@ -34,6 +69,7 @@ $(document).ready(function () {
                 };
                 sendEmail(data, 2);
                 saveComment(data);
+                insertStat('comentario', 'contacto');
                 $('#contactErrorMessage').hide();
             } else {
                 $('#contactErrorMessage').hide();
@@ -101,10 +137,27 @@ function scrollAnimation() {
 
 function readScroll() {
     $(window).scroll(function () {
+        var scrollTop = $(document).scrollTop();
+       
         if ($(document).scrollTop() > 200) {
             $('nav').addClass('navChanged').removeClass('navInactive');
         } else {
             $('nav').removeClass('navChanged').addClass('navInactive');
+        }
+
+        switch(scrollTop){
+            case 700: // Seccion queines somos
+                insertStat('visita','quienes_somos');
+                break;
+            case 1660: // Secion de servicios
+                insertStat('visita', 'servicios');
+                break;
+            case 4162: // Seccion de Calendario
+                insertStat('visita', 'agenda');
+                break;
+            case 5160: // Seccion de contacto
+                insertStat('visita', 'contacto');
+                break;        
         }
     });
 }
@@ -121,4 +174,29 @@ function validateEmail(data) {
     } else {
         return true;
     }
+}
+
+function insertStat(accion, seccion){
+    $.ajax({
+        url: 'system/controller/LandingController.php',
+        method: 'POST',
+        data: {
+            accion: accion,
+            seccion: seccion
+        },
+        beforeSend: function(){
+            console.log('Guardando acción...');  
+        },
+        success: function(response){
+            if(response == "true"){
+                console.log('Accion guardada');
+            }else{
+                console.log('No se guardó la acción', response);
+            } 
+        },
+        error: function(error){
+            console.log(error);
+        }
+
+    });
 }
