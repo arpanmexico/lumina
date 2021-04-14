@@ -31,10 +31,10 @@ if (isset($_GET['cerrarSesion'])) {
 
     switch ($_GET['accionArmazon']) {
         case 'suspend':
-            $frameQuery = "CALL framesManager(" . $_GET['idArmazon'] . ",null, null, null, null,null, null, null, null, 4)";
+            $frameQuery = "CALL framesManager(" . $_GET['idArmazon'] . ",null, null, null, null,null, null, null, null, null, 4)";
             break;
         case 'restore':
-            $frameQuery = "CALL framesManager(" . $_GET['idArmazon'] . ",null, null, null, null,null, null, null, null, 5)";
+            $frameQuery = "CALL framesManager(" . $_GET['idArmazon'] . ",null, null, null, null,null, null, null, null, null, 5)";
             break;
     }
     $frameResult = $database->query($frameQuery);

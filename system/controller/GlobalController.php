@@ -1,8 +1,25 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+//include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
 
 class GlobalController
 {
+
+    public function getDatabaseConnection()
+    {
+        return new Database();
+    }
+
+    public function createNewAlert($data){
+        $database = GlobalController::getDatabaseConnection();
+        $query = "CALL manageAlertCenter(null, '', '', '', 1)";
+        
+        $runQuery = $database->query($query);
+        if($runQuery){
+            
+        }
+    }
+
     public function getAlerts($type, $message)
     {
         switch ($type) {

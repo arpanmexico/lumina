@@ -32,7 +32,6 @@ function soldByMonthChart(year, id){
             year: year
         },
         beforeSend: function(){
-            console.log('Cargando gráfica');
             soldMsg.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             soldMsg.fadeIn(900);
         },
@@ -64,7 +63,6 @@ function viewChart(id){
             view: 'view'
         },
         beforeSend: function(){
-            console.log('Cargando gráfica');
             viewMsg.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             viewMsg.fadeIn(900);
         },
@@ -96,7 +94,6 @@ function clickChart(id){
             view: 'click'
         },
         beforeSend: function(){
-            console.log('Cargando gráfica');
             clickMsg.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             clickMsg.fadeIn(900);
         },
@@ -127,7 +124,6 @@ function quoteChart(id){
             view: 'quote'
         },
         beforeSend: function(){
-            console.log('Cargando gráfica');
             quotekMsg.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             quotekMsg.fadeIn(900);
         },
@@ -156,7 +152,6 @@ function contactChart(id){
             view: 'contact'
         },
         beforeSend: function(){
-            console.log('Cargando gráfica');
             contactkMsg.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             contactkMsg.fadeIn(900);
         },
@@ -185,7 +180,6 @@ function commentChart(id){
             view: 'comment'
         },
         beforeSend: function(){
-            console.log('Cargando gráfica');
             commentMsg.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             commentMsg.fadeIn(900);
         },

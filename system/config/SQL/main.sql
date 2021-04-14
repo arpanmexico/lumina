@@ -7,6 +7,7 @@ CALL categoriesManager(null, 'Ansi','Marca',1);
 CALL categoriesManager(null, 'Armani exchange','Marca',1);
 CALL categoriesManager(null, 'Axe Italy','Marca',1);
 CALL categoriesManager(null, 'Axel Eye Wear','Marca',1);
+CALL categoriesManager(null, 'Azirux','Marca',1);
 CALL categoriesManager(null, 'Back to Back','Marca',1);
 CALL categoriesManager(null, 'Blanc And Noir','Marca',1);
 CALL categoriesManager(null, 'Body Glove','Marca',1);
@@ -39,6 +40,7 @@ CALL categoriesManager(null, 'Owen','Marca',1);
 CALL categoriesManager(null, 'Panlees','Marca',1);
 CALL categoriesManager(null, 'Polariz','Marca',1);
 CALL categoriesManager(null, 'Puppy Eyes','Marca',1);
+CALL categoriesManager(null, 'Quarter Square', 'Marca', 1);
 CALL categoriesManager(null, 'Ralph Lauren','Marca',1);
 CALL categoriesManager(null, 'Ray Ban','Marca',1);
 CALL categoriesManager(null, 'Reebok','Marca',1);
@@ -50,12 +52,12 @@ CALL categoriesManager(null, 'Swapit','Marca',1);
 CALL categoriesManager(null, 'Tg','Marca',1);
 CALL categoriesManager(null, 'Twister','Marca',1);
 CALL categoriesManager(null, 'Twister improve','Marca',1);
+CALL categoriesManager(null, 'Versace','Marca',1);
 CALL categoriesManager(null, 'V-flex next','Marca',1);
 CALL categoriesManager(null, 'Videri','Marca',1);
 CALL categoriesManager(null, 'Visual','Marca',1);
 CALL categoriesManager(null, 'Vogue','Marca',1);
 CALL categoriesManager(null, 'X-dogydog','Marca',1);
-CALL categoriesManager(null, 'Armazon','Lente',1);
 
 /*  -----   INSERTAR ARMAZONES  -----   */
 /* INSERT QUERY NO: 1 */

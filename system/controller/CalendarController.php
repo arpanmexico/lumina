@@ -3,7 +3,7 @@
     header('Content-Type: application/json');
    
     // Sorry no se puede usar tu archivo de conexión IDKW :'c
-    $pdo = new PDO("mysql:dbname=lumina;host=34.71.80.62", "root","eNFr49WxFpsnFy");
+    $pdo = new PDO("mysql:dbname=lumina;host=35.239.25.237", "root","6BqE8jrEdJAFv2D+");
     class CalendarController
     {
         static function addEvent(){

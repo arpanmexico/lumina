@@ -26,7 +26,6 @@ if (!isset($_SESSION['userID'])) {
   </head>
 
   <body>
-
     <div id="wrapper">
       <!-- Sidebar -->
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -177,25 +176,53 @@ if (!isset($_SESSION['userID'])) {
               <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-bell fa-fw"></i>
-                  <span class="badge badge-danger badge-counter">1</span> <!-- Counter - Alerts -->
+                  <span class="badge badge-danger badge-counter"><?php echo $usuario->getAlertCenterCounter(); ?></span> <!-- Counter - Alerts -->
                 </a>
                 <!-- Dropdown - Alerts -->
                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                   <h6 class="dropdown-header">
                     Centro de Alertas
                   </h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-warning">
-                        <i class="fas fa-exclamation-triangle text-white"></i>
+                  <?php 
+                    foreach($usuario->getAlertCenter('all') as $key => $value){
+                  ?>
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                      <div class="mr-3">
+                        <?php 
+                          switch($value['tipo']){
+                            case 'Informacion':
+                              echo '
+                                <div class="icon-circle bg-info">
+                                  <i class="fas fa-info text-white"></i>
+                                </div>
+                              ';
+                              break;
+                            case 'Advertencia':
+                              echo '
+                                <div class="icon-circle bg-warning">
+                                  <i class="fas fa-exclamation-triangle text-white"></i>
+                                </div>
+                              ';
+                              break;
+                            case 'Alerta':
+                              echo '
+                                <div class="icon-circle bg-danger">
+                                  <i class="fas fa-exclamation text-white"></i>
+                                </div>
+                              ';
+                              break;
+                          }
+
+                        ?>
                       </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 2, 2019</div>
-                      Spending Alert: We've noticed unusually high spending for your account.
-                    </div>
-                  </a>
-                  <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar todas las alertas</a>
+                      <div>
+                        <div class="small text-gray-500"><?php echo $value['fecha']; ?></div>
+                        <?php echo $value['mensaje']; ?>
+                      </div>
+                    </a>
+                  <?php } ?>
+
+                  <a class="dropdown-item text-center small text-gray-500" href="dashboard.php?notificaciones=alertas">Mostrar todas las alertas</a>
                 </div>
               </li>
 
@@ -203,25 +230,31 @@ if (!isset($_SESSION['userID'])) {
               <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-envelope fa-fw"></i>
-                  <span class="badge badge-danger badge-counter">1</span> <!-- Counter - Messages -->
+                  <span class="badge badge-danger badge-counter"><?php echo $usuario->getMessageCenterCounter(); ?></span> <!-- Counter - Messages -->
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                   <h6 class="dropdown-header">
                     Centro de Mensajes
                   </h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img class="rounded-circle" src="https://source.unsplash.com/OjnmCKmzr3A/60x60" alt="">
-                      <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                        told me that people say this to all dogs, even if they aren't good...</div>
-                      <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item text-center small text-gray-500" href="#">Ver todos los mensajes</a>
+                  <?php 
+                    foreach($usuario->getMessageCenter('all') as $key => $value){
+                  ?>
+                    <a class="dropdown-item d-flex align-items-center" href="dashboard.php?notificaciones=mensajeria">
+                      <div class="dropdown-list-image mr-3">
+                        <img class="rounded-circle" src="https://source.unsplash.com/xv7-GlvBLFw/60x60" alt="">
+                        <div class="status-indicator bg-success"></div>
+                      </div>
+                      <div>
+                        <div class="text-truncate"><?php echo $value['mensaje']; ?></div>
+                        <div class="small text-gray-500"><?php echo $usuario->getGlobalController()->getFormattedDate($value['ingresado']); ?></div>
+                      </div>
+                    </a>
+
+                  <?php } ?>
+                  
+                  
+                  <a class="dropdown-item text-center small text-gray-500" href="dashboard.php?notificaciones=mensajeria">Ver todos los mensajes</a>
                 </div>
               </li>
 
@@ -308,6 +341,8 @@ if (!isset($_SESSION['userID'])) {
               include('doctores/doctores_suspendidos.php');
             } else if (isset($_GET['calendario'])) {
               include('citas/calendario.php');
+            } else if(isset($_GET['notificaciones'])){
+              include('notificaciones.php');
             } else {
               include('analisis.php');
             }
@@ -335,6 +370,8 @@ if (!isset($_SESSION['userID'])) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="../../src/js/bootstrap-notify.js"></script>
+    <script src="../../src/js/alerts.js"></script>
     <script src="../../src/js/sb-admin-2.js"></script>
     <script src="../../src/js/utilities.js"></script>
     <script src="../../src/js/sells.js"></script>
@@ -343,9 +380,8 @@ if (!isset($_SESSION['userID'])) {
     <script src="../../src/libs/clockpicker/src/clockpicker.js"></script>
     <script src="../../src/js/calendar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     <script src="../../src/js/admin.js"></script>
-    
   </body>
 
   </html>

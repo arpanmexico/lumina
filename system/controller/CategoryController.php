@@ -153,7 +153,8 @@ class CategoryController
     $database = CategoryController::getDatabaseConnection();
     $query = "CALL framesManager(" . $data['codigo'] . ", '" . $data['marca'] . "', '". $data['tipo'] ."', '" . $data['modelo'] . "', '" . ucfirst($data['color']) . "', '" . $data['descripcion'] . "', " . $data['precio'] . ", " . $data['existencias'] . ", '" . $data['proveedor'] . "', '" . $data['foto'] . "', $action)";
 
-    move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto']);
+    if($data['foto'] != 'NA')
+      move_uploaded_file($data['foto_tmp'], '../../src/catalog/' . $data['foto']);
 
     $runQuery = $database->query($query);
     if ($runQuery) {

@@ -51,7 +51,7 @@ CREATE TABLE armazones(
     id_marca varchar(20) NOT NULL, # Llave foranea
     id_tipo varchar(20) NOT NULL,  # es el mismo que id de marca pero será para los productos variossin ser foraneo parano hacer conflicto
     modelo varchar(200) NOT NULL,
-    color varchar(255) NOT NULL,
+    color text NOT NULL,
     descripcion text NOT NULL,
     precio float NOT NULL,
     existencias int(5) NOT NULL,
@@ -186,4 +186,11 @@ CREATE TABLE estadisticas(
     actualizado TIMESTAMP
 );
 
-
+/*  ------  TABLA PARA EL CENTRO DE ALERTAS  -----   */
+CREATE TABLE alertas(
+    id_alerta int(5) PRIMARY KEY AUTO_INCREMENT,
+    mensaje text NOT NULL,
+    seccion enum('Categorias','Productos','Doctores','Pacientes','Ventas','Citas') NOT NULL,
+    tipo enum('Informacion','Advertencia','Alerta') NOT NULL,
+    fecha timestamp NOT NULL
+);

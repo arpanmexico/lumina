@@ -8,6 +8,8 @@ class SellController
 
   public function sellManage($type, $data){
     include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+    //include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
+
     $response = 'true';
     $database = new Database();
     $query = "call sellsManager('".$data['id_paciente']."', '".$data['productos']."', '".$data['nombre']."', '".$data['apellidos']."', '".$data['fecha']."', '".$data['tipo_pago']."', '".$data['modalidad_pago']."', ".$data['mensualidades'].", ".$data['precio_mes'].", ".$data['interes'].", ".$data['total'].", ".$type.")";

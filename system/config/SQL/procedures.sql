@@ -77,7 +77,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS framesManager;
 DELIMITER ;
     CREATE PROCEDURE framesManager(IN _id_frame bigint(20), IN _id_brand varchar(20), IN _id_tipo varchar(20), IN _model varchar(20),
-        IN _color char(20), IN _description text, IN _price float, IN _stock int(5), IN _id_supplier varchar(20),
+        IN _color text, IN _description text, IN _price float, IN _stock int(5), IN _id_supplier varchar(20),
         IN _picture text, IN _action int(1))
     BEGIN
         SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
@@ -245,6 +245,19 @@ DELIMITER ;
 
         IF _action = 1 THEN # INSERT DATA
             INSERT INTO estadisticas(accion, seccion, creado) VALUES (_accion, _seccion, @current_time_mx);
+        END IF;
+    END;
+DELIMITER ;
+
+/*   -----  PROCEDIMIENTO PARA ADMINISTRAR EL CENTRO DE ALERTAS   -----   */
+DROP PROCEDURE IF EXISTS manageAlertCenter;
+DELIMITER ;
+    CREATE PROCEDURE manageAlertCenter(IN _id_alerta int(5), IN _mensaje text, IN _seccion enum('Categorias','Productos','Doctores', 'Pacientes','Ventas','Citas'), IN _tipo enum('Informacion','Advertencia','Alerta'), IN _accion int(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _accion = 1 THEN # INSERT DATA
+            INSERT INTO alertas(mensaje, seccion, tipo, fecha) VALUES (_mensaje, _seccion, _tipo, @current_time_mx);
         END IF;
     END;
 DELIMITER ;

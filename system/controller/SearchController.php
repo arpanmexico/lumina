@@ -1,21 +1,22 @@
 <?php
 
-include( 'GlobalController.php' );
+include('GlobalController.php');
+
 $global = new GlobalController();
 $database = new Database();
-if(isset($_POST["text"])){
+if (isset($_POST["text"])) {
     $search = $_POST['text'];
     $query = "";
-    if(comprobarBusqueda($search)){ 
+    if (comprobarBusqueda($search)) {
         $database = new Database();
         $query = "";
-        if(isset($_POST['type'])){
+        if (isset($_POST['type'])) {
             $type = $_POST['type'];
-            switch ($type){
+            switch ($type) {
                 case 'cat': //Categorias
                     $ext = $_POST['ext'];
                     $category = "";
-                    switch($ext){
+                    switch ($ext) {
                         case 1:
                             $category = 'Lente';
                             break;
@@ -28,9 +29,8 @@ if(isset($_POST["text"])){
                         case 4:
                             $category = 'Proveedor';
                             break;
-                        
                     }
-                    $query = "SELECT id_categoria, nombre, tipo FROM categorias WHERE tipo = '" . $category . "' and nombre LIKE '".$search."%' OR tipo = '" . $category . "' and id_categoria LIKE '".$search."%' ORDER BY nombre";
+                    $query = "SELECT id_categoria, nombre, tipo FROM categorias WHERE tipo = '" . $category . "' and nombre LIKE '" . $search . "%' OR tipo = '" . $category . "' and id_categoria LIKE '" . $search . "%' ORDER BY nombre";
                     break;
                 case 'arm': // Armazones
                     $query = "SELECT DISTINCT id_armazon, 
@@ -38,66 +38,65 @@ if(isset($_POST["text"])){
                         (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria )AS tipo,  
                         modelo, color, descripcion, precio, existencias,
                         (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
-                        proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 AND (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) LIKE '".$search."%' OR suspendido = 0 AND id_armazon LIKE '".$search."%' ORDER BY marca";  
+                        proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 AND (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) LIKE '" . $search . "%' OR suspendido = 0 AND id_armazon LIKE '" . $search . "%' ORDER BY marca";
                     break;
                 case 'doc': //Doctores
-                    $query = "SELECT id_doctor, nombre, apellido, telefono, especialidad, estado, ingresado, actualizado FROM doctores WHERE suspendido = 0 AND nombre LIKE '".$search."%' OR suspendido = 0 AND id_doctor LIKE '".$search."%'";
+                    $query = "SELECT id_doctor, nombre, apellido, telefono, especialidad, estado, ingresado, actualizado FROM doctores WHERE suspendido = 0 AND nombre LIKE '" . $search . "%' OR suspendido = 0 AND id_doctor LIKE '" . $search . "%'";
                     break;
                 case 'pac': // Pacientes
-                    $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 AND nombre LIKE '".$search."%' OR suspendido = 0 AND id_paciente LIKE '".$search."%'";
-                    break;           
+                    $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 AND nombre LIKE '" . $search . "%' OR suspendido = 0 AND id_paciente LIKE '" . $search . "%'";
+                    break;
                 case 'ven': // Pacientes en ventas
                     $ext = $_POST['ext'];
-                    switch($ext){
+                    switch ($ext) {
                         case 1:
-                            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total FROM ventas WHERE fecha LIKE '%".$search."%' OR id_venta LIKE '".$search."%' OR id_paciente LIKE '".$search."%' OR nombre LIKE '".$search."%' ORDER BY fecha";
+                            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total FROM ventas WHERE fecha LIKE '%" . $search . "%' OR id_venta LIKE '" . $search . "%' OR id_paciente LIKE '" . $search . "%' OR nombre LIKE '" . $search . "%' ORDER BY fecha";
                             $type = 'vent';
                             break;
                         default:
-                            $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 AND nombre LIKE '".$search."%' OR suspendido = 0 AND id_paciente LIKE '".$search."%'";
+                            $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 AND nombre LIKE '" . $search . "%' OR suspendido = 0 AND id_paciente LIKE '" . $search . "%'";
                             $type = "ven";
-                            break;    
+                            break;
                     }
-                    break;        
-                default: 
-                    break;    
+                    break;
+                default:
+                    break;
             }
-            search($query, $database, $type); 
+            search($query, $database, $type);
         }
-        
-    }    
-    
-        
+    }
 }
 
-function comprobarBusqueda($dato){
-     if (preg_match_all("/^[a-zA-Z0-9_]/", $dato)) {
-      //echo "El nombre de usuario $dato es correcto<br>";
-      return true;
-   } else {
-       echo '<div class="col-12 alert alert-warning animated fadeIn">La búsqueda con "'.$dato.'" no es válida. Vuelva a intentarlo únicamente con letras o números</div>';
-      return false;
-   }
+function comprobarBusqueda($dato)
+{
+    if (preg_match_all("/^[a-zA-Z0-9_]/", $dato)) {
+        //echo "El nombre de usuario $dato es correcto<br>";
+        return true;
+    } else {
+        echo '<div class="col-12 alert alert-warning animated fadeIn">La búsqueda con "' . $dato . '" no es válida. Vuelva a intentarlo únicamente con letras o números</div>';
+        return false;
+    }
 }
 
-function search($query, $database, $view){
+function search($query, $database, $view)
+{
     $execQuery = $database->query($query);
 
-    if(mysqli_num_rows($execQuery) > 0){
+    if (mysqli_num_rows($execQuery) > 0) {
         echo '<div class="row ml-0 animated fadeIn">
-                    <h6 class="small text-muted">Registros encontrados: '.mysqli_num_rows($execQuery).'</h6>
+                    <h6 class="small text-muted">Registros encontrados: ' . mysqli_num_rows($execQuery) . '</h6>
                 </div>
                 <div class="row animated fadeIn">
-                ';      
-        while($row = $execQuery->fetch_array()){
-            switch($view){
+                ';
+        while ($row = $execQuery->fetch_array()) {
+            switch ($view) {
                 case "cat":
                     $data = array(
                         'nombre' => $row['nombre'],
                         'id_categoria' => $row['id_categoria'],
                         'tipo' => $row['tipo'],
                     );
-        
+
                     echo categoryCard($data);
                     break;
                 case "arm":
@@ -129,7 +128,7 @@ function search($query, $database, $view){
                         'ingresado' => $row['ingresado'],
                         'actualizado' => $row['actualizado'],
                     );
-                    
+
                     echo docCard($data);
                     break;
                 case 'pac':
@@ -148,19 +147,19 @@ function search($query, $database, $view){
                         'ingresado' => $row['ingresado'],
                         'actualizado' => $row['actualizado']
                     );
-                    
+
                     echo patientCard($data);
-                    break;        
+                    break;
                 case 'ven':
                     $data = array(
                         'id' => $row['id_paciente'],
                         'nombre' => $row['nombre'],
-                        'ingresado' => $row['ingresado'],  
-                        'correo' => $row['correo'],  
+                        'ingresado' => $row['ingresado'],
+                        'correo' => $row['correo'],
                         'apellido_paterno' => $row['apellido_paterno'],
                         'apellido_materno' => $row['apellido_materno'],
                     );
-                    
+
                     echo sellPatientCard($data);
                     break;
                 case 'vent':
@@ -176,50 +175,51 @@ function search($query, $database, $view){
                         'precio_mes' => $row['precio_mes'],
                         'interes' => $row['interes'],
                         'total' => $row['total'],
-                    );  
+                    );
                     echo sellCard($data);
-                    break;            
+                    break;
             }
         }
-    }else{
+    } else {
         echo '
             <div class="alert alert-warning col-12 animated fadeIn">
                 No se ha encontrado ningún registro.
             </div>
             ';
     }
-    
 }
 
-function categoryCard($data){
-    
+function categoryCard($data)
+{
+
     $nombre = $data['nombre'];
     $id = $data['id_categoria'];
     $tipo = $data['tipo'];
-    
+
 
     $response = ' <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
     <div class="card shadow">
       <div class="card-body">
         <h5 class="card-title">' . $nombre . '</h5>
-        <a href="../controller/DeleteData.php?categoryID=' . $id . '&categoryType=' . $tipo. '" class="card-link text-danger">Eliminar</a>
+        <a href="../controller/DeleteData.php?categoryID=' . $id . '&categoryType=' . $tipo . '" class="card-link text-danger">Eliminar</a>
       </div>
     </div>
   </div>';
     return $response;
 }
 
-function frameCard($data){
+function frameCard($data)
+{
     $serialized_array = serialize($data);
     $url = urlencode($serialized_array);
     $stockMsg = "";
     if ($data['existencias'] >= 5) {
         $stockMsg = "<span class='text-success'>" . $data['existencias'] . " en existencia ";
-      } else if ($data['existencias'] < 5 && $data['existencias'] > 3) {
+    } else if ($data['existencias'] < 5 && $data['existencias'] > 3) {
         $stockMsg = "<span class='text-warning'>" . $data['existencias'] . " en existencia ";
-      } else if ($data['existencias'] <= 2) {
+    } else if ($data['existencias'] <= 2) {
         $stockMsg = "<span class='text-danger'>" . $data['existencias'] . " en existencia ";
-      }
+    }
     $response = "
         <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
             <div class='card shadow'>
@@ -243,7 +243,8 @@ function frameCard($data){
     return $response;
 }
 
-function docCard($data){
+function docCard($data)
+{
     $serialized_array = serialize($data);
     $url = urlencode($serialized_array);
 
@@ -283,9 +284,10 @@ function docCard($data){
     return $response;
 }
 
-function patientCard($data){
+function patientCard($data)
+{
     $serialized_array = serialize($data);
-    $url = urlencode($serialized_array);            
+    $url = urlencode($serialized_array);
     $response = "
     <div class='col-lg-3 col-md-6 col-sm-12'>
     <div class='card shadow-sm'>
@@ -322,10 +324,11 @@ function patientCard($data){
     </div>
     </div>
     ";
- return $response;
+    return $response;
 }
 
-function sellPatientCard($data){
+function sellPatientCard($data)
+{
     $response = "
     <div class='col-lg-3 col-md-6 col-sm-12'>
     <div class='card shadow-sm border-info text-info'>
@@ -342,7 +345,9 @@ function sellPatientCard($data){
                     </div>
                 </div>
                 <p class='text-muted'>" . $data['correo'] . "</p>
-                <a class='text-muted text-decoration-none small stretched-link' onClick= 'selectPatient("; $response .= '"'.$data['id'].'","'.$data['nombre'].'","'.$data['apellido_paterno'].' '.$data['apellido_materno'].'"'; $response.=")'>Click para seleccionar este paciente</a>
+                <a class='text-muted text-decoration-none small stretched-link' onClick= 'selectPatient(";
+    $response .= '"' . $data['id'] . '","' . $data['nombre'] . '","' . $data['apellido_paterno'] . ' ' . $data['apellido_materno'] . '"';
+    $response .= ")'>Click para seleccionar este paciente</a>
             </div>
         </div>
     </div>
@@ -352,7 +357,8 @@ function sellPatientCard($data){
     return $response;
 }
 
-function sellCard($data){
+function sellCard($data)
+{
     $date = explode(' ', $data['fecha']);
     $tipoPago = $data['tipo_pago'];
     $modalidadPago = $data['modalidad_pago'];
@@ -361,18 +367,18 @@ function sellCard($data){
     $interes = $data['interes'];
     $image = "";
 
-    switch($tipoPago){
+    switch ($tipoPago) {
         case 'E':
             $tipoPago = 'En efectivo';
             $image = "dollar.svg";
             break;
         case 'T':
-            $tipoPago = "Con tarjeta" ;
+            $tipoPago = "Con tarjeta";
             $image = "credit_card.svg";
-            break;   
+            break;
     }
 
-    switch($modalidadPago){
+    switch ($modalidadPago) {
         case 'C':
             $modalidadPago = 'Pago de contado';
             $mostrarPrecioMes = "d-none";
@@ -390,7 +396,7 @@ function sellCard($data){
             $mostrarPrecioMes = "d-block";
             $mostrarInteres = "d-block";
             $mostrarMensualidad = "d-none";
-            break;    
+            break;
     }
 
     $response = '
@@ -399,18 +405,20 @@ function sellCard($data){
                 <div class="card-header px-1">
                     <div class="row m-0">
                         <div class="col my-auto">
-                            <p class="text-muted small my-auto font-weight-bold">'.$date[0].'</p>
+                            <p class="text-muted small my-auto font-weight-bold">' . $date[0] . '</p>
                         </div>
                         <div class="col text-right my-auto">
-                            <p class="text-primary font-weight-bold my-auto">$ '.floatval($data['total']).'</p>
+                            <p class="text-primary font-weight-bold my-auto">$ ' . floatval($data['total']) . '</p>
                         </div>
                         
                     </div>
                 </div>
                 <div class="card-body text-center">
-                    <img src="../../src/img/'.$image.'" class="card-img mb-2" height="80px">
-                    <p class="text-success font-weight-bold small">'.$modalidadPago.' '.$tipoPago.'</p>
-                    <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo('; $response .= "'".$data['id_venta']."','".ucwords($data['nombre'])."','".ucwords($data['apellidos'])."','".$data['fecha']."','".$tipoPago."','".$modalidadPago."','".$mensualidades."','".$precioMes."','".$interes."',".floatval($data['total']).""; $response .= ');">Ver información completa</a>
+                    <img src="../../src/img/' . $image . '" class="card-img mb-2" height="80px">
+                    <p class="text-success font-weight-bold small">' . $modalidadPago . ' ' . $tipoPago . '</p>
+                    <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo(';
+    $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "','" . $mensualidades . "','" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . "";
+    $response .= ');">Ver información completa</a>
                 </div>
             </div>
         

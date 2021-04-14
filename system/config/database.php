@@ -2,9 +2,9 @@
 
 class Database extends mysqli
 {    
-    private $DB_HOST = '34.71.80.62';
+    private $DB_HOST = '35.239.25.237';
     private $DB_USER = 'root';
-    private $DB_PASS = 'eNFr49WxFpsnFy';
+    private $DB_PASS = '6BqE8jrEdJAFv2D+';
     private $DB_NAME = 'lumina';
 
     public function __construct()

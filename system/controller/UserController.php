@@ -53,7 +53,8 @@ class UserController
         $database->close();
     }
 
-    public function getCountPatients(){
+    public function getCountPatients()
+    {
         $database = UserController::getDatabaseConnection();
 
         $query = "SELECT count(id_paciente) as pacientes FROM pacientes";
@@ -78,13 +79,14 @@ class UserController
         $database->close();
     }
 
-    public function getIncomeByMonthByYear($year){
-        
+    public function getIncomeByMonthByYear($year)
+    {
+
         $database = UserController::getDatabaseConnection();
 
         $query = "call getSoldByMonthByYear($year)";
         $runQuery = $database->query($query);
-        
+
         while ($row = $runQuery->fetch_array()) {
             $jsonObject = array(
                 'Enero' => $row['enero'],
@@ -101,18 +103,19 @@ class UserController
                 'Diciembre' => $row['diciembre'],
             );
         }
-      
-        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
-        
+        $database->close();
+
+        echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 
-    public function getViewsBySection(){
+    public function getViewsBySection()
+    {
         $database = UserController::getDatabaseConnection();
 
         $query = "SELECT * FROM getViewsBySection";
         $runQuery = $database->query($query);
-        
+
         while ($row = $runQuery->fetch_array()) {
             $jsonObject = array(
                 'Inicio' => $row['inicio'],
@@ -124,16 +127,19 @@ class UserController
 
             );
         }
-      
+
+        $database->close();
+
         echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 
-    public function getClicksBySection(){
+    public function getClicksBySection()
+    {
         $database = UserController::getDatabaseConnection();
 
         $query = "SELECT * FROM getClicksBySection";
         $runQuery = $database->query($query);
-        
+
         while ($row = $runQuery->fetch_array()) {
             $jsonObject = array(
                 'Inicio' => $row['inicio'],
@@ -145,87 +151,173 @@ class UserController
 
             );
         }
-      
+
+        $database->close();
+
         echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 
-    public function getQuotesByHour(){
+    public function getQuotesByHour()
+    {
         $database = UserController::getDatabaseConnection();
 
         $query = "SELECT * FROM getQuotesByHour";
         $runQuery = $database->query($query);
-        
+
         $jsonObject = array();
-        while($row = $runQuery -> fetch_array()){
-            $jsonObject[$row['hora'].':00 hrs.'] = $row['citas'];
+        while ($row = $runQuery->fetch_array()) {
+            $jsonObject[$row['hora'] . ':00 hrs.'] = $row['citas'];
         }
         echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        
-       
-        
+
+        $database->close();
     }
-    public function getContactsByHour(){
+    public function getContactsByHour()
+    {
         $database = UserController::getDatabaseConnection();
 
         $query = "SELECT * FROM getContactByHour";
         $runQuery = $database->query($query);
-        
+
         $jsonObject = array();
-        while($row = $runQuery -> fetch_array()){
-            $jsonObject[$row['hora'].':00 hrs.'] = $row['correos'];
+        while ($row = $runQuery->fetch_array()) {
+            $jsonObject[$row['hora'] . ':00 hrs.'] = $row['correos'];
         }
         echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        
-       
-        
+
+        $database->close();
     }
-    public function getCommentsByHour(){
+    public function getCommentsByHour()
+    {
         $database = UserController::getDatabaseConnection();
 
         $query = "SELECT * FROM getCommentsByHour";
         $runQuery = $database->query($query);
-        
+
         $jsonObject = array();
-        while($row = $runQuery -> fetch_array()){
-            $jsonObject[$row['hora'].':00 hrs.'] = $row['comentarios'];
+        while ($row = $runQuery->fetch_array()) {
+            $jsonObject[$row['hora'] . ':00 hrs.'] = $row['comentarios'];
         }
         echo json_encode($jsonObject, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        
-       
-        
+
+        $database->close();
+    }
+
+    public function getMessageCenterCounter()
+    {
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT COUNT(id_comentario) AS mensajes FROM comentarios";
+        $runQuery = $database->query($query);
+        $row = $runQuery->fetch_array();
+
+        return $row['mensajes'];
+    }
+
+    public function getMessageCenter($type)
+    {
+        // type => [first, all]
+        $database = UserController::getDatabaseConnection();
+        $data = array();
+        switch ($type) {
+            case 'first':
+                $query = "SELECT id_comentario, nombre, correo, asunto, mensaje, ingresado, respondido FROM comentarios WHERE estado = 0 LIMIT 3 ORDER BY ingresado";
+                break;
+            case 'all':
+                $query = "SELECT id_comentario, nombre, correo, asunto, mensaje, ingresado, respondido, estado FROM comentarios";
+                break;
+        }
+        $runQuery = $database->query($query);
+
+        if ($runQuery->num_rows > 0) {
+            while ($row = $runQuery->fetch_array()) {
+                array_push($data, array(
+                    'id' => $row['id_comentario'],
+                    'nombre' => $row['nombre'],
+                    'correo' => $row['correo'],
+                    'asunto' => $row['asunto'],
+                    'mensaje' => $row['mensaje'],
+                    'ingresado' => $row['ingresado'],
+                    'respondido' => $row['respondido'],
+                    'estado' => $row['estado']
+                ));
+            }
+        } else {
+            return "Buzón de mensajes vacío";
+        }
+        return $data;
+    }
+
+    public function getAlertCenterCounter()
+    {
+        $database = UserController::getDatabaseConnection();
+
+        $query = "SELECT COUNT(id_alerta) AS alertas FROM alertas";
+        $runQuery = $database->query($query);
+        $row = $runQuery->fetch_array();
+
+        return $row['alertas'];
+    }
+
+    public function getAlertCenter($type)
+    {
+        // type => [first, all]
+        $database = UserController::getDatabaseConnection();
+        $data = array();
+        switch ($type) {
+            case 'first':
+                $query = "SELECT id_alerta, mensaje, seccion, tipo, fecha FROM alertas ORDER BY fecha DESC LIMIT 10";
+                break;
+            case 'all':
+                $query = "SELECT id_alerta, mensaje, seccion, tipo, fecha FROM alertas";
+                break;
+        }
+        $runQuery = $database->query($query);
+
+        if ($runQuery->num_rows > 0) {
+            while ($row = $runQuery->fetch_array()) {
+                array_push($data, array(
+                    'id' => $row['id_alerta'],
+                    'mensaje' => $row['mensaje'],
+                    'seccion' => $row['seccion'],
+                    'tipo' => $row['tipo'],
+                    'fecha' => $row['fecha']
+                ));
+            }
+        } else {
+            return "Buzón de alertas vacío";
+        }
+        return $data;
     }
 }
 
 
 
-if(isset($_POST['year'])){
+if (isset($_POST['year'])) {
     header('Content-Type: application/json');
     $user = new UserController();
-    $user -> getIncomeByMonthByYear($_POST['year']);
+    $user->getIncomeByMonthByYear($_POST['year']);
 }
 
-if(isset($_POST['view'])){
+if (isset($_POST['view'])) {
     $view = $_POST['view'];
     header('Content-Type: application/json');
     $user = new UserController();
-    switch ($view){
+    switch ($view) {
         case 'view':
-            $user -> getViewsBySection();
+            $user->getViewsBySection();
             break;
         case 'click':
-            $user -> getClicksBySection();
+            $user->getClicksBySection();
             break;
         case 'quote':
-            $user -> getQuotesByHour();
-            break;        
+            $user->getQuotesByHour();
+            break;
         case 'contact':
-            $user -> getContactsByHour();
-            break;        
+            $user->getContactsByHour();
+            break;
         case 'comment':
-            $user -> getCommentsByHour();
-            break;        
+            $user->getCommentsByHour();
+            break;
     }
-    
-    
-    
 }

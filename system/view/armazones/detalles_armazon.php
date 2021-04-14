@@ -44,7 +44,7 @@ $categorias = new CategoryController();
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="codigoBarras">Código de Barras <span class="text-danger">(No se puede cambiar)</span></label>
-                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras" value="<?php echo $array['id']; ?>" disabled>
+                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras" value="<?php echo $array['id_armazon']; ?>" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -127,7 +127,7 @@ $categorias = new CategoryController();
                         </div>
                         <button type="submit" name="actualizarArmazon" class="btn btn-info btn-block">Actualizar Datos</button>
                         <div class="ml-auto mx-auto mt-3">
-                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id']; ?>&accionArmazon=suspend" class="text-danger">Eliminar Armazón</a>
+                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id_armazon']; ?>&accionArmazon=suspend" class="text-danger">Eliminar Armazón</a>
                         </div>
                     </div>
                 </div>
@@ -137,9 +137,10 @@ $categorias = new CategoryController();
             <?php
             if (isset($_POST['actualizarArmazon'])) {
                 $data = array(
-                    'codigo' => $array['id'],
+                    'codigo' => $array['id_armazon'],
                     'marca' => $_POST['marcaArmazon'],
                     'modelo' => $_POST['modeloArmazon'],
+                    'tipo' => $_POST['tipoProducto'],
                     'color' => strtolower($_POST['colorArmazon']),
                     'descripcion' => ucfirst($_POST['descripcionArmazon']),
                     'precio' => $_POST['precioArmazon'],
