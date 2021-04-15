@@ -108,7 +108,7 @@ $categorias = new CategoryController();
                 </div>
             </div>
 
-            <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3">Guardar Producto</button>
+            <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3 imprimirEtiqueta">Guardar Producto</button>
         </form>
         <?php
         if (isset($_POST['guardarArmazon'])) {
@@ -125,6 +125,50 @@ $categorias = new CategoryController();
                 'foto' => $_FILES['fotoArmazon']['name'],
                 'foto_tmp' => $_FILES['fotoArmazon']['tmp_name']
             );
+            require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ImprimirEpl.php');
+	        require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ExisteImpresoraWindows.php');
+		
+
+	        //Instanciamos de la clase ExisteImpresoraWindows.php para comprobar si existe la impresora
+	        $exiteImpresora = new ExisteImpresoraWindows();	
+	        //Instanciamos de la clase ImprimirEpl.php para imprimir
+	        $epl = new ImprimirEpl();	
+            //Escribimos el nombre de la impresora tal cual este compartida.
+	        $impresora = 'Xprinter XP-450B';
+	        //$impresora = 'PDFCreator';
+	
+
+	        if ($exiteImpresora->verificarImpresora($impresora,true)) {		
+		
+		            //Escribimos el contenido de la etiqueta a imprimir
+       
+
+                    $codigo = $data["codigo"];
+                    $tipo = $data["tipo"];
+                    $marca = $data["marca"];
+                    $modelo = $data["modelo"];
+                    $color = $data["color"];
+                    $existencia = $data["existencia"];
+                    $precio = $data["precio"];
+
+		            $texto1 = "'$codigo'";
+		            $texto2 = "'$tipo $modelo $color'";
+		            $texto3 = "$'$precio'";
+		            $texto4 = "LUMINA. Centro Integral Ocular";
+                                                        
+	                $etiqueta = $epl->escribirTexto($texto2, 170, 10, 1, false, 0, 3, 3);
+                    $etiqueta .= $epl->escribirTexto($texto3, 350, 95, 1, false, 0, 2, 2);
+	                $etiqueta .= $epl->pintarLinea(5, 75, 765, 10, 1, 0);
+
+	    
+	    //Ejemplo de código de barras
+	                $etiqueta .= $epl->pintarCodigoBarra($texto1, 190, 210, 120, 1, true, 0, 2, 6);   
+
+	    	              
+	                $epl->imprimir($epl->construirEtiqueta($etiqueta, $existencia), $impresora, false, true);
+	                }else{
+		                echo "<h1>No existe Impresora</h1>";
+	                }
 
             // 1 => INSERT
             if ($categorias->manageFrames($data, 1)) {
