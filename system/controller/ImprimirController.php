@@ -49,7 +49,11 @@ $printer->text("Ventas");
 //Datos del pago
 $printer->text("FOLIO: ");
 $printer->text("TIPO DE VENTA: ");
+$printer->text($data['modalidad_pago'] . "\n");
 $printer->text("PACIENTE: ");
+$printer->text($data["nombre"] . "\n");
+$printer->text($data["apellidos"] . "\n");
+
 
 
  
