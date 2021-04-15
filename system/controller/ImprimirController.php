@@ -1,5 +1,15 @@
 <?php
-    require __DIR__ . '/ticket/autoload.php'; 
+/*
+
+	echo "Datos en el controlador:";
+
+	for ($i=0; $i < count($_POST['venta']); $i++) { 
+		print_r($_POST['venta']['productos'][$i]);
+	}
+ */
+
+
+require __DIR__ . '/ticket/autoload.php'; 
     use Mike42\Escpos\Printer;
     use Mike42\Escpos\EscposImage;
     use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
