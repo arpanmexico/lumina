@@ -38,6 +38,11 @@ $categorias = new CategoryController();
                     <?php
                     echo $categorias->getGlobalController()->getFormattedDate($array['actualizado']);
                     ?>
+
+                    <!-- Función para Reimprimir Etiquetas -->
+                    <p class="mt-3">
+                        <a href="#!" class="btn btn-info"><i class="fas fa-print"></i> Reimprimir Etiqueta</a>
+                    </p>
                 </div>
                 <div class=" col-lg-7 col-sm-6 col-sm-12">
                     <div class="row">

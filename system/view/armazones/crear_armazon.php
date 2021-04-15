@@ -108,7 +108,7 @@ $categorias = new CategoryController();
                 </div>
             </div>
 
-            <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3">Guardar Producto</button>
+            <button type="submit" name="guardarArmazon" class="btn btn-info btn-block mt-3">Guardar Producto e Imprimir Etiqueta</button>
         </form>
         <?php
         if (isset($_POST['guardarArmazon'])) {
