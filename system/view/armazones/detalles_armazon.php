@@ -41,15 +41,19 @@ $categorias = new CategoryController();
 
                     <!-- Función para Reimprimir Etiquetas -->
                     <p class="mt-3">
-                        <a href="#!" class="btn btn-info"><i class="fas fa-print"></i> Reimprimir Etiqueta</a>
+                        <button type="submit" name="reimprimir" class="btn btn-info"><i class="fas fa-print"></i>
+                            Reimprimir Etiqueta</button>
                     </p>
                 </div>
                 <div class=" col-lg-7 col-sm-6 col-sm-12">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="codigoBarras">Código de Barras <span class="text-danger">(No se puede cambiar)</span></label>
-                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras" placeholder="Digita aquí el código de barras" value="<?php echo $array['id_armazon']; ?>" disabled>
+                                <label for="codigoBarras">Código de Barras <span class="text-danger">(No se puede
+                                        cambiar)</span></label>
+                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras"
+                                    placeholder="Digita aquí el código de barras"
+                                    value="<?php echo $array['id_armazon']; ?>" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -87,31 +91,40 @@ $categorias = new CategoryController();
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="modeloArmazon">Módelo del Armazon</label>
-                                <input type="text" name="modeloArmazon" class="form-control" id="modeloArmazon" placeholder="Escribe aquí el módelo del armazon" value="<?php echo $array['modelo']; ?>">
+                                <input type="text" name="modeloArmazon" class="form-control" id="modeloArmazon"
+                                    placeholder="Escribe aquí el módelo del armazon"
+                                    value="<?php echo $array['modelo']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="colorArmazon">Color del Armazon</label>
-                                <input type="text" name="colorArmazon" class="form-control" id="colorArmazon" placeholder="Escribe aquí el/los colores del armazon" value="<?php echo $array['color']; ?>">
+                                <input type="text" name="colorArmazon" class="form-control" id="colorArmazon"
+                                    placeholder="Escribe aquí el/los colores del armazon"
+                                    value="<?php echo $array['color']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <label for="descripcionArmazon">Descripción del Armazon</label>
-                                <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon" rows="3" placeholder="Escribe en esra zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."><?php echo $array['descripcion']; ?></textarea>
+                                <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon"
+                                    rows="3"
+                                    placeholder="Escribe en esra zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."><?php echo $array['descripcion']; ?></textarea>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="precioArmazon">Precio al público</label>
-                                <input type="number" name="precioArmazon" class="form-control" id="precioArmazon" placeholder="Escribe el precio al público" value="<?php echo $array['precio']; ?>">
+                                <input type="number" name="precioArmazon" class="form-control" id="precioArmazon"
+                                    placeholder="Escribe el precio al público" value="<?php echo $array['precio']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="existenciaArmazon">Existencias</label>
-                                <input type="number" name="existenciaArmazon" class="form-control" id="existenciaArmazon" placeholder="Digita el número de existencias" value="<?php echo $array['existencias']; ?>">
+                                <input type="number" name="existenciaArmazon" class="form-control"
+                                    id="existenciaArmazon" placeholder="Digita el número de existencias"
+                                    value="<?php echo $array['existencias']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -130,9 +143,11 @@ $categorias = new CategoryController();
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" name="actualizarArmazon" class="btn btn-info btn-block">Actualizar Datos</button>
+                        <button type="submit" name="actualizarArmazon" class="btn btn-info btn-block">Actualizar
+                            Datos</button>
                         <div class="ml-auto mx-auto mt-3">
-                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id_armazon']; ?>&accionArmazon=suspend" class="text-danger">Eliminar Armazón</a>
+                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id_armazon']; ?>&accionArmazon=suspend"
+                                class="text-danger">Eliminar Armazón</a>
                         </div>
                     </div>
                 </div>
@@ -167,6 +182,61 @@ $categorias = new CategoryController();
                 }
             }
             ?>
+            <?php
+                if (isset($_POST['reimprimir'])) {
+                    $data = array(
+                      'codigo' => $array['codigoBarras'],
+                      'marca' => $_POST['marcaArmazon'],
+                      'modelo' => $_POST['modeloArmazon'],
+                      'tipo' => $_POST['tipoProducto'],
+                      'color' => strtolower($_POST['colorArmazon']),
+                      'descripcion' => ucfirst($_POST['descripcionArmazon']),
+                      'precio' => $_POST['precioArmazon'],
+                      'existencias' => $_POST['existenciaArmazon'],
+                      'proveedor' => $_POST['proveedorArmazon'],
+                      );
+
+                      require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ImprimirEpl.php');
+                      require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ExisteImpresoraWindows.php');
+                            
+                    
+                      //Instanciamos de la clase ExisteImpresoraWindows.php para comprobar si existe la impresora
+                      $exiteImpresora = new ExisteImpresoraWindows();	
+                      //Instanciamos de la clase ImprimirEpl.php para imprimir
+                      $epl = new ImprimirEpl();	
+                      //Escribimos el nombre de la impresora tal cual este compartida.
+                      $impresora = 'Xprinter XP-450B';
+                      //$impresora = 'PDFCreator';
+                        
+                    
+                    if ($exiteImpresora->verificarImpresora($impresora,true)) {		
+                            
+                              //Escribimos el contenido de la etiqueta a imprimir
+                        $codigo = $data["codigo"];
+                        $tipo = $data["tipo"];
+                        $marca = $data["marca"];
+                        $modelo = $data["modelo"];
+                        $color = $data["color"];
+                        $existencia = $data["existencia"];
+                        $precio = $data["precio"];
+                    
+                        $texto1 = "'$codigo'";
+                        $texto2 = "'$tipo $modelo $color'";
+                        $texto3 = "$'$precio'";
+                        $texto4 = "LUMINA. Centro Integral Ocular";
+                                                                            
+                        $etiqueta = $epl->escribirTexto($texto2, 170, 10, 1, false, 0, 3, 3);
+                        $etiqueta .= $epl->escribirTexto($texto3, 350, 95, 1, false, 0, 2, 2);
+                        $etiqueta .= $epl->pintarLinea(5, 75, 765, 10, 1, 0);
+
+                        //código de barras
+                        $etiqueta .= $epl->pintarCodigoBarra($texto1, 190, 210, 120, 1, true, 0, 2, 6);                 
+                        $epl->imprimir($epl->construirEtiqueta($etiqueta, $existencia), $impresora, false, true);
+                }else{
+                    echo "<h1>No existe Impresora</h1>";
+                    }
+                }
+            ?>  
         </div>
     </div>
 </div>
