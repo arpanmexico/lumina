@@ -20,10 +20,6 @@ require __DIR__ . '/ticket/autoload.php';
 	La impresora debe estar instalada como genérica y debe estar
 	compartida
 */
- 
-    class Ventas {
-        
-    }
 
 /*
 	Conectamos con la impresora
@@ -57,22 +53,71 @@ $printer->setUnderline(Printer::UNDERLINE_SINGLE);
 $printer->text("Ventas");
 
 //Datos del pago
+$tipoPago = $_POST['venta']['tipo_pago'];
+$nombre = $_POST['venta']['nombre'];
+$apellido = $_POST['venta']['apellidos'];
 $printer->text("FOLIO: ");
-$printer->text("TIPO DE VENTA: ");
-$printer->text($data['modalidad_pago'] . "\n");
 $printer->text("PACIENTE: ");
-$printer->text($data["nombre"] . "\n");
-$printer->text($data["apellidos"] . "\n");
+$printer->text("'$nombre'". "\n");
+$printer->text("'$apellido'" . "\n");
+$printer->setJustification(Printer::JUSTIFY_LEFT);
+$printer->text("Productos");
+$printer->setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("Cantidad");
+$printer->setJustification(Printer::JUSTIFY_RIGHT);
+$printer->text("Precio");
+//optenemos el producto
+for ($i=0; $i < count($_POST['venta']); $i++) { 
+	$modelo = $_POST['venta']['models'][$i];
+	$marca = $_POST['venta']['brands'][$i];
+	$tipo = $_POST['venta']['type'][$i];
+	$precio = $_POST['venta']['price'][$i];
+	$cantidad = $_POST['venta']['quantity'][$i];
+
+	$printer->setJustification(Printer::JUSTIFY_LEFT);
+	$printer->setTextSize(1,1);
+	$printer->text("'$tipo' '$modelo' '$marca'");
+	$printer->setJustification(Printer::JUSTIFY_CENTER);
+	$printer->setTextSize(1,1);
+	$printer->text("'$cantidad'");
+	$printer->setJustification(Printer::JUSTIFY_RIGHT);
+	$printer->setTextSize(1,1);
+	$printer->text("'$precio'");
+}
+
+$printer->setLineSpacing(1);
+$printer->setJustification(Printer::JUSTIFY_LEFT);
+$printer->setTextSize(1,1);
+$printer->text("Total: ");
+$printer->setJustification(Printer::JUSTIFY_RIGHT);
+$printer->setTextSize(1,1);
+$total = $_POST['venta']['total'];
+$printer->text("'$total'");
+
+$printer->setJustification(Printer::JUSTIFY_CENTER);
+$printer->setUnderline(Printer::UNDERLINE_SINGLE);
+$printer->text("Modalidad de pago");
+$modalidadPago = $_POST['venta']['modalidad_pago'];
+$printer->text($modalidadPago);
 
 
+$printer->text("Mensualidades");
+$mensualidad = $_POST['venta']['mensualidades'];
+$printer->text($mensualidad);
 
- 
+$printer->text("Interes");
+$interes = $_POST['venta']['interes'];
+$printer->text($interes);
+
+$printer->text("Pago por mes");
+$mes = $_POST['venta']['precio_mes'];
+$printer->text($mes);
+
 /*
 	Imprimimos un mensaje. Podemos usar
 	el salto de línea o llamar muchas
 	veces a $printer->text()
 */
-$printer->text("Hola mundo\nParzibyte.me");
  
 /*
 	Hacemos que el papel salga. Es como 

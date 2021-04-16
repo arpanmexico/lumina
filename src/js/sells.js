@@ -136,7 +136,12 @@ $(document).ready(function(){
             'precio_mes': precio_mes,
             'interes': txt_interes,
             'total': localStorage.getItem('total'),
-            'cantidad': localStorage.getItem('quantity')
+            'cantidad': localStorage.getItem('quantity'),
+            'models': localStorage.getItem('models'),
+            'brands': localStorage.getItem('brands'),
+            'type': localStorage.getItem('type'),
+            'price': localStorage.getItem('prices') 
+
         };
 
         if(data['fecha'] == "" || data['nombre'] == "" || data['apellidos'] == "" || data['tipo_pago'] == "" || data['modalidad_pago'] == "" ){
