@@ -9,10 +9,11 @@
  */
 
 
-require __DIR__ . '/ticket/autoload.php'; 
-    use Mike42\Escpos\Printer;
-    use Mike42\Escpos\EscposImage;
-    use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+require $_SERVER['DOCUMENT_ROOT'] . '/ticket/autoload.php';
+
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
     /*
 	Este ejemplo imprime un hola mundo en una impresora de tickets
