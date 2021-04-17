@@ -21,7 +21,12 @@ if (!isset($_SESSION['userID'])) {
     <link rel="stylesheet" href="../../src/libs/fullcalendar/lib/main.min.css">
     <link rel="stylesheet" href="../../src/libs/clockpicker/src/clockpicker.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../src/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../src/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../src/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../src/favicon/site.webmanifest">
     <title>Panel de Control - Lumina</title>
   </head>
 
@@ -166,12 +171,12 @@ if (!isset($_SESSION['userID'])) {
             <div class="input-group my-auto col-lg-4" id="search-content">
               <input class="form-control py-2 border-right-0 border" type="search" id="search-input">
               <span class="input-group-append">
-                  <label for="search-input" class="input-group-text text-info bg-transparent"><i class="fa fa-search"></i></label>
+                <label for="search-input" class="input-group-text text-info bg-transparent"><i class="fa fa-search"></i></label>
               </span>
             </div>
             <h6 id="search-msg" class="text-success small my-auto font-weight-bold">Presiona ENTER para realizar la busqueda.</h6>
             <ul class="navbar-nav ml-auto">
-            
+
               <!-- ALERTS -->
               <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -183,35 +188,35 @@ if (!isset($_SESSION['userID'])) {
                   <h6 class="dropdown-header">
                     Centro de Alertas
                   </h6>
-                  <?php 
-                    foreach($usuario->getAlertCenter('all') as $key => $value){
+                  <?php
+                  foreach ($usuario->getAlertCenter('all') as $key => $value) {
                   ?>
                     <a class="dropdown-item d-flex align-items-center" href="#">
                       <div class="mr-3">
-                        <?php 
-                          switch($value['tipo']){
-                            case 'Informacion':
-                              echo '
+                        <?php
+                        switch ($value['tipo']) {
+                          case 'Informacion':
+                            echo '
                                 <div class="icon-circle bg-info">
                                   <i class="fas fa-info text-white"></i>
                                 </div>
                               ';
-                              break;
-                            case 'Advertencia':
-                              echo '
+                            break;
+                          case 'Advertencia':
+                            echo '
                                 <div class="icon-circle bg-warning">
                                   <i class="fas fa-exclamation-triangle text-white"></i>
                                 </div>
                               ';
-                              break;
-                            case 'Alerta':
-                              echo '
+                            break;
+                          case 'Alerta':
+                            echo '
                                 <div class="icon-circle bg-danger">
                                   <i class="fas fa-exclamation text-white"></i>
                                 </div>
                               ';
-                              break;
-                          }
+                            break;
+                        }
 
                         ?>
                       </div>
@@ -237,8 +242,8 @@ if (!isset($_SESSION['userID'])) {
                   <h6 class="dropdown-header">
                     Centro de Mensajes
                   </h6>
-                  <?php 
-                    foreach($usuario->getMessageCenter('all') as $key => $value){
+                  <?php
+                  foreach ($usuario->getMessageCenter('all') as $key => $value) {
                   ?>
                     <a class="dropdown-item d-flex align-items-center" href="dashboard.php?notificaciones=mensajeria">
                       <div class="dropdown-list-image mr-3">
@@ -252,8 +257,8 @@ if (!isset($_SESSION['userID'])) {
                     </a>
 
                   <?php } ?>
-                  
-                  
+
+
                   <a class="dropdown-item text-center small text-gray-500" href="dashboard.php?notificaciones=mensajeria">Ver todos los mensajes</a>
                 </div>
               </li>
@@ -341,7 +346,7 @@ if (!isset($_SESSION['userID'])) {
               include('doctores/doctores_suspendidos.php');
             } else if (isset($_GET['calendario'])) {
               include('citas/calendario.php');
-            } else if(isset($_GET['notificaciones'])){
+            } else if (isset($_GET['notificaciones'])) {
               include('notificaciones.php');
             } else {
               include('analisis.php');

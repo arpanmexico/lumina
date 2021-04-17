@@ -1,6 +1,8 @@
 <?php
 include('../controller/DoctorController.php');
 $doctores = new DoctorController();
+
+$codigo = $doctores->IDCodeGenerator();
 ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -19,7 +21,7 @@ $doctores = new DoctorController();
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="form-group">
             <label for="codigoDoctor">Código del Doctor</label>
-            <input type="number" name="codigoDoctor" class="form-control" id="codigoDoctor" placeholder="Escribe aquí el código del doctor">
+            <input type="number" name="codigoDoctor" class="form-control" id="codigoDoctor" placeholder="Escribe aquí el código del doctor" value="<?php echo $codigo; ?>" readonly>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">

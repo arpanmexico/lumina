@@ -17,9 +17,8 @@ $ventas = new SellController();
         Total:
       </h5>
     </div>
-
     <div class="col-lg-2">
-      <h4 id="totalIndicator" class="font-weight-bolder text-success">$  0.0 MXN</h4>
+      <h4 id="totalIndicator" class="font-weight-bolder text-success">$0.00MXN</h4>
     </div>
   </div>
 
@@ -77,7 +76,7 @@ $ventas = new SellController();
         <span class="font-weight-bolder mt-5">Fecha de venta <span class="font-weight-bolder text-danger"> * </span></span>
           <div class="row">
             <div class="input-group col-8">
-                <input type="date" id="txtDate" name="fecha" class="form-control">
+                <input type="date" id="txtDate" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>"">
                 <span class="input-group-append">
                     <label for="txtDate" class="input-group-text bg-transparent"><i class="fa fa-calendar"></i></label>
                 </span>

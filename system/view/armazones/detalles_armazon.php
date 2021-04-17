@@ -25,15 +25,21 @@ $categorias = new CategoryController();
             <div class="row">
                 <div class="col-lg-5 col-sm-6 col-sm-12 align-self-center text-center">
                     <img src='../../src/catalog/<?php echo $array['foto']; ?>' class="img-fluid">
+                    
                     <p class="font-weight-bolder">
-                        Fecha de Creación del Armazón:
+                        Código de Barras del Producto:
+                    </p>
+                    <?php echo $array['id_armazon']; ?>
+
+                    <p class="font-weight-bolder">
+                        Fecha de Creación del Producto:
                     </p>
                     <?php
                     echo $categorias->getGlobalController()->getFormattedDate($array['ingresado']);
                     ?>
                     <hr>
                     <p class="font-weight-bolder">
-                        Última Fecha de Actualización del Armazón:
+                        Última Fecha de Actualización del Producto:
                     </p>
                     <?php
                     echo $categorias->getGlobalController()->getFormattedDate($array['actualizado']);
@@ -49,18 +55,9 @@ $categorias = new CategoryController();
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="codigoBarras">Código de Barras <span class="text-danger">(No se puede
-                                        cambiar)</span></label>
-                                <input type="number" name="codigoBarras" class="form-control" id="codigoBarras"
-                                    placeholder="Digita aquí el código de barras"
-                                    value="<?php echo $array['id_armazon']; ?>" disabled>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
                                 <label for="marcaArmazon">Marca</label>
                                 <select class="form-control" id="marcaArmazon" name="marcaArmazon">
-                                    <option disabled selected>Selecciona la marca del armazon</option>
+                                    <option disabled selected>Selecciona la marca del Producto</option>
                                     <?php
                                     for ($i = 0; $i < count($ids_armazones); $i++) {
                                         if ($nombres_armazones[$i] == $array['marca'])
@@ -90,44 +87,41 @@ $categorias = new CategoryController();
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="modeloArmazon">Módelo del Armazon</label>
-                                <input type="text" name="modeloArmazon" class="form-control" id="modeloArmazon"
-                                    placeholder="Escribe aquí el módelo del armazon"
-                                    value="<?php echo $array['modelo']; ?>">
+                                <label for="modeloArmazon">Módelo del Producto</label>
+                                <input type="text" name="modeloArmazon" class="form-control" id="modeloArmazon" placeholder="Escribe aquí el módelo del armazon" value="<?php echo $array['modelo']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="colorArmazon">Color del Armazon</label>
-                                <input type="text" name="colorArmazon" class="form-control" id="colorArmazon"
-                                    placeholder="Escribe aquí el/los colores del armazon"
-                                    value="<?php echo $array['color']; ?>">
+                                <label for="colorArmazon">Color del Producto</label>
+                                <input type="text" name="colorArmazon" class="form-control" id="colorArmazon" placeholder="Escribe aquí el/los colores del armazon" value="<?php echo $array['color']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
-                                <label for="descripcionArmazon">Descripción del Armazon</label>
-                                <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon"
-                                    rows="3"
-                                    placeholder="Escribe en esra zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."><?php echo $array['descripcion']; ?></textarea>
+                                <label for="descripcionArmazon">Descripción del Producto</label>
+                                <textarea class="form-control" id="descripcionArmazon" name="descripcionArmazon" rows="3" placeholder="Escribe en esra zona todo lo que puedas del armazon, ésta será la misma descripción que se mostrará en la tienda en línea..."><?php echo $array['descripcion']; ?></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label for="precioArmazon">Precio al público</label>
-                                <input type="number" name="precioArmazon" class="form-control" id="precioArmazon"
-                                    placeholder="Escribe el precio al público" value="<?php echo $array['precio']; ?>">
+                                <label for="precioCompraArmazon">Precio de compra <span class="text-danger">*</span></label>
+                                <input type="number" name="precioCompraArmazon" class="form-control" id="precioCompraArmazon" placeholder="Escribe el precio de compra" value="<?php echo $array['precio_compra']; ?>">
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="precioPublicoArmazon">Precio al público</label>
+                                <input type="number" name="precioPublicoArmazon" class="form-control" id="precioPublicoArmazon" placeholder="Escribe el precio al público" value="<?php echo $array['precio_publico']; ?>">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="existenciaArmazon">Existencias</label>
-                                <input type="number" name="existenciaArmazon" class="form-control"
-                                    id="existenciaArmazon" placeholder="Digita el número de existencias"
-                                    value="<?php echo $array['existencias']; ?>">
+                                <input type="number" name="existenciaArmazon" class="form-control" id="existenciaArmazon" placeholder="Digita el número de existencias" value="<?php echo $array['existencias']; ?>">
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label for="proveedorArmazon">Proveedor</label>
                                 <select class="form-control" id="proveedorArmazon" name="proveedorArmazon">
@@ -146,8 +140,7 @@ $categorias = new CategoryController();
                         <button type="submit" name="actualizarArmazon" class="btn btn-info btn-block">Actualizar
                             Datos</button>
                         <div class="ml-auto mx-auto mt-3">
-                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id_armazon']; ?>&accionArmazon=suspend"
-                                class="text-danger">Eliminar Armazón</a>
+                            <a href="../controller/DeleteData.php?idArmazon=<?php echo $array['id_armazon']; ?>&accionArmazon=suspend" class="text-danger">Eliminar Armazón</a>
                         </div>
                     </div>
                 </div>
@@ -163,7 +156,8 @@ $categorias = new CategoryController();
                     'tipo' => $_POST['tipoProducto'],
                     'color' => strtolower($_POST['colorArmazon']),
                     'descripcion' => ucfirst($_POST['descripcionArmazon']),
-                    'precio' => $_POST['precioArmazon'],
+                    'precio_compra' => $_POST['precioCompraArmazon'],
+                    'precio_publico' => $_POST['precioPublicoArmazon'],
                     'existencias' => $_POST['existenciaArmazon'],
                     'proveedor' => $_POST['proveedorArmazon'],
                     'foto' => 'NA'
@@ -183,60 +177,60 @@ $categorias = new CategoryController();
             }
             ?>
             <?php
-                if (isset($_POST['reimprimir'])) {
-                    $data = array(
-                      'codigo' => $array['codigoBarras'],
-                      'marca' => $_POST['marcaArmazon'],
-                      'modelo' => $_POST['modeloArmazon'],
-                      'tipo' => $_POST['tipoProducto'],
-                      'color' => strtolower($_POST['colorArmazon']),
-                      'descripcion' => ucfirst($_POST['descripcionArmazon']),
-                      'precio' => $_POST['precioArmazon'],
-                      'existencias' => $_POST['existenciaArmazon'],
-                      'proveedor' => $_POST['proveedorArmazon'],
-                      );
+            if (isset($_POST['reimprimir'])) {
+                $data = array(
+                    'codigo' => $array['codigoBarras'],
+                    'marca' => $_POST['marcaArmazon'],
+                    'modelo' => $_POST['modeloArmazon'],
+                    'tipo' => $_POST['tipoProducto'],
+                    'color' => strtolower($_POST['colorArmazon']),
+                    'descripcion' => ucfirst($_POST['descripcionArmazon']),
+                    'precio' => $_POST['precioArmazon'],
+                    'existencias' => $_POST['existenciaArmazon'],
+                    'proveedor' => $_POST['proveedorArmazon'],
+                );
 
-                      require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ImprimirEpl.php');
-                      require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ExisteImpresoraWindows.php');
-                            
-                    
-                      //Instanciamos de la clase ExisteImpresoraWindows.php para comprobar si existe la impresora
-                      $exiteImpresora = new ExisteImpresoraWindows();	
-                      //Instanciamos de la clase ImprimirEpl.php para imprimir
-                      $epl = new ImprimirEpl();	
-                      //Escribimos el nombre de la impresora tal cual este compartida.
-                      $impresora = 'Xprinter XP-450B';
-                      //$impresora = 'PDFCreator';
-                        
-                    
-                    if ($exiteImpresora->verificarImpresora($impresora,true)) {		
-                            
-                              //Escribimos el contenido de la etiqueta a imprimir
-                        $codigo = $data["codigo"];
-                        $tipo = $data["tipo"];
-                        $marca = $data["marca"];
-                        $modelo = $data["modelo"];
-                        $color = $data["color"];
-                        $existencia = $data["existencia"];
-                        $precio = $data["precio"];
-                    
-                        $texto1 = "'$codigo'";
-                        $texto2 = "'$tipo $modelo $color'";
-                        $texto3 = "$'$precio'";
-                        $texto4 = "LUMINA. Centro Integral Ocular";
-                                                                            
-                        $etiqueta = $epl->escribirTexto($texto2, 170, 10, 1, false, 0, 3, 3);
-                        $etiqueta .= $epl->escribirTexto($texto3, 350, 95, 1, false, 0, 2, 2);
-                        $etiqueta .= $epl->pintarLinea(5, 75, 765, 10, 1, 0);
+                require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ImprimirEpl.php');
+                require_once('/lumina/src/libs/imprimirEtiqueta/Codadry/JY/Epl/ExisteImpresoraWindows.php');
 
-                        //código de barras
-                        $etiqueta .= $epl->pintarCodigoBarra($texto1, 190, 210, 120, 1, true, 0, 2, 6);                 
-                        $epl->imprimir($epl->construirEtiqueta($etiqueta, $existencia), $impresora, false, true);
-                }else{
+
+                //Instanciamos de la clase ExisteImpresoraWindows.php para comprobar si existe la impresora
+                $exiteImpresora = new ExisteImpresoraWindows();
+                //Instanciamos de la clase ImprimirEpl.php para imprimir
+                $epl = new ImprimirEpl();
+                //Escribimos el nombre de la impresora tal cual este compartida.
+                $impresora = 'Xprinter XP-450B';
+                //$impresora = 'PDFCreator';
+
+
+                if ($exiteImpresora->verificarImpresora($impresora, true)) {
+
+                    //Escribimos el contenido de la etiqueta a imprimir
+                    $codigo = $data["codigo"];
+                    $tipo = $data["tipo"];
+                    $marca = $data["marca"];
+                    $modelo = $data["modelo"];
+                    $color = $data["color"];
+                    $existencia = $data["existencia"];
+                    $precio = $data["precio"];
+
+                    $texto1 = "'$codigo'";
+                    $texto2 = "'$tipo $modelo $color'";
+                    $texto3 = "$'$precio'";
+                    $texto4 = "LUMINA. Centro Integral Ocular";
+
+                    $etiqueta = $epl->escribirTexto($texto2, 170, 10, 1, false, 0, 3, 3);
+                    $etiqueta .= $epl->escribirTexto($texto3, 350, 95, 1, false, 0, 2, 2);
+                    $etiqueta .= $epl->pintarLinea(5, 75, 765, 10, 1, 0);
+
+                    //código de barras
+                    $etiqueta .= $epl->pintarCodigoBarra($texto1, 190, 210, 120, 1, true, 0, 2, 6);
+                    $epl->imprimir($epl->construirEtiqueta($etiqueta, $existencia), $impresora, false, true);
+                } else {
                     echo "<h1>No existe Impresora</h1>";
-                    }
                 }
-            ?>  
+            }
+            ?>
         </div>
     </div>
 </div>

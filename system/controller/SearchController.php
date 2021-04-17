@@ -36,7 +36,7 @@ if (isset($_POST["text"])) {
                     $query = "SELECT DISTINCT id_armazon, 
                         (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca,
                         (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria )AS tipo,  
-                        modelo, color, descripcion, precio, existencias,
+                        modelo, color, descripcion, precio_publico, existencias,
                         (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
                         proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 AND (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) LIKE '" . $search . "%' OR suspendido = 0 AND id_armazon LIKE '" . $search . "%' ORDER BY marca";
                     break;
@@ -107,7 +107,7 @@ function search($query, $database, $view)
                         'modelo' => $row['modelo'],
                         'color' => $row['color'],
                         'descripcion' => $row['descripcion'],
-                        'precio' => $row['precio'],
+                        'precio_publico' => $row['precio_publico'],
                         'existencias' => $row['existencias'],
                         'proveedor' => $row['proveedor'],
                         'ingresado' => $row['ingresado'],
@@ -222,13 +222,13 @@ function frameCard($data)
     }
     $response = "
         <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
-            <div class='card shadow'>
+            <div class='card shadow h-100'>
                 <a href='?detallesArmazon=" . $url . "'>
                   <img src='../../src/catalog/" . $data['foto'] . "' class='card-img-top'>
                 </a>
                 <div class='card-body'>
                     <h5 class='card-title'>ID: " . $data['id_armazon'] . "</h5>
-                    <h5 class='font-weight-bolder'>$" . $data['precio'] . " - " . $stockMsg . "</span></h5>
+                    <h5 class='font-weight-bolder'>$" . $data['precio_publico'] . ".00 - " . $stockMsg . "</h5>
 
                     <p>" . $data['marca'] . "</p>
                     
@@ -288,6 +288,10 @@ function patientCard($data)
 {
     $serialized_array = serialize($data);
     $url = urlencode($serialized_array);
+    $correo = $data['correo'] == '' ? 'Sin Correo Electrónico' : $data['correo'];
+    $telefono_fijo = $data['telefono_primario'] == '0' ? 'Sin número fijo' : $data['telefono_primario'];
+    $telefono_movil = $data['telefono_secundario'] == '0' ? 'Sin número móvil' : $data['telefono_secundario'];
+
     $response = "
     <div class='col-lg-3 col-md-6 col-sm-12'>
     <div class='card shadow-sm'>
@@ -308,13 +312,13 @@ function patientCard($data)
                         <h5>" . $data['nombre'] . " " . $data['apellido_paterno'] . " " . $data['apellido_materno'] . "</h5>
                     </div>
                 </div>
-                <p class='text-muted'>" . $data['correo'] . "</p>
+                <p class='text-muted'>" . $correo . "</p>
                 <div class='row'>
                     <div class='col-md-6 text-right'>
-                        <p class='text-muted'>" . $data['telefono_primario'] . "</p>
+                        <p class='text-muted'>" . $telefono_fijo . "</p>
                     </div>
                     <div class='col-md-6 text-left'>
-                        <p class='text-muted'>" . $data['telefono_secundario'] . "</p>
+                        <p class='text-muted'>" . $telefono_movil . "</p>
                     </div>
                 </div>
                 <hr>
@@ -331,7 +335,7 @@ function sellPatientCard($data)
 {
     $response = "
     <div class='col-lg-3 col-md-6 col-sm-12'>
-    <div class='card shadow-sm border-info text-info'>
+    <div class='card h-100 shadow-sm border-info text-info'>
         <div class='card-body'>
             <div class='row mb-2'>
                 <div class='col-12'>
@@ -401,20 +405,21 @@ function sellCard($data)
 
     $response = '
         <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
-            <div class="card shadow" style="min-height: 255px;">
+            <div class="card shadow h-100" style="min-height: 255px;">
                 <div class="card-header px-1">
                     <div class="row m-0">
                         <div class="col my-auto">
                             <p class="text-muted small my-auto font-weight-bold">' . $date[0] . '</p>
                         </div>
                         <div class="col text-right my-auto">
-                            <p class="text-primary font-weight-bold my-auto">$ ' . floatval($data['total']) . '</p>
+                            <p class="text-primary font-weight-bold my-auto">$' . floatval($data['total']) . '.00</p>
                         </div>
                         
                     </div>
                 </div>
                 <div class="card-body text-center">
                     <img src="../../src/img/' . $image . '" class="card-img mb-2" height="80px">
+                    <h5 class="text-muted">' . $data['nombre'] . ' ' . $data['apellidos'] . '</h5>
                     <p class="text-success font-weight-bold small">' . $modalidadPago . ' ' . $tipoPago . '</p>
                     <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo(';
     $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "','" . $mensualidades . "','" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . "";

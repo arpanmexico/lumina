@@ -26,14 +26,14 @@ class PatientController
                 break;
         }
 
-        echo $query;
-
         $runQuery = $database->query($query);
 
         if ($runQuery)
             header('Location: ?listarPacientes');
         else
             PatientController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos, intenta <a href="?crearPaciente">Recargar la página</a>, si el problema persiste escribe a <a href="mailto:contacto@arpan.com.mx">contacto@arpan.com.mx</a>');
+
+        echo $database->error;
 
         $database->close();
     }

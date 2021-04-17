@@ -46,7 +46,7 @@ $(document).ready(function () {
     $('#contactButton').click(function () {
         if (validateEmail($('[name=correo]').val())) {
             $('#errorMessage').hide();
-            sendEmail({ 'id': 1, 'user_email': $('[name=correo]').val() }, 1);
+            //sendEmail({ 'id': 1, 'user_email': $('[name=correo]').val() }, 1);
             insertStat('correo', 'contacto');
         } else {
             $('#errorMessage').show();
@@ -67,7 +67,7 @@ $(document).ready(function () {
                     'subject': $('#inputSubject').val(),
                     'message': $('#inputMessage').val()
                 };
-                sendEmail(data, 2);
+                //sendEmail(data, 2);
                 saveComment(data);
                 insertStat('comentario', 'contacto');
                 $('#contactErrorMessage').hide();

@@ -1,6 +1,6 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
-//include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
+//include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
 
 class GlobalController
 {

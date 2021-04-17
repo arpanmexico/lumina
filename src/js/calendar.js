@@ -26,7 +26,8 @@ $(document).ready(function(){
         initialView: 'dayGridMonth',
         themeSystem: 'bootstrap',
         locale: 'es',
-        events:'http://localhost:9000/lumina/system/controller/CalendarController.php?action=',
+        //events:'http://localhost:9000/lumina/system/controller/CalendarController.php?action=',
+        events:'https://www.luminaoptica.com.mx/system/controller/CalendarController.php?action=',
         select: function(start, end) {
             if(start.isBefore(moment())) {
                 calendar.unselect();
@@ -110,7 +111,8 @@ $(document).ready(function(){
     function setData(action, objEvent){
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:9000/lumina/system/controller/CalendarController.php?action=' + action,
+            //url: 'http://localhost:9000/lumina/system/controller/CalendarController.php?action=' + action,
+            url:'https://www.luminaoptica.com.mx/system/controller/CalendarController.php?action=' + action,
             data: objEvent,
             success:function(msg){
                 calendar.refetchEvents();

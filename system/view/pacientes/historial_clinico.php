@@ -26,26 +26,26 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                             <div class="form-group">
-                                <label for="antecedentesPatGeneral">Antecedentes Patológicos Generales</label>
+                                <label for="antecedentesPatGeneral">Antecedentes Patológicos Generales <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="antecedentesPatGeneral" name="antecedentesPatGeneral" rows="3" placeholder="Escribe en esta zona..."></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                             <div class="form-group">
-                                <label for="antecedentesPatOcular">Antecedentes Patológicos Oculates</label>
+                                <label for="antecedentesPatOcular">Antecedentes Patológicos Oculares <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="antecedentesPatOcular" name="antecedentesPatOcular" rows="3" placeholder="Escribe en esta zona..."></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                             <div class="form-group">
-                                <label for="motivoConsulta">Motivo de Consulta</label>
+                                <label for="motivoConsulta">Motivo de Consulta <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="motivoConsulta" name="motivoConsulta" rows="2" placeholder="Escribe en esta zona..."></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                             <div class="form-group">
-                                <label for="ultimoExamen">¿Cuando se realizó su último Examen Visual?</label>
-                                <textarea class="form-control" id="ultimoExamen" name="ultimoExamen" rows="2" placeholder="Escribe en esta zona..."></textarea>
+                                <label for="ultimoExamen">¿Cuando se realizó su último Examen Visual? <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="ultimoExamen" name="ultimoExamen" rows="2" placeholder="Escribe en esta zona; Ej. 'Hace 1 año', 'Hace 5 meses', 'Nunca' o cualquier aproximado que el paciente mencione. "></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
@@ -62,7 +62,7 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">OD</th>
+                                        <th scope="row">OD <span class="text-danger">*</span></th>
                                         <td>
                                             <input type="text" name="odAvLejosSRx" class="form-control" placeholder="Valor">
                                         </td>
@@ -80,7 +80,7 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">IO</th>
+                                        <th scope="row">IO <span class="text-danger">*</span></th>
                                         <td>
                                             <input type="text" name="ioAvLejosSRx" class="form-control" placeholder="Valor">
                                         </td>
@@ -114,7 +114,7 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">OD</th>
+                                        <th scope="row">OD <span class="text-danger">*</span></th>
                                         <td>
                                             <input type="text" name="odEsfera" class="form-control" placeholder="Valor">
                                         </td>
@@ -132,7 +132,7 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">IO</th>
+                                        <th scope="row">IO <span class="text-danger">*</span></th>
                                         <td>
                                             <input type="text" name="ioEsfera" class="form-control" placeholder="Valor">
                                         </td>
@@ -154,7 +154,7 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
                             <div class="form-group">
-                                <label for="obervaciones">Observaciones del Paciente</label>
+                                <label for="obervaciones">Observaciones del Paciente <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="obervaciones" name="obervaciones" rows="5" placeholder="Escribe en esta zona..."></textarea>
                             </div>
                         </div>
@@ -162,7 +162,7 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="tipoVision">Tipo de Visión</label>
+                                        <label for="tipoVision">Tipo de Visión <span class="text-danger">*</span></label>
                                         <input type="text" name="tipoVision" class="form-control" id="tipoVision" placeholder="Valor">
                                     </div>
                                 </div>
@@ -172,13 +172,13 @@ if (isset($_GET['crearHistorial']) && isset($_GET['accionHistorial'])) {
                                         <input type="text" name="folioPaciente" class="form-control" id="folioPaciente" placeholder="Este campo se llena solo" value="<?php echo uniqid(); ?>" readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-5 col-md-6 col-sm-12">
                                     <div class="form-group">
-                                        <label for="tipoLente">Tipo de Lente</label>
+                                        <label for="tipoLente">Tipo de Lente <span class="text-danger">*</span></label>
                                         <input type="text" name="tipoLente" class="form-control" id="tipoLente" placeholder="Valor">
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                                <div class="col-lg-7 col-md-6 col-sm-12 align-self-center">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="confirmacionMedico" name="confirmacionMedico" value="1">
                                         <label class="form-check-label" for="confirmacionMedico">El médico confirma que los datos son correctos</label>

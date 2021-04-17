@@ -48,7 +48,7 @@ body {
   height: 800px;
   min-height: 35rem;
   padding: 15rem 0;
-  background: url(https://storage.googleapis.com/optica-lumina/landing/lenses.png);
+  background: url("../img/lenses.png");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -151,7 +151,7 @@ input, select {
 }
 
 .cta {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(https://storage.googleapis.com/optica-lumina/landing/IMG_1666.jpg) fixed center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../img/IMG_1666.jpg") fixed center center;
   background-size: cover;
   padding: 120px 0;
 }

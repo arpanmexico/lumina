@@ -157,4 +157,25 @@ class DoctorController
 
         $database->close();
     }
+
+    public function IDCodeGenerator()
+    {
+        $database = DoctorController::getDatabaseConnection();
+
+        do {
+            $rand_number = rand(100000000000, 999999999999);
+
+            $query = "SELECT COUNT(id_doctor) AS codigo FROM doctores WHERE id_doctor = " . $rand_number . "";
+            $runQuery = $database->query($query);
+
+            if ($runQuery->num_rows == 0) {
+                continue;
+            } else {
+                return $rand_number;
+                break;
+            }
+        } while ($runQuery->num_rows == 0);
+
+        $database->close();
+    }
 }

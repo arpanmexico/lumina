@@ -2,21 +2,21 @@
 header('Access-Control-Allow-Origin: *');
 include('GlobalController.php');
 $global = new GlobalController();
-$items = 20;
+$items = 30;
 $page = $_POST['page'];
 $start = ($page - 1) * $items;
 $first = 0;
 $last = 0;
 $database = new Database();
 
-if(isset($_POST['type'])){
+if (isset($_POST['type'])) {
     $type = $_POST['type'];
 
-    switch ($type){
+    switch ($type) {
         case 'cat': //Categorias
             $ext = $_POST['ext'];
             $category = "";
-            switch($ext){
+            switch ($ext) {
                 case 1:
                     $category = 'Lente';
                     break;
@@ -29,69 +29,68 @@ if(isset($_POST['type'])){
                 case 4:
                     $category = 'Proveedor';
                     break;
-                
             }
             $query = "SELECT id_categoria, nombre, tipo FROM categorias WHERE tipo = '" . $category . "' ORDER BY nombre LIMIT $start, $items";
-            $query2="SELECT count(id_categoria) FROM categorias WHERE tipo = '" . $category . "'";
+            $query2 = "SELECT count(id_categoria) FROM categorias WHERE tipo = '" . $category . "'";
             pagination($query, $query2, $database, $page, $items, 'cat');
             break;
         case 'arm': // Armazones
             $query = "SELECT DISTINCT id_armazon, 
                 (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, 
                 (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria )AS tipo, 
-                modelo, color, descripcion, precio, existencias,
+                modelo, color, descripcion, precio_compra, precio_publico, existencias,
                 (SELECT nombre FROM categorias WHERE armazones.id_proveedor = categorias.id_categoria) AS
                 proveedor, foto, ingresado, actualizado FROM categorias, armazones WHERE suspendido = 0 ORDER BY marca LIMIT $start, $items";
             $query2 = "SELECT count(id_armazon) FROM armazones WHERE suspendido = 0";
-            pagination($query, $query2, $database, $page, $items, 'arm');    
+            pagination($query, $query2, $database, $page, $items, 'arm');
             break;
         case 'doc': //Doctores
             $query = "SELECT id_doctor, nombre, apellido, telefono, especialidad, estado, ingresado, actualizado FROM doctores WHERE suspendido = 0 LIMIT $start, $items";
             $query2 = "SELECT count(id_doctor) FROM doctores WHERE suspendido = 0";
-            pagination($query, $query2, $database, $page, $items, 'doc'); 
+            pagination($query, $query2, $database, $page, $items, 'doc');
             break;
         case 'pac': // Pacientes
             $query = "SELECT id_paciente, nombre, apellido_paterno, apellido_materno, nacimiento, correo, ocupacion, direccion, genero, telefono_primario, telefono_secundario, ingresado, actualizado FROM pacientes WHERE suspendido = 0 LIMIT $start, $items";
             $query2 = "SELECT count(id_paciente) FROM pacientes WHERE suspendido = 0";
-            pagination($query, $query2, $database, $page, $items, 'pac'); 
-            break;           
-        case 'ven': // Pacientes
+            pagination($query, $query2, $database, $page, $items, 'pac');
+            break;
+        case 'ven': // Ventas
             $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total FROM ventas ORDER BY fecha DESC LIMIT $start, $items ";
             $query2 = "SELECT count(id_venta) FROM ventas";
-            pagination($query, $query2, $database, $page, $items, 'ven'); 
-            break;           
-        default: 
-            
-            break;    
+            pagination($query, $query2, $database, $page, $items, 'ven');
+            break;
+        default:
+
+            break;
     }
-    
 }
 
-function pagination($query, $query2, $database, $page, $items, $card){
+function pagination($query, $query2, $database, $page, $items, $card)
+{
     $cont = 0;
     $global = $GLOBALS['global'];
     $runQuery = $database->query($query);
     $runQuery2 = $database->query($query2);
     $pages = $runQuery2->fetch_array();
     // Pages num
-    $num_pages = ceil($pages[0]/$items);
+    $num_pages = ceil($pages[0] / $items);
     $first = ($page - 2) > 2 ? $page - 2 : 1;
     $last = ($page + 2) < $num_pages ? $page + 2 : $num_pages;
-    if(mysqli_num_rows($runQuery) > 0){
-        echo ' <h6 class="ml-3">Pág. '.$page.' de '.$num_pages.'</h6>';
+    if (mysqli_num_rows($runQuery) > 0) {
+        echo ' <h6 class="ml-3">Pág. ' . $page . ' de ' . $num_pages . '</h6>';
         echo '<div class="row">'; //starting row
-        while($row = $runQuery->fetch_array()){
-            
+        while ($row = $runQuery->fetch_array()) {
+
             $data = "";
 
-            switch ($card){
+            switch ($card) {
                 case 'cat':
                     $data = array(
                         'nombre' => $row['nombre'],
                         'id_categoria' => $row['id_categoria'],
                         'tipo' => $row['tipo'],
-                        
-                    );  
+
+                    );
                     echo categoryCard($data);
                     break;
                 case 'arm':
@@ -102,7 +101,8 @@ function pagination($query, $query2, $database, $page, $items, $card){
                         'modelo' => $row['modelo'],
                         'color' => $row['color'],
                         'descripcion' => $row['descripcion'],
-                        'precio' => $row['precio'],
+                        'precio_compra' => $row['precio_compra'],
+                        'precio_publico' => $row['precio_publico'],
                         'existencias' => $row['existencias'],
                         'proveedor' => $row['proveedor'],
                         'ingresado' => $row['ingresado'],
@@ -122,7 +122,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                         'ingresado' => $row['ingresado'],
                         'actualizado' => $row['actualizado'],
                     );
-                    
+
                     echo docCard($data);
                     break;
                 case 'pac':
@@ -141,7 +141,7 @@ function pagination($query, $query2, $database, $page, $items, $card){
                         'ingresado' => $row['ingresado'],
                         'actualizado' => $row['actualizado']
                     );
-                    
+
                     echo patientCard($data);
                     break;
                 case 'ven':
@@ -158,21 +158,19 @@ function pagination($query, $query2, $database, $page, $items, $card){
                         'interes' => $row['interes'],
                         'total' => $row['total'],
                         'productos' => $row['productos']
-                    );  
+                    );
                     echo sellCard($data);
-                    break;    
+                    break;
                 default:
-                    break;    
+                    break;
             }
 
-            if ( isset( $page ) ) {
-                if ( $page >= 1 ) {
+            if (isset($page)) {
+                if ($page >= 1) {
                     $back = $page - 1;
                     $next = $page + 1;
                 }
-
             }
-
         }
         echo '</div>'; // end row
 
@@ -182,72 +180,73 @@ function pagination($query, $query2, $database, $page, $items, $card){
                     <ul class="pagination justify-content-center">
                     
                         <li class="page-item';
-                            echo $page <= 1?' disabled':'';
-                            echo'">
-                            <a class="page-link num-page mx-1 rounded-circle bg-light text-white font-weight-bold" href="#!" tabindex="-1"'; 
-                            if ( $page > 1 ) {
-                                echo 'onClick="linkClick('.$back.');"';
-                            }  echo' ><i class="text-primary fas fa-arrow-left">
+        echo $page <= 1 ? ' disabled' : '';
+        echo '">
+                            <a class="page-link num-page mx-1 rounded-circle bg-light text-white font-weight-bold" href="#!" tabindex="-1"';
+        if ($page > 1) {
+            echo 'onClick="linkClick(' . $back . ');"';
+        }
+        echo ' ><i class="text-primary fas fa-arrow-left">
                             </i></a>
                         </li>
                             ';
-                            if($first != 1){
-                                echo '<li class="page-item 
+        if ($first != 1) {
+            echo '<li class="page-item 
                                     ';
-                                if ( $page == $num ) {
-                                    echo 'active';
-                                }
-                                echo'">
+            if ($page == $num) {
+                echo 'active';
+            }
+            echo '">
                                         <a class="page-link num-page" onClick="linkClick(1);" href="#!">1</a>
                                 </li><li class="page-item"><h4 class="mt-3"><i class="fas fa-ellipsis-h"></i></h4></li>';
-                                
-                            }
-                            for ( $i = $first; $i <= $last; $i++ ) {
-                                $num = $i;
-                                echo'
+        }
+        for ($i = $first; $i <= $last; $i++) {
+            $num = $i;
+            echo '
                             <li class="page-item 
                                     ';
-                            if ( $page == $num ) {
-                                echo 'active';
-                            }
-                            echo'">
-                                    <a class="page-link num-page" onClick="linkClick('.$num.');" href="#!">'.$num.'</a>
+            if ($page == $num) {
+                echo 'active';
+            }
+            echo '">
+                                    <a class="page-link num-page" onClick="linkClick(' . $num . ');" href="#!">' . $num . '</a>
                         </li>
                                 ';
+        }
 
-                            }
-
-                            if($last != $num_pages){
-                                echo '<li class="page-item mx-1"><h4 class="mt-3"><i class="fas fa-ellipsis-h"></i></h4></li><li class="page-item 
+        if ($last != $num_pages) {
+            echo '<li class="page-item mx-1"><h4 class="mt-3"><i class="fas fa-ellipsis-h"></i></h4></li><li class="page-item 
                                     ';
-                                if ( $page == $num ) {
-                                    echo 'active';
-                                }
-                                echo'">
-                                        <a class="page-link num-page" onClick="linkClick('.$num_pages.');" href="#!">'.$num_pages.'</a>
+            if ($page == $num) {
+                echo 'active';
+            }
+            echo '">
+                                        <a class="page-link num-page" onClick="linkClick(' . $num_pages . ');" href="#!">' . $num_pages . '</a>
                             </li>';
-                            }
+        }
 
-                            echo'
+        echo '
                         <li class="page-item';
-                            echo $page >= $num_pages?' disabled':'';
-                            echo'">
-                                <a class="page-link mx-1 num-page bg-light rounded-circle text-white font-weight-bold"'; if ( $page >= 1 ) {
-                                    echo 'onClick="linkClick('.$next.');"';
-                                }  echo'href="#!"><i class="text-primary fas fa-arrow-right">
+        echo $page >= $num_pages ? ' disabled' : '';
+        echo '">
+                                <a class="page-link mx-1 num-page bg-light rounded-circle text-white font-weight-bold"';
+        if ($page >= 1) {
+            echo 'onClick="linkClick(' . $next . ');"';
+        }
+        echo 'href="#!"><i class="text-primary fas fa-arrow-right">
                                 
                                 </i></a>
                         </li>
                     </ul>
                 </nav>
-            </div>';  
-    }else{
-        switch($card){
+            </div>';
+    } else {
+        switch ($card) {
             case 'cat':
                 $global->getAlerts(
                     'warning',
                     'No se encontraron categorías registradas en este apartado.'
-                
+
                 );
                 break;
             case 'arm':
@@ -255,64 +254,65 @@ function pagination($query, $query2, $database, $page, $items, $card){
                     'warning',
                     'No se encontraron productos registrados, <br> <a class="font-weight-bolder" href="?crearArmazon">Aregar un nuevo producto</a>'
                 );
-                break;    
+                break;
             case 'doc':
                 $global->getAlerts(
                     'warning',
                     'No existe ningún doctor registrado, <br> <a href="?crearDoctores">Registrar un nuevo doctor</a>'
-                
+
                 );
-                break;    
+                break;
             case 'pac':
                 $global->getAlerts(
                     'warning',
                     'Oops! Parece que no hay ningún paciente registrado, <br><a href="?crearPaciente">Registrar un nuevo paciente</a>'
-                
+
                 );
-                break;    
+                break;
         }
-        
     }
 }
 
-function categoryCard($data){
-    
+function categoryCard($data)
+{
+
     $nombre = $data['nombre'];
     $id = $data['id_categoria'];
     $tipo = $data['tipo'];
-    
+
 
     $response = ' <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
     <div class="card shadow">
       <div class="card-body">
         <h5 class="card-title">' . $nombre . '</h5>
-        <a href="../controller/DeleteData.php?categoryID=' . $id . '&categoryType=' . $tipo. '" class="card-link text-danger">Eliminar</a>
+        <a href="../controller/DeleteData.php?categoryID=' . $id . '&categoryType=' . $tipo . '" class="card-link text-danger">Eliminar</a>
       </div>
     </div>
   </div>';
     return $response;
 }
 
-function frameCard($data){
+function frameCard($data)
+{
     $serialized_array = serialize($data);
     $url = urlencode($serialized_array);
     $stockMsg = "";
     if ($data['existencias'] >= 5) {
         $stockMsg = "<span class='text-success'>" . $data['existencias'] . " en existencia ";
-      } else if ($data['existencias'] < 5 && $data['existencias'] > 3) {
+    } else if ($data['existencias'] < 5 && $data['existencias'] > 3) {
         $stockMsg = "<span class='text-warning'>" . $data['existencias'] . " en existencia ";
-      } else if ($data['existencias'] <= 2) {
+    } else if ($data['existencias'] <= 2) {
         $stockMsg = "<span class='text-danger'>" . $data['existencias'] . " en existencia ";
-      }
+    }
     $response = "
         <div class='col-lg-3 col-md-4 col-sm-12 mb-3'>
-            <div class='card shadow'>
+            <div class='card shadow h-100'>
                 <a href='?detallesArmazon=" . $url . "'>
                   <img src='../../src/catalog/" . $data['foto'] . "' class='card-img-top'>
                 </a>
                 <div class='card-body'>
                     <h5 class='card-title'>ID: " . $data['id_armazon'] . "</h5>
-                    <h5 class='font-weight-bolder'>$" . $data['precio'] . " - " . $stockMsg . "</span></h5>
+                    <h5 class='font-weight-bolder'>$" . $data['precio_publico'] . ".00 - " . $stockMsg . "</span></h5>
 
                     <p>" . $data['marca'] . "</p>
                     
@@ -327,7 +327,8 @@ function frameCard($data){
     return $response;
 }
 
-function docCard($data){
+function docCard($data)
+{
     $serialized_array = serialize($data);
     $url = urlencode($serialized_array);
 
@@ -367,12 +368,18 @@ function docCard($data){
     return $response;
 }
 
-function patientCard($data){
+function patientCard($data)
+{
     $serialized_array = serialize($data);
-    $url = urlencode($serialized_array);            
+    $url = urlencode($serialized_array);
+
+    $correo = $data['correo'] == '' ? 'Sin Correo Electrónico' : $data['correo'];
+    $telefono_fijo = $data['telefono_primario'] == '0' ? 'Sin número fijo' : $data['telefono_primario'];
+    $telefono_movil = $data['telefono_secundario'] == '0' ? 'Sin número móvil' : $data['telefono_secundario'];
+
     $response = "
     <div class='col-lg-3 col-md-6 col-sm-12'>
-    <div class='card shadow-sm'>
+    <div class='card shadow-sm h-100'>
         <div class='card-body'>
             <div class='row mb-2'>
                 <div class='col-12'>
@@ -390,13 +397,13 @@ function patientCard($data){
                         <h5>" . $data['nombre'] . " " . $data['apellido_paterno'] . " " . $data['apellido_materno'] . "</h5>
                     </div>
                 </div>
-                <p class='text-muted'>" . $data['correo'] . "</p>
+                <p class='text-muted'>" . $correo . "</p>
                 <div class='row'>
                     <div class='col-md-6 text-right'>
-                        <p class='text-muted'>" . $data['telefono_primario'] . "</p>
+                        <p class='text-muted'>" . $telefono_fijo . "</p>
                     </div>
                     <div class='col-md-6 text-left'>
-                        <p class='text-muted'>" . $data['telefono_secundario'] . "</p>
+                        <p class='text-muted'>" . $telefono_movil . "</p>
                     </div>
                 </div>
                 <hr>
@@ -406,10 +413,11 @@ function patientCard($data){
     </div>
     </div>
     ";
- return $response;
+    return $response;
 }
 
-function sellCard($data){
+function sellCard($data)
+{
     $date = explode(' ', $data['fecha']);
     $tipoPago = $data['tipo_pago'];
     $modalidadPago = $data['modalidad_pago'];
@@ -419,18 +427,18 @@ function sellCard($data){
     $productos = $data['productos'];
     $image = "";
 
-    switch($tipoPago){
+    switch ($tipoPago) {
         case 'E':
             $tipoPago = 'En efectivo';
             $image = "dollar.svg";
             break;
         case 'T':
-            $tipoPago = "Con tarjeta" ;
+            $tipoPago = "Con tarjeta";
             $image = "credit_card.svg";
-            break;   
+            break;
     }
 
-    switch($modalidadPago){
+    switch ($modalidadPago) {
         case 'C':
             $modalidadPago = 'Pago de contado';
             $mostrarPrecioMes = "d-none";
@@ -448,27 +456,30 @@ function sellCard($data){
             $mostrarPrecioMes = "d-block";
             $mostrarInteres = "d-block";
             $mostrarMensualidad = "d-none";
-            break;    
+            break;
     }
 
     $response = '
         <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
-            <div class="card shadow" style="min-height: 255px;">
+            <div class="card shadow h-100" style="min-height: 255px;">
                 <div class="card-header px-1">
                     <div class="row m-0">
                         <div class="col my-auto">
-                            <p class="text-muted small my-auto font-weight-bold">'.$date[0].'</p>
+                            <p class="text-muted small my-auto font-weight-bold">' . $date[0] . '</p>
                         </div>
                         <div class="col text-right my-auto">
-                            <p class="text-primary font-weight-bold my-auto">$ '.floatval($data['total']).'</p>
+                            <p class="text-primary font-weight-bold my-auto">$' . floatval($data['total']) . '.00</p>
                         </div>
                         
                     </div>
                 </div>
                 <div class="card-body text-center">
-                    <img src="../../src/img/'.$image.'" class="card-img mb-2" height="80px">
-                    <p class="text-success font-weight-bold small">'.$modalidadPago.' '.$tipoPago.'</p>
-                    <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo('; $response .= "'".$data['id_venta']."','".ucwords($data['nombre'])."','".ucwords($data['apellidos'])."','".$data['fecha']."','".$tipoPago."','".$modalidadPago."','".$mensualidades."','".$precioMes."','".$interes."',".floatval($data['total']).",'".$productos."'"; $response .= ');">Ver información completa</a>
+                    <img src="../../src/img/' . $image . '" class="card-img mb-2" height="80px">
+                    <h5 class="text-muted">' . $data['nombre'] . ' ' . $data['apellidos'] . '</h5>
+                    <p class="text-success font-weight-bold small">' . $modalidadPago . ' ' . $tipoPago . '</p>
+                    <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo(';
+    $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "','" . $mensualidades . "','" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . ",'" . $productos . "'";
+    $response .= ');">Ver información completa</a>
                 </div>
             </div>
         
@@ -477,4 +488,3 @@ function sellCard($data){
 
     return $response;
 }
-

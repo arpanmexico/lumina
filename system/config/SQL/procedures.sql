@@ -85,11 +85,11 @@ DELIMITER ;
         SET @_description = CONCAT(UCASE(LOWER(LEFT(_description, 1))), SUBSTRING(LOWER(_description), 2));
 
         IF _action = 1 THEN # INSERT DATA
-            INSERT INTO armazones(id_armazon, id_marca, id_tipo, modelo, color, descripcion, precio, existencias,
+            INSERT INTO armazones(id_armazon, id_marca, id_tipo, modelo, color, descripcion, precio_publico, existencias,
                 id_proveedor, foto, suspendido, ingresado, actualizado) VALUES (_id_frame, _id_brand, _id_tipo, _model, @_color, @_description, _price, _stock, _id_supplier, _picture, 0, @current_time_mx, @current_time_mx);
         ELSEIF _action = 2 THEN # UPDATE DATA
             UPDATE armazones SET id_marca = _id_brand, id_tipo = _id_tipo, modelo = _model, color = _color,
-                descripcion = _description, precio = _price, existencias = _stock, id_proveedor = _id_supplier, actualizado = @current_time_mx WHERE id_armazon = _id_frame;
+                descripcion = _description, precio_publico = _price, existencias = _stock, id_proveedor = _id_supplier, actualizado = @current_time_mx WHERE id_armazon = _id_frame;
         ELSEIF _action = 3 THEN # UPDATE STOCK
             UPDATE armazones SET existencias = _stock WHERE id_armazon = _id_frame;
         ELSEIF _action = 4 THEN # DELETE DATA

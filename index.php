@@ -17,6 +17,12 @@ $sucursal = new BranchController();
   <link rel="stylesheet" href="src/css/index.css">
   <link rel="stylesheet" href="src/libs/fullcalendar/lib/main.min.css">
   <link rel="stylesheet" href="src/libs/clockpicker/src/clockpicker.css">
+  
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="src/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="src/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="src/favicon/favicon-16x16.png">
+  <link rel="manifest" href="src/favicon/site.webmanifest">
   <title>Óptica Lumina</title>
 </head>
 
@@ -26,7 +32,7 @@ $sucursal = new BranchController();
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <img src="https://storage.googleapis.com/optica-lumina/landing/logo.png" class="img-fluid" width="100" alt="">
+        <img src="src/img/lumina-logo.png" class="img-fluid" width="100" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -112,12 +118,8 @@ $sucursal = new BranchController();
     <div class="col-md-1"></div>
     <div class="col-md-5" data-aos="fade-right">
       <h1 class="title" id="about">¿Quiénes somos?</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus facilis animi tempora nulla alias ea fugit
-        officiis voluptatibus sequi quidem fuga necessitatibus, neque commodi adipisci, reprehenderit eos quaerat
-        deleniti similique.</p>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut cum quibusdam nobis sed ullam explicabo
-        cupiditate officiis totam, suscipit animi sapiente eveniet dignissimos accusantium fugit sequi quidem! Animi, et
-        praesentium.</p>
+      <p>Somos una empresa dedicada a prevenir y cuidar de la salud visual de las personas dentro de la región oriente de Michoacán y sus alrededores. <br>
+        Puesto que contamos con especialista en oftalmología y optometrista, los cuales buscan prevenir problemas oculares con distintitos tratamientos los cuales ayudaran a mejorar tu bienestar visual</p>
 
       <h3 class="subtitle mt-5">Puedes encontrarnos en</h3>
       <p><i class="fas fa-location-arrow light-color"></i> Vidal Solis #10, Colonia Centro, CP. 61100, Ciudad Hidalgo
@@ -127,7 +129,7 @@ $sucursal = new BranchController();
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5894.682841663783!2d-100.55614753116616!3d19.688548638274863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2cb151daf6bad%3A0x5370d65e70009aa5!2sLumina!5e0!3m2!1sen!2sus!4v1609747274105!5m2!1sen!2sus" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
     </div>
     <div class="col-md-6 mt-5 py-5 align-self-center">
-      <img src="https://storage.googleapis.com/optica-lumina/landing/business.png" class="img-fluid" alt="">
+      <img src="src/img/business.png" class="img-fluid" alt="">
     </div>
   </div>
 
@@ -136,7 +138,7 @@ $sucursal = new BranchController();
 
     <div class="row">
       <div class="col-md-6">
-        <img src="https://storage.googleapis.com/optica-lumina/landing/pexels-ksenia-chernaya-5752309.jpg" class="img-fluid" alt="">
+        <img src="src/img/pexels-ksenia-chernaya-5752309.jpg" class="img-fluid" alt="">
       </div>
       <div class="col-md-6 text-center align-self-center">
         <h3 class="subtitle text-uppercase">Oftalmología</h3>
@@ -186,7 +188,7 @@ $sucursal = new BranchController();
         </div>
       </div>
       <div class="col-md-6">
-        <img src="https://storage.googleapis.com/optica-lumina/landing/pexels-daniel-frank-305565.jpg" class="img-fluid" alt="">
+        <img src="src/img/pexels-daniel-frank-305565.jpg" class="img-fluid" alt="">
       </div>
     </div>
   </section>
@@ -205,13 +207,13 @@ $sucursal = new BranchController();
       <h3 class="subtitle mt-3">Y con marcas como</h3>
       <div class="row" data-aos="flip-up">
         <div class="col-md-4 align-self-center">
-          <img src="https://storage.googleapis.com/optica-lumina/landing/Ocuerna-levis%402x_.svg" alt="" class="img-fluid">
+          <img src="src/img/Ocuerna-levis%402x_.svg" alt="" class="img-fluid">
         </div>
         <div class="col-md-4 align-self-center">
-          <img src="https://storage.googleapis.com/optica-lumina/landing/logo.jpeg" alt="" class="img-fluid">
+          <img src="src/img/logo.jpeg" alt="" class="img-fluid">
         </div>
         <div class="col-md-4 align-self-center">
-          <img src="https://storage.googleapis.com/optica-lumina/landing/Ocuerna-reebook%402x_2.svg" alt="" class="img-fluid">
+          <img src="src/img/Ocuerna-reebook%402x_2.svg" alt="" class="img-fluid">
         </div>
       </div>
 
@@ -221,21 +223,17 @@ $sucursal = new BranchController();
   <section class="container">
     <div class="row">
       <div class="col-md-6 mt-3" data-aos="fade-right">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque cupiditate veniam optio quisquam explicabo
-        illum in ipsa quis totam iusto eum, earum neque quibusdam voluptatibus aperiam autem ea dolorum numquam. <br>
-        <br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae sit eligendi voluptate natus reprehenderit
-        eius. Ea consequuntur dicta, veniam necessitatibus consectetur optio voluptates, sit error eaque, soluta nemo
-        rem. Vero! <br> <br>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ad id perspiciatis ullam. Sapiente molestias,
-        necessitatibus, asperiores excepturi animi reiciendis distinctio ipsum est assumenda dolore quam ut sequi
-        debitis nulla. <br> <br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor doloremque hic numquam temporibus sed
-        praesentium, labore reiciendis sapiente perferendis error eius? Ducimus deleniti porro ea quasi? Ipsa est labore
-        autem!
+        Óptica Lumina es una empresa de nuevo ingreso en el mercado, puesto que lleva alrededor de 2 años de labor dentro de la región de Ciudad Hidalgo Michoacán. <br> <br>
+
+        Esta surge de la idea de unos jóvenes emprendedores los cuales quisieron aprovechar de su talento, puesto que uno de ellos es <b>Doctor y Cirujano Oftálmico</b> y su socio es <b>Especialista en Manejo de Materiales para la Elaboración de Lentes Oftálmicos</b>, por ello decidieron abrir una óptica, la cual ya cuenta con una amplia gama de servicios y lentes. <br> <br>
+
+        Los servicios que se brindan son desde tratamientos alérgicos en el ojo, hasta cirugías o cuales las cuales abarcan y cubren el 99.99% de problemas relacionados a la visón. <br>
+        En la gama de productos se enfocan principalmente en la venta de lentes oftálmicos, lentes solares y lentes de contacto, hasta reparaciones menores de armazones puesto que tiente una gran ventaja competitiva en la región buscan expandirse a largo plazo e incrementar sus ventas a corto y mediano plazo, para poder cubrir toda esta zona. <br></br>
+
+        Óptica Lumina es una empresa de nuevo comienzo posicionada en la región oriente de Michoacán, su prestigio se debe a la excelente calidad de atención en los diversos servicios que ofrece para combatir en los problemas visuales, la mayor parte de reconocimiento y posicionamiento es debido al <b>Doctor Rodrigo González Solís Cirujano Oftálmico</b> puesto que brinda una atención de calidad ante la sociedad Ciudadalguence ayudando a la mejora y solucionar la variedad de los problemas visuales que habitan en ellos.
       </div>
       <div class="col-md-6" data-aos="fade-left">
-        <img src="https://storage.googleapis.com/optica-lumina/landing/shooting.png" alt="" class="img-fluid">
+        <img src="src/img/shooting.png" alt="" class="img-fluid">
       </div>
     </div>
     <a href="#!" class="mt-5 btn btn-lg btn-primary btn-block light-color-bg">Visita nuestra tienda en línea</a>
@@ -244,30 +242,29 @@ $sucursal = new BranchController();
   <section class="container mb-5">
     <h1 class="title text-center" id="booking">Agenda tu cita</h1>
     <p class="quote">
-      Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur
-      velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis
-      commodi quidem hic quas
+      Agenda tu consulta con Óptica Lumina y con médicos certificados. <br>
+      Estamos listos para atenderte de manera ágil y segura.
     </p>
-    
+
 
     <div class="row" data-aos="fade-left">
       <div class="col-md-10 mx-auto">
         <div class="card shadow p-2">
           <div id="calendar" class="m-2"></div>
-        </div>   
+        </div>
       </div>
 
       <div class="col-2 mx-auto mt-5">
 
-      <div class="col">
-        <p class="small text-muted font-weight-bold">Da click en el día en que quieres agendar tu cita.</p>
+        <div class="col">
+          <p class="small text-muted font-weight-bold">Da click en el día en que quieres agendar tu cita.</p>
+        </div>
+        <div class="col">
+          <p class="small text-muted font-weight-bold">Cinta del estilo <span class="fc-daygrid-event fc-daygrid-dot-event fc-event my-auto" style="width: 10vh" ;></span> indica que el horario no está disponible.</p>
+
+        </div>
       </div>
-      <div class="col">
-        <p class="small text-muted font-weight-bold">Cinta del estilo <span class="fc-daygrid-event fc-daygrid-dot-event fc-event my-auto" style="width: 10vh";></span> indica que el horario no está disponible.</p>
-        
-      </div>
-    </div>
-   
+
     </div>
 
     <!-- Insertar aquí el calendario para visualizar fechas/horas reservadas y disponibles -->
@@ -276,9 +273,7 @@ $sucursal = new BranchController();
   <section class="container mb-5">
     <h1 class="title text-center" id="contact">Contáctanos</h1>
     <p class="quote">
-      Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur
-      velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis
-      commodi quidem hic quas
+      Resolvemos tus dudas y te orientamos en tus futuras consultas y procedimientos oftalmicos, déjanos un mensaje y nos pondremos en contacto contigo lo más rápido posible.
     </p>
     <div class="row">
       <div class="col-md-6" data-aos="fade-right">
@@ -392,7 +387,7 @@ $sucursal = new BranchController();
     <div class="container">
       <span class="text-muted">Sitio diseñado por:
         <a class="text-dark subtitle" href="https://arpan.com.mx" target="_blank">
-          <img src="https://storage.googleapis.com/arpan/landing/logo.svg" class="img-fluid" width="20" alt="">
+          <img src="src/img/logo.svg" class="img-fluid" width="20" alt="">
           ARPAN México</a>
       </span>
     </div>
@@ -401,79 +396,79 @@ $sucursal = new BranchController();
 
   <!-- Modal para agendar cita -->
   <div class="modal fade" id="eventModal" tabindex="-1" data-backdrop="static" aria-labelledby="eventModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title font-weight-bold" id="eventTitle"></h5>
-                  <button type="button" class="close none-btn" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-              </div>
-              <div class="modal-body">
-                  <div class="form-group row">
-                  <input type="text" id="eventId" class="d-none">
-                      <div class="col">
-                          <label for="txtName">Nombre del paciente <span class="text-danger font-weight-bold"> *</span></label>
-                          <input type="text" id="txtName" class="form-control">
-                      </div>
-                      <div class="col">
-                          <label for="txtLastName">Apellidos del paciente <span class="text-danger font-weight-bold"> *</span></label>
-                          <input type="text" id="txtLastName" class="form-control">
-                      </div>
-                  </div>
-                  
-
-                  <div class="form-group row">
-
-                        <div class="col">
-                            <label for="txtDescription">Detalles</span></label>
-                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="col">
-                            <label for="txtPhone">Teléfono (10 digitos)<span class="text-danger font-weight-bold"> *</label>
-                            <input type="number" name="" id="txtPhone" class="form-control">
-                            <span class="text-danger font-weight-bold small" id="phoneValidation">Tiene que ser un teléfono con 10 dígitos, sin espacios ni guiones.</span>
-                        </div>
-                        
-                    </div>
-
-                  <div class="form-group row">
-                          <div class="col-12 col-sm-12 col-md-4">
-                              <label for="txtDate">Fecha <span class="text-danger font-weight-bold"> *</span></label>
-                              <div class="input-group">
-                                  <input type="date" id="txtDate" class="form-control">
-                                  <span class="input-group-append">
-                                      <label for="txtDate" class="input-group-text bg-transparent"><i class="fa fa-calendar"></i></label>
-                                  </span>
-                              </div>
-                              
-                          </div>
-                          <div class="col-12 col-sm-12 col-md-4 clockpicker">
-                              <label for="txtTime">Hora <span class="text-danger font-weight-bold"> *</span></label>
-                              <div class="input-group">
-                                  <input type="text" id="txtTime" class="form-control">
-                                  <span class="input-group-append">
-                                      <label for="txtTime" class="input-group-text bg-transparent"><i class="fa fa-clock"></i></label>
-                                  </span>
-                              </div>
-                              
-                              
-                          </div>
-                  </div>
-
-                  <div class="alert alert-warning" role="alert" id="emptyField">
-                      Por favor, llene los campos obigatorios marcados con un <span class="text-danger font-weight-bold"> * </span>
-                  </div>
-                  <div class="alert alert-warning" role="alert" id="wrongDate">
-                      Lo sentimos, esta fecha no es accesible, elija una fecha a partir del día de hoy.
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="button" id="btnAdd" class="btn btn-success">Agregar</button>
-              </div>
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold" id="eventTitle"></h5>
+          <button type="button" class="close none-btn" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <input type="text" id="eventId" class="d-none">
+            <div class="col">
+              <label for="txtName">Nombre del paciente <span class="text-danger font-weight-bold"> *</span></label>
+              <input type="text" id="txtName" class="form-control">
+            </div>
+            <div class="col">
+              <label for="txtLastName">Apellidos del paciente <span class="text-danger font-weight-bold"> *</span></label>
+              <input type="text" id="txtLastName" class="form-control">
+            </div>
           </div>
+
+
+          <div class="form-group row">
+
+            <div class="col">
+              <label for="txtDescription">Detalles</span></label>
+              <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+            </div>
+            <div class="col">
+              <label for="txtPhone">Teléfono (10 digitos)<span class="text-danger font-weight-bold"> *</label>
+              <input type="number" name="" id="txtPhone" class="form-control">
+              <span class="text-danger font-weight-bold small" id="phoneValidation">Tiene que ser un teléfono con 10 dígitos, sin espacios ni guiones.</span>
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+            <div class="col-12 col-sm-12 col-md-4">
+              <label for="txtDate">Fecha <span class="text-danger font-weight-bold"> *</span></label>
+              <div class="input-group">
+                <input type="date" id="txtDate" class="form-control">
+                <span class="input-group-append">
+                  <label for="txtDate" class="input-group-text bg-transparent"><i class="fa fa-calendar"></i></label>
+                </span>
+              </div>
+
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 clockpicker">
+              <label for="txtTime">Hora <span class="text-danger font-weight-bold"> *</span></label>
+              <div class="input-group">
+                <input type="text" id="txtTime" class="form-control">
+                <span class="input-group-append">
+                  <label for="txtTime" class="input-group-text bg-transparent"><i class="fa fa-clock"></i></label>
+                </span>
+              </div>
+
+
+            </div>
+          </div>
+
+          <div class="alert alert-warning" role="alert" id="emptyField">
+            Por favor, llene los campos obigatorios marcados con un <span class="text-danger font-weight-bold"> * </span>
+          </div>
+          <div class="alert alert-warning" role="alert" id="wrongDate">
+            Lo sentimos, esta fecha no es accesible, elija una fecha a partir del día de hoy.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" id="btnAdd" class="btn btn-success">Agregar</button>
+        </div>
       </div>
+    </div>
   </div>
 
 

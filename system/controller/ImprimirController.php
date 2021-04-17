@@ -1,37 +1,9 @@
 <?php
-/*
-
-	echo "Datos en el controlador:";
-
-	for ($i=0; $i < count($_POST['venta']); $i++) { 
-		print_r($_POST['venta']['productos'][$i]);
-	}
- */
-
-
-require __DIR__ . '/ticket/autoload.php'; 
+require $_SERVER['DOCUMENT_ROOT'] . '/ticket/autoload.php'; 
     use Mike42\Escpos\Printer;
     use Mike42\Escpos\EscposImage;
     use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
-    /*
-	Este ejemplo imprime un hola mundo en una impresora de tickets
-	en Windows.
-	La impresora debe estar instalada como genérica y debe estar
-	compartida
-*/
-
-/*
-	Conectamos con la impresora
-*/
- 
- 
-/*
-	Aquí, en lugar de "POS-58" (que es el nombre de mi impresora)
-	escribe el nombre de la tuya. Recuerda que debes compartirla
-	desde el panel de control
-*/
- 
 $nombre_impresora = "POS-58"; 
  
  
@@ -66,53 +38,17 @@ $printer->setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("Cantidad");
 $printer->setJustification(Printer::JUSTIFY_RIGHT);
 $printer->text("Precio");
-//optenemos el producto
+
+//Obtenemos el producto
 for ($i=0; $i < count($_POST['venta']); $i++) { 
 	$modelo = $_POST['venta']['models'][$i];
 	$marca = $_POST['venta']['brands'][$i];
 	$tipo = $_POST['venta']['type'][$i];
 	$precio = $_POST['venta']['price'][$i];
 	$cantidad = $_POST['venta']['quantity'][$i];
-
-	$printer->setJustification(Printer::JUSTIFY_LEFT);
-	$printer->setTextSize(1,1);
-	$printer->text("'$tipo' '$modelo' '$marca'");
-	$printer->setJustification(Printer::JUSTIFY_CENTER);
-	$printer->setTextSize(1,1);
-	$printer->text("'$cantidad'");
-	$printer->setJustification(Printer::JUSTIFY_RIGHT);
-	$printer->setTextSize(1,1);
-	$printer->text("'$precio'");
 }
 
-$printer->setLineSpacing(1);
-$printer->setJustification(Printer::JUSTIFY_LEFT);
-$printer->setTextSize(1,1);
-$printer->text("Total: ");
-$printer->setJustification(Printer::JUSTIFY_RIGHT);
-$printer->setTextSize(1,1);
-$total = $_POST['venta']['total'];
-$printer->text("'$total'");
-
-$printer->setJustification(Printer::JUSTIFY_CENTER);
-$printer->setUnderline(Printer::UNDERLINE_SINGLE);
-$printer->text("Modalidad de pago");
-$modalidadPago = $_POST['venta']['modalidad_pago'];
-$printer->text($modalidadPago);
-
-
-$printer->text("Mensualidades");
-$mensualidad = $_POST['venta']['mensualidades'];
-$printer->text($mensualidad);
-
-$printer->text("Interes");
-$interes = $_POST['venta']['interes'];
-$printer->text($interes);
-
-$printer->text("Pago por mes");
-$mes = $_POST['venta']['precio_mes'];
-$printer->text($mes);
-
+ 
 /*
 	Imprimimos un mensaje. Podemos usar
 	el salto de línea o llamar muchas
@@ -144,4 +80,3 @@ $printer->pulse();
 	la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
 */
 $printer->close();
-?>

@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     let basic = $('#patientBasic');
     let datePanel = $('#datePanel');
     let moneyPanel = $('#moneyPanel');
@@ -19,7 +19,6 @@ $(document).ready(function(){
     let opcionesPaciente = $('#panelPaciente');
     let selectedProductsPanel = $('#selectedProductsPanel');
     let result = $('#sellMsg');
-   
 
     result.hide();
     opcionesPaciente.hide();
@@ -82,46 +81,46 @@ $(document).ready(function(){
         localStorage.setItem('type', '');
     });
 
-    textName.on('input', function(){
+    textName.on('input', function () {
         products.fadeIn(800);
     });
-    textLastName.on('input', function(){
+    textLastName.on('input', function () {
         products.fadeIn(800);
     });
-    
-    modalidadPago.change(function(){
-        switch (modalidadPago.val()){
+
+    modalidadPago.change(function () {
+        switch (modalidadPago.val()) {
             case 'C': //Contado
                 mensualidad.fadeOut(800);
                 precioMes.fadeOut(800);
                 interes.fadeOut(800);
-            break;
+                break;
             case 'MSI': //Meses sin intereses
                 mensualidad.fadeIn(800);
                 precioMes.fadeIn(800);
                 interes.fadeOut(800);
-            break;
+                break;
             case 'MCI': //Meses con intereses
                 mensualidad.fadeIn(800);
                 precioMes.fadeIn(800);
                 interes.fadeIn(800);
-            break;
+                break;
         }
     });
 
-    btnSaveSell.click(function(){
+    btnSaveSell.click(function () {
         let result = $('#sellMsg');
         mensualidades = 0;
         precio_mes = 0;
         txt_interes = 0;
 
-        if(txtMensualidad.val() != ""){
-            mensualidades =  txtMensualidad.val();
+        if (txtMensualidad.val() != "") {
+            mensualidades = txtMensualidad.val();
         }
-        if(txtPrecioMes.val() != ""){
+        if (txtPrecioMes.val() != "") {
             precio_mes = txtPrecioMes.val();
         }
-        if(txtInteres.val() != ""){
+        if (txtInteres.val() != "") {
             txt_interes = txtInteres.val();
         }
         data = {
@@ -140,31 +139,39 @@ $(document).ready(function(){
             'models': localStorage.getItem('models'),
             'brands': localStorage.getItem('brands'),
             'type': localStorage.getItem('type'),
-            'price': localStorage.getItem('prices') 
+            'price': localStorage.getItem('prices')
 
         };
 
-        if(data['fecha'] == "" || data['nombre'] == "" || data['apellidos'] == "" || data['tipo_pago'] == "" || data['modalidad_pago'] == "" ){
+        if (data['fecha'] == "" || data['nombre'] == "" || data['apellidos'] == "" || data['tipo_pago'] == "" || data['modalidad_pago'] == "") {
             result.hide();
             result.html('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_0iHUgw.json"  background="transparent"  speed="1"  style="width: 100%; height: 25vh;"  loop  autoplay></lottie-player><h4 class="text-center font-weight-bolder py-3 text-warning">Oops!. Hay campos marcados con un <span class="text-danger"> * </span> sin llenar.</h4>');
             result.fadeIn(800);
             setTimeout(function () { result.fadeOut(800); }, 3500);
-        }else{
+        } else {
             saveSell(data);
             imprimirTicket(data);
         }
-        
+
+    });
+
+    $('[name=mensualidad]').keyup(function(){
+        //precioMes
+
+        var total = parseFloat($('#totalIndicator').text());
+        var meses = parseFloat($('[name=mensualidad]').val());
+        $('[name=precioMes]').val(total / meses);
     });
 });
 
 
-function selectPatient(id_paciente, nombre, apellidos){
+function selectPatient(id_paciente, nombre, apellidos) {
     let textID = $('#txtID');
     let textName = $('#txtName');
     let textLastName = $('#txtLastName');
     let basic = $('#patientBasic');
     let products = $('#productsPanel');
-    
+
     basic.fadeIn(800);
     products.fadeIn(800);
     textID.val(id_paciente);
@@ -172,11 +179,11 @@ function selectPatient(id_paciente, nombre, apellidos){
     textName.attr('readonly', true);
     textLastName.val(apellidos);
     textLastName.attr('readonly', true);
-   
-    
+
+
 }
 
-function saveProducts(){
+function saveProducts() {
     let datePanel = $('#datePanel');
     let moneyPanel = $('#moneyPanel');
     let saveSell = $('#saveSell');
@@ -203,19 +210,19 @@ function saveProducts(){
     productsPanel.html('<h5 class="font-weight-bold text-muted mt-4">Productos seleccionados</h5>')
     productsPanel.append('<div class="row"><label class="text-muted text-wrap font-weight-bold mx-auto my-2">Tipo</label><label class="text-muted font-weight-bold col-md-2 mx-auto my-2">Código</label><label class="text-muted font-weight-bold col-md-2 mx-auto my-2">Modelo</label><label class="text-muted font-weight-bold col-md-3 mx-auto my-2">Marca</label><label class="text-muted font-weight-bold col-md-2 mx-auto my-2">Precio</label><label class="text-muted font-weight-bold col-md-1 mx-auto my-2">Cant.</label></div>')
     arrProducts.forEach((element, index, array) => {
-        if(element != ""){
+        if (element != "") {
             productsPanel.append(
-                '<div class="row"><label class="my-auto small text-muted">'+ arrTypes[index] +'</label><input readonly class="form-control mx-auto my-2 col-md-2" value="' + element +'"><input readonly class="form-control mx-auto my-2 col-md-2" value="' + arrModels[index] +'"><input readonly class="form-control mx-auto my-2 col-md-3" value="' + arrBrands[index] +'"><input readonly id="price'+element+'" class="form-control mx-auto my-2 col-md-2" value="' + arrPrices[index] +'"><input type="number" id="quantity'+ element +'" onchange="changeQuantity('+element+','+index+');" class="form-control input-number mx-auto my-2 col-md-1" min=1 max=' + arrStock[index] +' value="1"></div>'
+                '<div class="row"><label class="my-auto small text-muted">' + arrTypes[index] + '</label><input readonly class="form-control mx-auto my-2 col-md-2" value="' + element + '"><input readonly class="form-control mx-auto my-2 col-md-2" value="' + arrModels[index] + '"><input readonly class="form-control mx-auto my-2 col-md-3" value="' + arrBrands[index] + '"><input readonly id="price' + element + '" class="form-control mx-auto my-2 col-md-2" value="' + arrPrices[index] + '"><input type="number" id="quantity' + element + '" onchange="changeQuantity(' + element + ',' + index + ');" class="form-control input-number mx-auto my-2 col-md-1" min=1 max=' + arrStock[index] + ' value="1"></div>'
             );
-        }else{
+        } else {
             $('tr').removeClass('row-selected');
-        } 
+        }
     });
     productsPanel.fadeIn(800);
     calculateTotal(arrPrices);
 }
 
-function selectProduct(product, model, brand, price, stock, type, quantity){
+function selectProduct(product, model, brand, price, stock, type, quantity) {
     arrProduct = localStorage.getItem('products');
     arrModel = localStorage.getItem('models');
     arrBrand = localStorage.getItem('brands');
@@ -232,11 +239,11 @@ function selectProduct(product, model, brand, price, stock, type, quantity){
     localStorage.setItem('type', arrType + type + ',');
     localStorage.setItem('quantity', arrQuantity + quantity + ',');
 
-    $('#row'+product).addClass('row-selected');
-    
+    $('#row' + product).addClass('row-selected');
+
 }
 
-function cancelProducts(){
+function cancelProducts() {
     localStorage.setItem('products', '');
     localStorage.setItem('models', '');
     localStorage.setItem('brands', '');
@@ -245,12 +252,12 @@ function cancelProducts(){
     localStorage.setItem('type', '');
 }
 
-function changeQuantity(element, index){
-    let input = $('#quantity'+element).val();
-    let text = $('#price'+element);
+function changeQuantity(element, index) {
+    let input = $('#quantity' + element).val();
+    let text = $('#price' + element);
     products = localStorage.getItem('products');
     arrProducts = products.split(',');
-    
+
     prices = localStorage.getItem('prices');
     arrPrices = prices.split(',');
 
@@ -262,28 +269,26 @@ function changeQuantity(element, index){
     arrPrices[index] = newPrice;
     arrQuantity[index] = input;
 
-    localStorage.setItem('quantity',arrQuantity);
+    localStorage.setItem('quantity', arrQuantity);
     text.val(newPrice);
     console.log(arrPrices);
     calculateTotal(arrPrices);
 }
 
-function calculateTotal(prices){
+function calculateTotal(prices) {
     sum = 0.0;
-    prices.forEach(element =>{
-        if(element != ""){
+    prices.forEach(element => {
+        if (element != "") {
             sum += parseFloat(element);
         }
     });
-
-    console.log('Total: ', sum);
-    $('#totalIndicator').html('$  '+ sum + ' MXN');
+    $('#totalIndicator').html(sum + '.00');
     $('#txtTotal').val(sum);
     $('#totalIndicator').fadeIn(800);
     localStorage.setItem('total', sum);
 }
 
-function saveSell(data){
+function saveSell(data) {
     let result = $('#sellMsg');
     console.log(data);
     $.ajax({
@@ -293,7 +298,7 @@ function saveSell(data){
             action: 'venta',
             venta: data
         },
-        beforeSend: function (){
+        beforeSend: function () {
             result.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             result.fadeIn(800);
         },
@@ -304,13 +309,13 @@ function saveSell(data){
         success: function (response) {
             result.hide();
             console.log(response);
-            if(response == 'true'){
+            if (response == 'true') {
                 result.addClass('bg-primary');
                 result.html('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_gaSt56.json" background="#4E73DF"  speed="1"  style="width: 100%; height: 25vh;"  loop  autoplay></lottie-player><h4 class="text-center font-weight-bolder bg-primary py-3 text-white">Venta guardada con éxito!</h4>');
                 result.fadeIn(800);
                 setTimeout(function () { result.fadeOut(800); }, 2200);
-                setTimeout(function () { location.reload(); }, 2900);
-            }else{
+                setTimeout(function () { window.location.href = "dashboard.php?listarVentas"; }, 2900);
+            } else {
                 result.html('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_ed9D2z.json"  background="transparent"  speed=".5"  style="width: 100%; height: 25vh;"  loop  autoplay></lottie-player><h4 class="text-center font-weight-bolder py-3 text-danger">Oops ha ocurrido un error! Por favor vuelve a intentarlo</h4>');
                 result.fadeIn(800);
                 setTimeout(function () { result.fadeOut(800); }, 3500);
@@ -319,7 +324,7 @@ function saveSell(data){
     });
 }
 
-function sellInfo(id, name, lastname, date, payment_type, modality_pay, monthly, price_month, interest, sell_total, products){
+function sellInfo(id, name, lastname, date, payment_type, modality_pay, monthly, price_month, interest, sell_total, products) {
     let modalSell = $('#sellInfo');
     let title = $('#sellInfoTitle');
     let txtName = $('#sellInfoName');
@@ -369,7 +374,7 @@ function sellInfo(id, name, lastname, date, payment_type, modality_pay, monthly,
         data: {
             products: products
         },
-        beforeSend: function (){
+        beforeSend: function () {
             result.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             result.fadeIn(800);
         },
@@ -396,7 +401,7 @@ function imprimirTicket(data) {
             action: 'venta',
             venta: data
         },
-        beforeSend: function (){
+        beforeSend: function () {
             result.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
             result.fadeIn(800);
         },
@@ -407,13 +412,13 @@ function imprimirTicket(data) {
         success: function (response) {
             result.hide();
             console.log(response);
-            if(response == 'true'){
+            if (response == 'true') {
                 result.addClass('bg-primary');
                 result.html('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_gaSt56.json" background="#4E73DF"  speed="1"  style="width: 100%; height: 25vh;"  loop  autoplay></lottie-player><h4 class="text-center font-weight-bolder bg-primary py-3 text-white">Venta guardada con éxito!</h4>');
                 result.fadeIn(800);
                 setTimeout(function () { result.fadeOut(800); }, 2200);
                 setTimeout(function () { location.reload(); }, 2900);
-            }else{
+            } else {
                 result.html('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_ed9D2z.json"  background="transparent"  speed=".5"  style="width: 100%; height: 25vh;"  loop  autoplay></lottie-player><h4 class="text-center font-weight-bolder py-3 text-danger">Oops ha ocurrido un error! Por favor vuelve a intentarlo</h4>');
                 result.fadeIn(800);
                 setTimeout(function () { result.fadeOut(800); }, 3500);
