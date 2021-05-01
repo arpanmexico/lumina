@@ -3,6 +3,10 @@ include('../controller/CategoryController.php');
 $categorias = new CategoryController();
 
 $codigo_barras = $categorias->IDCodeGenerator();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Productos - Agregar Producto</h1>

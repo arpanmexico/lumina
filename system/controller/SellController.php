@@ -1,21 +1,47 @@
 <?php
 class SellController
 {
+
   public function getGlobalController()
   {
     return new GlobalController();
+  }
+
+
+  public function UniqueIDGenerator()
+  {
+    $database = new Database();
+
+    do {
+      $uniqid = uniqid();
+
+      $invoice_id_query = "SELECT COUNT(id_venta) AS venta FROM ventas WHERE id_venta = '" . $uniqid . "'";
+      $runInvoiceQuery = $database->query($invoice_id_query);
+
+      if ($runInvoiceQuery->num_rows == 0) {
+        continue;
+      } else {
+        return $uniqid;
+        break;
+      }
+    } while ($runInvoiceQuery->num_rows == 0);
   }
 
   public function sellManage($type, $data)
   {
     //include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
     include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
-
     $response = 'true';
     $database = new Database();
-    $query = "call sellsManager('" . $data['id_paciente'] . "', '" . $data['productos'] . "', '" . $data['nombre'] . "', '" . $data['apellidos'] . "', '" . $data['fecha'] . "', '" . $data['tipo_pago'] . "', '" . $data['modalidad_pago'] . "', " . $data['mensualidades'] . ", " . $data['precio_mes'] . ", " . $data['interes'] . ", " . $data['total'] . ", " . $type . ")";
+
+
+
+    $query = "call sellsManager('" . $data['id_venta'] . "', '" . $data['id_paciente'] . "', '" . $data['productos'] . "', '" . $data['nombre'] . "', 
+            '" . $data['apellidos'] . "', '" . $data['fecha'] . "', '" . $data['tipo_pago'] . "', '" . $data['modalidad_pago'] . "', " . $data['descuento'] . ",
+            " . $data['anticipo'] . ", " . $data['mensualidades'] . ", " . $data['precio_mes'] . ", " . $data['interes'] . ", " . $data['total'] . ", 1)";
 
     $runQuery = $database->query($query);
+
     if ($runQuery) {
       $producto = explode(',', $data['productos']);
       $cantidad = explode(',', $data['cantidad']);

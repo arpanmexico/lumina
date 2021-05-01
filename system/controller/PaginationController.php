@@ -55,7 +55,7 @@ if (isset($_POST['type'])) {
             pagination($query, $query2, $database, $page, $items, 'pac');
             break;
         case 'ven': // Ventas
-            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total FROM ventas ORDER BY fecha DESC LIMIT $start, $items ";
+            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, descuento, anticipo, mensualidades, precio_mes, interes, total FROM ventas ORDER BY fecha DESC LIMIT $start, $items ";
             $query2 = "SELECT count(id_venta) FROM ventas";
             pagination($query, $query2, $database, $page, $items, 'ven');
             break;
@@ -153,6 +153,8 @@ function pagination($query, $query2, $database, $page, $items, $card)
                         'fecha' => $row['fecha'],
                         'tipo_pago' => $row['tipo_pago'],
                         'modalidad_pago' => $row['modalidad_pago'],
+                        'descuento' => $row['descuento'],
+                        'anticipo' => $row['anticipo'],
                         'mensualidades' => $row['mensualidades'],
                         'precio_mes' => $row['precio_mes'],
                         'interes' => $row['interes'],
@@ -423,6 +425,8 @@ function sellCard($data)
     $modalidadPago = $data['modalidad_pago'];
     $mensualidades = $data['mensualidades'];
     $precioMes = $data['precio_mes'];
+    $descuento = $data['descuento'];
+    $anticipo = $data['anticipo'];
     $interes = $data['interes'];
     $productos = $data['productos'];
     $image = "";
@@ -478,7 +482,7 @@ function sellCard($data)
                     <h5 class="text-muted">' . $data['nombre'] . ' ' . $data['apellidos'] . '</h5>
                     <p class="text-success font-weight-bold small">' . $modalidadPago . ' ' . $tipoPago . '</p>
                     <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo(';
-    $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "','" . $mensualidades . "','" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . ",'" . $productos . "'";
+    $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "', '" . $descuento . "', '" . $anticipo . "', '" . $mensualidades . "', '" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . ",'" . $productos . "'";
     $response .= ');">Ver información completa</a>
                 </div>
             </div>

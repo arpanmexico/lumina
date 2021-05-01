@@ -268,4 +268,8 @@ class PatientController
 
         $database->close();
     }
+
+    public function getAllSoldProducts($id){
+        echo "Sección en construcción";
+    }
 }

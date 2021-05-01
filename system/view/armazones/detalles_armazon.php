@@ -25,7 +25,7 @@ $categorias = new CategoryController();
             <div class="row">
                 <div class="col-lg-5 col-sm-6 col-sm-12 align-self-center text-center">
                     <img src='../../src/catalog/<?php echo $array['foto']; ?>' class="img-fluid">
-                    
+
                     <p class="font-weight-bolder">
                         Código de Barras del Producto:
                     </p>

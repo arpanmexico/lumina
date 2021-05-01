@@ -61,10 +61,10 @@ if (isset($_GET['cerrarSesion'])) {
 } else if (isset($_GET['idPaciente']) && isset($_GET['accionPaciente'])) {
     switch ($_GET['accionPaciente']) {
         case 'suspend':
-            $patientQuery = "CALL patientsManager('ABAYPA7117', null, null, null, null, null, null, null, null, null, null, 3)";
+            $patientQuery = "CALL patientsManager('" . $_GET['idPaciente'] . "', null, null, null, null, null, null, null, null, null, null, 3)";
             break;
         case 'restore':
-            $patientQuery = "CALL patientsManager('ABAYPA7117', null, null, null, null, null, null, null, null, null, null, 4)";
+            $patientQuery = "CALL patientsManager('" . $_GET['idPaciente'] . "', null, null, null, null, null, null, null, null, null, null, 4)";
             break;
     }
     $patientResult = $database->query($patientQuery);
