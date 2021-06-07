@@ -84,7 +84,7 @@ $uniqid = $ventas->UniqueIDGenerator();
 
             <div class="col-lg-6 col-md-6 col-sm-12 align-self-center mt-3">
               <label for="txtPhoneNumber" class="font-weight-bolder">Teléfono de Contacto <span class="font-weight-bolder text-danger"> * </span></label>
-              <input type="tel" id="txtPhoneNumber" name="telefono_secundario" class="form-control" readonly>
+              <input type="tel" id="txtPhoneNumber" name="telefono_secundario" class="form-control">
             </div>
           </div>
         </div>

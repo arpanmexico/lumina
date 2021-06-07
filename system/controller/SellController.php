@@ -13,7 +13,7 @@ class SellController
     $database = new Database();
 
     do {
-      $uniqid = uniqid();
+      $uniqid = rand(1000, 90000);
 
       $invoice_id_query = "SELECT COUNT(id_venta) AS venta FROM ventas WHERE id_venta = '" . $uniqid . "'";
       $runInvoiceQuery = $database->query($invoice_id_query);
@@ -29,8 +29,8 @@ class SellController
 
   public function sellManage($type, $data)
   {
-    //include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
-    include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
+    include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+    //include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
     $response = 'true';
     $database = new Database();
 
@@ -143,8 +143,8 @@ class SellController
 
   public function showSoldProducts($products)
   {
-    //include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
-    include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
+    include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+    //include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
     $database = new Database();
 
     $formatedProd = explode(",", $products);
