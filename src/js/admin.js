@@ -17,6 +17,8 @@ $(document).ready(function () {
     selectYear.change(function(){
         soldByMonthChart(selectYear.val(), income);
     });
+
+    $('#ticketMsgBtn').hide();
 });
 
 function soldByMonthChart(year, id){
@@ -521,3 +523,5 @@ function polarChart(labels, data,id){
         }
     });
 }
+
+

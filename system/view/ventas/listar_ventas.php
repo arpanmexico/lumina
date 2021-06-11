@@ -56,7 +56,7 @@
 
         <div class="row">
           <div class="form-group col-12 col-md-6 my-3">
-            <label for="sellDiscount"> Porcentaje de Descuento</label>
+            <label for="sellDiscount"> Descuento</label>
             <input type="text" id="sellDiscount" readonly class="form-control">
           </div>
           <div class="form-group col-12 col-md-6 my-3">
@@ -81,7 +81,16 @@
         </div>
 
         <div class="row mt-4">
-          <h6 class="text-muted col-12 text-center font-weight-bold">Total de la venta: <span class="h4 text-primary font-weight-bolder" id="sellInfoTotal"></span></h6>
+          <div class="col-12 col-md-6">
+            <h6 class="text-muted col-12 text-center font-weight-bold">Total bruto: <span class="h5 text-primary font-weight-bolder" id="sellInfoTotal"></span></h6>
+
+          </div>
+          <div class="col-12 col-md-6">
+            <h5 class="text-muted col-12 text-center font-weight-bold">Total neto: <span class="h4 text-primary font-weight-bolder" id="sellInfoTotalDesc"></span></h5>
+          </div>
+          
+         
+
         </div>
 
         <div class="" id="productsTable"></div>

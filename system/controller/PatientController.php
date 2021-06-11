@@ -11,7 +11,7 @@ class PatientController
         return new Database();
     }
 
-    public function patientsManager($data, $action)
+    public function patientsManager($data, $action, $option)
     {
         $database = PatientController::getDatabaseConnection();
 
@@ -28,8 +28,15 @@ class PatientController
 
         $runQuery = $database->query($query);
 
+        if($option == 'normal'){
+            $location = 'listarPacientes';
+        }elseif($option == 'auto'){
+            $location = 'crearVentas&name='.$data['nombre'].'&lastname='.$data['apellido_paterno'].' '.$data['apellido_materno'].'&phone='.$data['telefono_fijo'];
+        }
+        
+
         if ($runQuery)
-            header('Location: ?listarPacientes');
+            header('Location: ?'.$location);
         else
             PatientController::getGlobalController()->getAlerts('error', 'Ocurrió un error al guardar los datos, intenta <a href="?crearPaciente">Recargar la página</a>, si el problema persiste escribe a <a href="mailto:contacto@arpan.com.mx">contacto@arpan.com.mx</a>');
 

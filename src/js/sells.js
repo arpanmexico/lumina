@@ -11,6 +11,7 @@ $(document).ready(function () {
   let textPhoneNumber = $('#txtPhoneNumber');
   let tipoPago = $('#tipoPago');
   let modalidadPago = $('#modalidadPago');
+  let tipoDescuento = $('#tipoDescuento');
   let descuento = $('#descuento');
   let anticipo = $('#anticipo');
   let mensualidad = $('#mensualidad');
@@ -34,7 +35,7 @@ $(document).ready(function () {
   products.hide();
   moneyPanel.hide();
   btnSaveSell.hide();
-
+  calculateDiscount('NA', 0);
   $('#totalIndicator').hide();
 
   $('#esPaciente').click(function () {
@@ -63,8 +64,10 @@ $(document).ready(function () {
     opcionesPaciente.fadeOut(800);
     textName.attr('readonly', false);
     textLastName.attr('readonly', false);
+    textPhoneNumber.attr('readonly', false);
     textName.val("");
     textLastName.val("");
+    textPhoneNumber.val("");
     basic.fadeIn(800);
     products.fadeOut(800);
     moneyPanel.fadeOut(800);
@@ -110,6 +113,38 @@ $(document).ready(function () {
     }
   });
 
+  tipoDescuento.change(function(){
+    switch(tipoDescuento.val()){
+      case 'D':
+        descuento.val(''); 
+        descuento.attr('readonly', false);
+        descuento.attr('placeholder', 'Ingresa el monto del descuento');
+        break;
+      case 'T':
+        descuento.val(''); 
+        descuento.attr('readonly', true);
+        descuento.attr('placeholder', 'Se aplicará descuento total de la venta');
+        descuento.val(localStorage.getItem('total'));
+        break;
+      case 'P':
+        descuento.val(''); 
+        descuento.attr('readonly', false);    
+        descuento.attr('placeholder', 'Ingresa el porcentaje del descuento');
+        break;
+      default:
+        descuento.val(''); 
+        descuento.attr('readonly', true);
+        descuento.attr('placeholder', 'No se aplicará descuento');
+        descuento.val('');      
+    }
+
+    calculateDiscount(tipoDescuento.val(), descuento.val());
+  });
+
+  descuento.on('input',function(){
+    calculateDiscount(tipoDescuento.val(), descuento.val());
+  });
+
   btnSaveSell.click(function () {
     let result = $('#sellMsg');
     mensualidades = 0;
@@ -135,7 +170,8 @@ $(document).ready(function () {
       'fecha': textDate.val(),
       'tipo_pago': tipoPago.val(),
       'modalidad_pago': modalidadPago.val(),
-      'descuento': descuento.val() == '' ? 0 : descuento.val(),
+      'tipo_descuento': tipoDescuento.val(),
+      'descuento': localStorage.getItem('discount'),
       'anticipo': anticipo.val() == '' ? 0 : anticipo.val(),
       'mensualidades': mensualidades,
       'precio_mes': precio_mes,
@@ -199,6 +235,8 @@ function saveProducts() {
   let moneyPanel = $('#moneyPanel');
   let saveSell = $('#saveSell');
   let productsPanel = $('#selectedProductsPanel');
+  let tipoDescuento = $('#tipoDescuento');
+  let descuento = $('#descuento');
   datePanel.fadeIn(800);
   moneyPanel.fadeIn(800);
   saveSell.fadeIn(800);
@@ -229,6 +267,11 @@ function saveProducts() {
   });
   productsPanel.fadeIn(800);
   calculateTotal(arrPrices);
+  calculateDiscount(tipoDescuento.val(), descuento.val());
+  if(tipoDescuento.val() == 'T'){
+    descuento.val(localStorage.getItem('total'));
+  }
+ 
 }
 
 function selectProduct(product, model, brand, price, stock, type, quantity) {
@@ -253,17 +296,20 @@ function selectProduct(product, model, brand, price, stock, type, quantity) {
 }
 
 function cancelProducts() {
-  localStorage.setItem('products', '');
-  localStorage.setItem('models', '');
-  localStorage.setItem('brands', '');
-  localStorage.setItem('prices', '');
-  localStorage.setItem('stock', '');
-  localStorage.setItem('type', '');
+  localStorage.setItem('products', arrProduct + '');
+  localStorage.setItem('models',  arrModel + '');
+  localStorage.setItem('brands', arrBrand + '');
+  localStorage.setItem('prices', arrPrice + '');
+  localStorage.setItem('stock', arrStock + '');
+  localStorage.setItem('type', arrType + '');
+  localStorage.setItem('quantity', arrQuantity + '');
 }
 
 function changeQuantity(element, index) {
   let input = $('#quantity' + element).val();
   let text = $('#price' + element);
+  let tipoDescuento = $('#tipoDescuento');
+  let descuento = $('#descuento');
   products = localStorage.getItem('products');
   arrProducts = products.split(',');
 
@@ -282,6 +328,10 @@ function changeQuantity(element, index) {
   text.val(newPrice);
   console.log(arrPrices);
   calculateTotal(arrPrices);
+  calculateDiscount(tipoDescuento.val(), descuento.val());
+  if(tipoDescuento.val() == 'T'){
+    descuento.val(localStorage.getItem('total'));
+  }
 }
 
 function calculateTotal(prices) {
@@ -332,7 +382,7 @@ function saveSell(data) {
   });
 }
 
-function sellInfo(id, name, lastname, date, payment_type, modality_pay, discount, advance, monthly, price_month, interest, sell_total, products) {
+function sellInfo(id, name, lastname, date, payment_type, modality_pay, discount_type, advance, monthly, price_month, interest, sell_total, products, discount) {
   let modalSell = $('#sellInfo');
   let title = $('#sellInfoTitle');
   let txtName = $('#sellInfoName');
@@ -348,6 +398,7 @@ function sellInfo(id, name, lastname, date, payment_type, modality_pay, discount
   let txtPrice = $('#sellInfoPrice');
   let txtInterest = $('#sellInfoInterest');
   let txtTotal = $('#sellInfoTotal');
+  let txtTotalNet = $('#sellInfoTotalDesc');
   let result = $('#productsTable');
 
   var onlyDate = date.split(" ", 2);
@@ -373,15 +424,16 @@ function sellInfo(id, name, lastname, date, payment_type, modality_pay, discount
   txtLastName.val(lastname);
   txtPayment.val(payment_type);
   txtModality.val(modality_pay);
-  txtDiscount.val(discount + "%");
+  txtDiscount.val(discount_type);
   txtAdvance.val("$" + advance + ".00");
   txtMonthly.val(monthly);
   txtPrice.val(price_month);
   txtInterest.val(interest + "%");
-  txtTotal.html("$ " + sell_total + ".00 MXN");
+  txtTotal.html("$ " + parseFloat(sell_total) + " MXN");
+  txtTotalNet.html("$ " + (sell_total - discount) + " MXN");
   txtDate.html(formatDate[2] + " de " + arrMonth[formatDate[1]] + " del " + formatDate[0]);
   modalSell.modal();
-
+  console.log('Descuento -> ', discount);
   $.ajax({
     url: "../../system/controller/SellController.php",
     type: "POST",
@@ -434,3 +486,66 @@ function printSell(data) {
 
   window.open("ventas/ticket.php?datosTicket=" + arrStr + "", "_blank");
 }
+
+function searchProducts(type, search){
+  let result = $('#searchProducts');
+  console.log(type);
+  $.ajax({
+    url: '../../system/controller/SellController.php',
+    type: 'POST',
+    data: {
+      search_products: search,
+      id_categoria: type
+    },
+    beforeSend: function () {
+      console.log('Buscando..');
+      result.html('<div class="spinner mx-auto"></div><h3 class="mx-auto text-center">Cargando...</h3><h5 class="mx-auto text-center">Espere un momento por favor</h5>');
+      result.fadeIn(800);
+    },
+    error: function (error) {
+      console.log('No se pudo realizar la búsqueda -> ', error);
+      result.fadeIn(800);
+    },
+    success: function (response) {
+      console.log('Busqueda finalizada: ');
+      result.hide();
+      result.html(response);
+      result.show();
+    },
+  });
+}
+
+function openProductModal(type, name){
+  let modal = $('#productsModal');
+  $('#modalTitle').html('Agregar ' + name);
+  localStorage.setItem('cat', type);
+  modal.modal();
+  searchProducts(type, '');
+}
+
+function calculateDiscount(type, num){
+  discount = 0;
+  let prev_total = localStorage.getItem('total');
+  switch(type){
+    case 'NA':
+      discount = 0;
+      break;
+    case 'T':
+      discount = prev_total;
+      break;
+    case 'P':
+      discount = (prev_total * num)/100;
+      break;
+    case 'D':
+      discount = num;
+      break;    
+  }
+
+  localStorage.setItem('discount', discount);
+}
+
+$('#search-products').on('input', function (){
+  let search = $('#search-products').val();
+  let type = localStorage.getItem('cat');
+  searchProducts(type, search);
+});

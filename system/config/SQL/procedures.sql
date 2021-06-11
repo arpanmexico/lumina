@@ -174,12 +174,12 @@ DELIMITER ;
 /*   -----  PROCEDIMIENTO PARA ADMINISTRAR LA SECCIÓN << VENTAS >>   -----   */
 DROP PROCEDURE IF EXISTS sellsManager;
 DELIMITER ;
-    CREATE PROCEDURE sellsManager(IN _id_paciente varchar(20), IN _productos TEXT, IN _nombre varchar(200), IN _apellidos varchar(200), IN _fecha DATETIME, IN _tipo_pago enum('E', 'T'), IN _modalidad_pago enum('C', 'MSI', 'MCI'), IN _mensualidaes INT(10), IN _precio_mes FLOAT(15), IN _interes FLOAT(10), IN _total FLOAT(10), IN _cantidad TEXT, IN _action INT(1))
+    CREATE PROCEDURE sellsManager(IN _id_paciente varchar(20), IN _productos TEXT, IN _nombre varchar(200), IN _apellidos varchar(200), IN _fecha DATETIME, IN _tipo_pago enum('E', 'T'), IN _modalidad_pago enum('C', 'MSI', 'MCI'), IN _tipo_descuento enum('NA', 'T', 'P', 'D'),IN _descuento FLOAT(10) , IN _anticipo FLOAT, IN _mensualidaes INT(10), IN _precio_mes FLOAT(15), IN _interes FLOAT(10), IN _total FLOAT(10), IN _cantidad TEXT, IN _action INT(1))
     BEGIN
         SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
 
         IF _action = 1 THEN # INSERT DATA
-            INSERT INTO ventas(id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, mensualidades, precio_mes, interes, total, creado) VALUES (_id_paciente, _productos, _nombre, _apellidos, _fecha, _tipo_pago, _modalidad_pago, _mensualidaes, _precio_mes, _interes, _total, @current_time_mx);
+            INSERT INTO ventas(id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, tipo_descuento, descuento, anticipo, mensualidades, precio_mes, interes, total, creado,actualizado) VALUES (_id_paciente, _productos, _nombre, _apellidos, _fecha, _tipo_pago, _modalidad_pago, _tipo_descuento, _descuento, _anticipo, _mensualidaes, _precio_mes, _interes, _total, @current_time_mx, @current_time_mx);
         END IF;
     END;
 DELIMITER ;
@@ -258,6 +258,34 @@ DELIMITER ;
 
         IF _accion = 1 THEN # INSERT DATA
             INSERT INTO alertas(mensaje, seccion, tipo, fecha) VALUES (_mensaje, _seccion, _tipo, @current_time_mx);
+        END IF;
+    END;
+DELIMITER ;
+/*   -----  PROCEDIMIENTO PARA ADMINISTRAR EL TICKET   -----   */
+DROP PROCEDURE IF EXISTS manageTicket;
+DELIMITER ;
+    CREATE PROCEDURE manageTicket(IN _id_ticket int(5), IN _mensaje text, IN _accion int(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _accion = 1 THEN # INSERT DATA
+            UPDATE ticket set estatus = 0 WHERE id_ticket != -id_ticket;
+            INSERT INTO ticket(mensaje, estatus, fecha) VALUES (_mensaje, 1, @current_time_mx);
+        ELSEIF _accion = 2 THEN # UPDATE DATA
+            UPDATE ticket SET mensaje = _mensaje WHERE id_ticket = _id_ticket;
+        END IF;
+    END;
+DELIMITER ;
+
+/*   -----  PROCEDIMIENTO PARA ADMINISTRAR LAS SALIDAS DE DINERO   -----   */
+DROP PROCEDURE IF EXISTS manageMoneyOut;
+DELIMITER ;
+    CREATE PROCEDURE manageMoneyOut(IN _id_salida int(5), IN _monto DOUBLE, IN _concepto text, IN _accion int(1))
+    BEGIN
+        SET @current_time_mx = CONVERT_TZ(current_timestamp,'GMT','America/Mexico_City');
+
+        IF _accion = 1 THEN # INSERT DATA
+            INSERT INTO salidas(monto,concepto, fecha) VALUES (_monto,_concepto, @current_time_mx);
         END IF;
     END;
 DELIMITER ;

@@ -131,7 +131,16 @@ $pacientes = new PatientController();
           </div>
         </div>
       </section>
-      <button type="submit" name="guardarPaciente" class="btn btn-info btn-block">Agregar Paciente</button>
+      <div class="row">
+        <div class="col-12 col-md-6 mx-auto">
+          <button type="submit" name="guardarPaciente" class="btn btn-info btn-block">Agregar Paciente</button>
+        </div>
+        <div class="col-12 col-md-6 mx-auto">
+          <button type="submit" name="guardarVender" class="btn btn-success btn-block">Guardar y crear venta en automático</button>
+        </div>
+       
+        
+      </div>
     </form>
     <br>
 
@@ -153,7 +162,25 @@ $pacientes = new PatientController();
       );
 
       // 1 => INSERT
-      $pacientes->patientsManager($data, 1);
+      $pacientes->patientsManager($data, 1, 'normal');
+    }elseif(isset($_POST['guardarVender'])){
+      $data = array(
+        'nombre' => ucwords(strtolower($_POST['nombrePaciente'])),
+        'apellido_paterno' => ucwords(strtolower($_POST['apellidoPaternoPaciente'])),
+        'apellido_materno' => ucwords(strtolower($_POST['apellidoMaternoPaciente'])),
+        'dia' => $_POST['diaNacimientoPaciente'],
+        'mes' => $_POST['mesNacimientoPaciente'],
+        'anio' => $_POST['anoNacimientoPaciente'],
+        'correo' => $_POST['correoPaciente'],
+        'ocupacion' => ucwords(strtolower($_POST['ocupacionPaciente'])),
+        'direccion' => ucwords(strtolower($_POST['direccionPaciente'])),
+        'genero' => $_POST['generoPaciente'],
+        'telefono_fijo' => $_POST['telefonoFijoPaciente'] == '' ? '0000000000' : $_POST['telefonoFijoPaciente'],
+        'telefono_movil' => $_POST['telefonoMovilPaciente'] == '' ? '0000000000' : $_POST['telefonoMovilPaciente']
+      );
+
+      // 1 => INSERT
+      $pacientes->patientsManager($data, 1, 'auto');
     }
     ?>
   </div>

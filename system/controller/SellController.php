@@ -37,7 +37,7 @@ class SellController
 
 
     $query = "call sellsManager('" . $data['id_venta'] . "', '" . $data['id_paciente'] . "', '" . $data['productos'] . "', '" . $data['nombre'] . "', 
-            '" . $data['apellidos'] . "', '" . $data['fecha'] . "', '" . $data['tipo_pago'] . "', '" . $data['modalidad_pago'] . "', " . $data['descuento'] . ",
+            '" . $data['apellidos'] . "', '" . $data['fecha'] . "', '" . $data['tipo_pago'] . "', '" . $data['modalidad_pago'] . "', '" . $data['tipo_descuento'] . "'," . $data['descuento'] . ",
             " . $data['anticipo'] . ", " . $data['mensualidades'] . ", " . $data['precio_mes'] . ", " . $data['interes'] . ", " . $data['total'] . ", 1)";
 
     $runQuery = $database->query($query);
@@ -68,29 +68,9 @@ class SellController
 
     if ($runQuery->num_rows > 0) {
       while ($row = $runQuery->fetch_array()) {
-        $response .= '<button type="button" id="btn' . $row['id_categoria'] . '"class="btn btn-success mr-2" data-toggle="modal" data-target="#modal' . $row['id_categoria'] . '">Agregar ' . ucfirst($row['nombre']) . '</button>';
-        $response .= '
-        <div class="modal fade" id="modal' . $row['id_categoria'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg pt-0">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Agregar ' . ucfirst($row['nombre']) . ' </h5>
-                <p class="my-auto small font-weight-bold ml-5 text-muted">De click en la fila correspondiete para seleccionar el producto deseado</p>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-              </div>
-              <div class="modal-body p-0">
-              
-                ' . SellController::getProductsByType($row['id_categoria']) . '
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onClick="cancelProducts();" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="saveProducts();">Guardar productos</button>
-              </div>
-            </div>
-          </div>
-        </div>';
+        $response .= '<button type="button" id="btn' . $row['id_categoria'] . '"class="btn btn-success mr-2" data-toggle="modal" onclick="openProductModal('; $response .= "'" .$row['id_categoria']."','".ucfirst($row['nombre']) ."'"; $response .= ')">Agregar ' . ucfirst($row['nombre']) . '</button>';
       }
-
+  
       echo $response;
     } else {
       echo '<div class="alert alert-warning col-12 animated fadeIn">
@@ -99,10 +79,17 @@ class SellController
     }
   }
 
-  public function getProductsByType($type)
+  public function getProductsByType($type, $search)
   {
+    include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
     $database = new Database();
-    $query = "SELECT id_armazon, modelo, (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, precio_publico, existencias, (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria) AS tipo FROM armazones WHERE id_tipo = '" . $type . "' AND suspendido = 0 AND existencias != 0 ORDER BY marca";
+  
+    if($search == ''){
+      $query = "SELECT id_armazon, modelo, (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, precio_publico, existencias, (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria) AS tipo FROM armazones WHERE id_tipo = '" . $type . "' AND suspendido = 0 AND existencias != 0 ORDER BY marca";
+    }else{
+      $query = "SELECT id_armazon, modelo, (SELECT nombre FROM categorias WHERE armazones.id_marca = categorias.id_categoria) AS marca, precio_publico, existencias, (SELECT nombre FROM categorias WHERE armazones.id_tipo = categorias.id_categoria) AS tipo FROM armazones WHERE id_tipo = '" . $type . "' AND suspendido = 0 AND existencias != 0 AND modelo LIKE '".$search."%' OR id_tipo = '" . $type . "' AND suspendido = 0 AND existencias != 0 AND precio_publico LIKE '".$search."%' ORDER BY marca";
+    }
+    
     $runQuery = $database->query($query);
     $response = '';
 
@@ -138,7 +125,7 @@ class SellController
             </div>';
     }
 
-    return $response;
+    echo $response;
   }
 
   public function showSoldProducts($products)
@@ -196,6 +183,7 @@ class SellController
 
     echo $response;
   }
+
 }
 
 if (isset($_POST['action'])) {
@@ -206,4 +194,9 @@ if (isset($_POST['action'])) {
 if (isset($_POST['products'])) {
   $sell = new SellController();
   $sell->showSoldProducts($_POST['products']);
+}
+
+if (isset($_POST['search_products'])){
+  $sell = new SellController();
+  $sell->getProductsByType($_POST['id_categoria'], $_POST['search_products']);
 }

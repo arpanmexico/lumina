@@ -1,6 +1,9 @@
 <?php
 date_default_timezone_set('America/Mexico_City');
+include($_SERVER['DOCUMENT_ROOT'] . "/lumina/system/config/database.php");
+//include($_SERVER['DOCUMENT_ROOT'] . "/system/config/database.php");
 include('../../controller/CategoryController.php');
+include('../../controller/TicketController.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -89,7 +92,22 @@ include('../../controller/CategoryController.php');
             <div class="centered">
                 PAGO: $<?php echo $json['anticipo'] == '' ? "NA" : $json['anticipo'] . ".00"; ?> <br>
                 MESES: <?php echo $json['mensualidades'] == '' ? "NA" : $json['mensualidades']; ?> <br>
-                DESCUENTO: <?php echo $json['descuento'] == '' ? "NA" : $json['descuento'] . "%"; ?> <br>
+                DESCUENTO: <?php  
+                    switch($json['tipo_descuento']){
+                        case 'T':
+                            echo "Total de venta";
+                            break;
+                        case 'P':
+                            echo $json['total']/$json['descuento'] . "% ($ ". $json['descuento'].")";
+                            break;
+                        case 'D':
+                            echo "$ " . $json['descuento'];
+                            break;
+                        case 'NA':
+                            echo "NA";
+                            break;    
+                    }
+                ?><br>
                 FORMA PAGO: <?php  
                     switch($json['tipo_pago']){
                         case 'E':
@@ -116,8 +134,7 @@ include('../../controller/CategoryController.php');
                 ?>
             </div>
             <p class="centered">
-                ¡Gracias por su preferencia!
-                luminaoptica.com.mx
+                <?php $ticket->getMessages(); ?>
             </p>
 
 

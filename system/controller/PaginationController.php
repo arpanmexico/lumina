@@ -55,9 +55,15 @@ if (isset($_POST['type'])) {
             pagination($query, $query2, $database, $page, $items, 'pac');
             break;
         case 'ven': // Ventas
-            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, descuento, anticipo, mensualidades, precio_mes, interes, total FROM ventas ORDER BY fecha DESC LIMIT $start, $items ";
+            $query = "SELECT id_venta, id_paciente, productos, nombre, apellidos, fecha, tipo_pago, modalidad_pago, tipo_descuento, descuento, anticipo, mensualidades, precio_mes, interes, total FROM ventas ORDER BY fecha DESC LIMIT $start, $items ";
             $query2 = "SELECT count(id_venta) FROM ventas";
             pagination($query, $query2, $database, $page, $items, 'ven');
+            break;
+        case 'out': // Salidas de dinero
+            $start2 = ($page - 1) * 5;
+            $query = "SELECT id_salida, monto, concepto, fecha FROM salidas ORDER BY fecha DESC LIMIT $start2, 4 ";
+            $query2 = "SELECT count(id_salida) FROM salidas";
+            pagination($query, $query2, $database, $page, 4, 'out');
             break;
         default:
 
@@ -77,7 +83,10 @@ function pagination($query, $query2, $database, $page, $items, $card)
     $first = ($page - 2) > 2 ? $page - 2 : 1;
     $last = ($page + 2) < $num_pages ? $page + 2 : $num_pages;
     if (mysqli_num_rows($runQuery) > 0) {
-        echo ' <h6 class="ml-3">Pág. ' . $page . ' de ' . $num_pages . '</h6>';
+        if($card != 'out'){
+            echo ' <h6 class="ml-3">Pág. ' . $page . ' de ' . $num_pages . '</h6>';
+        }
+       
         echo '<div class="row">'; //starting row
         while ($row = $runQuery->fetch_array()) {
 
@@ -153,6 +162,7 @@ function pagination($query, $query2, $database, $page, $items, $card)
                         'fecha' => $row['fecha'],
                         'tipo_pago' => $row['tipo_pago'],
                         'modalidad_pago' => $row['modalidad_pago'],
+                        'tipo_descuento' => $row['tipo_descuento'],
                         'descuento' => $row['descuento'],
                         'anticipo' => $row['anticipo'],
                         'mensualidades' => $row['mensualidades'],
@@ -162,6 +172,15 @@ function pagination($query, $query2, $database, $page, $items, $card)
                         'productos' => $row['productos']
                     );
                     echo sellCard($data);
+                    break;
+                case 'out':
+                    $data = array(
+                        'id_salida' => $row['id_salida'],
+                        'monto' => $row['monto'],
+                        'concepto' => $row['concepto'],
+                        'fecha' => $row['fecha']
+                    );
+                    echo moneyOutTable($data);
                     break;
                 default:
                     break;
@@ -268,6 +287,12 @@ function pagination($query, $query2, $database, $page, $items, $card)
                 $global->getAlerts(
                     'warning',
                     'Oops! Parece que no hay ningún paciente registrado, <br><a href="?crearPaciente">Registrar un nuevo paciente</a>'
+
+                );
+            case 'out':
+                $global->getAlerts(
+                    'warning',
+                    'Oops! Parece que no hay ninguna salida de dinero</a>'
 
                 );
                 break;
@@ -425,6 +450,7 @@ function sellCard($data)
     $modalidadPago = $data['modalidad_pago'];
     $mensualidades = $data['mensualidades'];
     $precioMes = $data['precio_mes'];
+    $tipo_descuento = $data['tipo_descuento'];
     $descuento = $data['descuento'];
     $anticipo = $data['anticipo'];
     $interes = $data['interes'];
@@ -463,6 +489,21 @@ function sellCard($data)
             break;
     }
 
+    switch ($tipo_descuento){
+        case 'NA':
+            $tipo_descuento = "Sin descuento";
+            break;
+        case 'T':
+            $tipo_descuento = "Total de venta";
+            break;
+        case 'P':
+            $tipo_descuento = "Porcentaje: " .$data['total']/$descuento." %";
+            break;
+        case 'D':
+            $tipo_descuento = "Descuento en dinero: $ ". $descuento;
+            break;
+    }
+
     $response = '
         <div class="col-lg-3 col-md-4 col-sm-2 mt-3">
             <div class="card shadow h-100" style="min-height: 255px;">
@@ -472,7 +513,7 @@ function sellCard($data)
                             <p class="text-muted small my-auto font-weight-bold">' . $date[0] . '</p>
                         </div>
                         <div class="col text-right my-auto">
-                            <p class="text-primary font-weight-bold my-auto">$' . floatval($data['total']) . '.00</p>
+                            <p class="text-primary font-weight-bold my-auto">$' . floatval($data['total'] - $descuento) . '.00</p>
                         </div>
                         
                     </div>
@@ -482,12 +523,25 @@ function sellCard($data)
                     <h5 class="text-muted">' . $data['nombre'] . ' ' . $data['apellidos'] . '</h5>
                     <p class="text-success font-weight-bold small">' . $modalidadPago . ' ' . $tipoPago . '</p>
                     <a href="#!" class="alert-link text-primary small stretched-link" onClick="sellInfo(';
-    $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "', '" . $descuento . "', '" . $anticipo . "', '" . $mensualidades . "', '" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . ",'" . $productos . "'";
+    $response .= "'" . $data['id_venta'] . "','" . ucwords($data['nombre']) . "','" . ucwords($data['apellidos']) . "','" . $data['fecha'] . "','" . $tipoPago . "','" . $modalidadPago . "', '" . $tipo_descuento . "', '" . $anticipo . "', '" . $mensualidades . "', '" . $precioMes . "','" . $interes . "'," . floatval($data['total']) . ",'" . $productos . "'," . floatval($descuento) ."";
     $response .= ');">Ver información completa</a>
                 </div>
             </div>
         
         </div>
+    ';
+
+    return $response;
+}
+
+function moneyOutTable($data){
+    $response = '
+
+    <tr class="p-4" id="row' . $data['id_salida'] . '">
+        <td class="">' . $data['fecha'] . '</td>
+        <td class="">$ ' . $data['monto'] . ' MXN</td>
+        <td class="">' . $data['concepto'] . '</td>
+    <tr>   
     ';
 
     return $response;

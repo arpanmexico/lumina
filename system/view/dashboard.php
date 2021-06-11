@@ -153,7 +153,25 @@ if (!isset($_SESSION['userID'])) {
           </a>
         </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Salidas de dinero -->
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.php?crearSalida">
+            <i class="fas fa-comment-dollar"></i>
+            <span>Salidas de dinero</span>
+          </a>
+        </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+        <!-- Ticket -->
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.php?miTicket">
+            <i class="fas fa-ticket-alt"></i>
+            <span>Modificar ticket</span>
+          </a>
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
@@ -347,6 +365,10 @@ if (!isset($_SESSION['userID'])) {
               include('doctores/doctores_suspendidos.php');
             } else if (isset($_GET['calendario'])) {
               include('citas/calendario.php');
+            } else if (isset($_GET['crearSalida'])) {
+              include('salidas/crear_salida.php');
+            } else if (isset($_GET['miTicket'])) {
+              include('ticket/modificar_ticket.php');
             } else if (isset($_GET['notificaciones'])) {
               include('notificaciones.php');
             } else {
@@ -379,8 +401,8 @@ if (!isset($_SESSION['userID'])) {
     <script src="../../src/js/bootstrap-notify.js"></script>
     <script src="../../src/js/alerts.js"></script>
     <script src="../../src/js/sb-admin-2.js"></script>
-    <script src="../../src/js/utilities.js"></script>
     <script src="../../src/js/sells.js"></script>
+    <script src="../../src/js/utilities.js"></script>
     <script src="../../src/libs/fullcalendar/lib/main.js"></script>
     <script src="../../src/libs/fullcalendar/lib/locales-all.min.js"></script>
     <script src="../../src/libs/clockpicker/src/clockpicker.js"></script>
@@ -388,6 +410,8 @@ if (!isset($_SESSION['userID'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     <script src="../../src/js/admin.js"></script>
+    <script src="../../src/js/ticket.js"></script>
+    <script src="../../src/js/moneyout.js"></script>
   </body>
 
   </html>

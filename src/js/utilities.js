@@ -6,11 +6,15 @@ $(document).ready(function () {
     let searchMsg = $('#search-msg');
     let pacMsg = $('#search-msg-pac');
     let searchPac = $('#search-input-pac');
+    let basic = $('#patientBasic');
+    let products = $('#productsPanel');
+    let textName = $('#txtName');
+    let textLastName = $('#txtLastName');
+    let textPhoneNumber = $('#txtPhoneNumber');
+    let pregunta = $('#preguntaPaciente');
     page = 1;
     searchMsg.hide();
     pacMsg.hide();
-    
-    
     
     switch(rol){
         case '?listarMarcas':
@@ -89,9 +93,42 @@ $(document).ready(function () {
             localStorage.setItem('stock', '');
             localStorage.setItem('type', '');
             localStorage.setItem('quantity', '');
+            localStorage.setItem('total', '');
             type = "ven";
             ext = 2;
             saveLocalStorage(ext, type, page)
+            break;    
+        case '?crearSalida':
+            localStorage.setItem('products', '');
+            localStorage.setItem('models', '');
+            localStorage.setItem('brands', '');
+            localStorage.setItem('prices', '');
+            localStorage.setItem('stock', '');
+            localStorage.setItem('type', '');
+            localStorage.setItem('quantity', '');
+            type = "out";
+            ext = "";
+            saveLocalStorage(ext, type, page)
+            break;    
+        case '?crearVentas&name':
+            localStorage.setItem('products', '');
+            localStorage.setItem('models', '');
+            localStorage.setItem('brands', '');
+            localStorage.setItem('prices', '');
+            localStorage.setItem('stock', '');
+            localStorage.setItem('type', '');
+            localStorage.setItem('quantity', '');
+            localStorage.setItem('total', '');
+            type = "ven";
+            ext = 2;
+            saveLocalStorage(ext, type, page)
+            console.log("Venta automática");
+            basic.fadeIn(800);
+            products.fadeIn(800);
+            pregunta.hide()
+            textName.attr('readonly', true);
+            textLastName.attr('readonly', true);
+            textPhoneNumber.attr('readonly', true);
             break;    
         default:
             searchContent.fadeOut(800);
@@ -136,6 +173,8 @@ $(document).ready(function () {
             search(text, type, ext);
         }
     });
+
+   
 });
 
 
@@ -165,7 +204,7 @@ function loadPagination(type,page, ext){
               result.fadeIn(800);
         },
         error: function (error) {
-            
+            console.log('No se pudo cargar la paginacipon -> ', error);
         },
         success: function (data) {
             result.hide();
@@ -225,6 +264,8 @@ function search(text, type, ext){
         },
     });
 }
+
+
 
 
 

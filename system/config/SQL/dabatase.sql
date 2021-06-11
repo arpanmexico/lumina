@@ -168,6 +168,9 @@ CREATE TABLE ventas(
     fecha DATETIME NOT NULL,
     tipo_pago enum('E', 'T') NOT NULL, 
     modalidad_pago enum('C', 'MSI', 'MCI') NOT NULL,
+    tipo_descuento enum('NA', 'T', 'P', 'D') DEFAULT 'NA',
+    descuento FLOAT(10) DEFAULT 0.0,
+    anticipo FLOAT(10) DEFAULT 0.0,
     mensualidades INT(10) DEFAULT 0,
     precio_mes FLOAT(15) DEFAULT 0.0,
     interes FLOAT(10) DEFAULT 0.0,
@@ -192,5 +195,19 @@ CREATE TABLE alertas(
     mensaje text NOT NULL,
     seccion enum('Categorias','Productos','Doctores','Pacientes','Ventas','Citas') NOT NULL,
     tipo enum('Informacion','Advertencia','Alerta') NOT NULL,
+    fecha timestamp NOT NULL
+);
+/*  ------  TABLA PARA LOS MENSAJES DEL TICKET  -----   */
+CREATE TABLE ticket(
+    id_ticket int(5) PRIMARY KEY AUTO_INCREMENT,
+    mensaje text NOT NULL,
+    estatus bool NOT NULL,
+    fecha timestamp NOT NULL
+);
+/*  ------  TABLA PARA LAS SALIDAS DE DINERO  -----   */
+CREATE TABLE salidas(
+    id_salida int(5) PRIMARY KEY AUTO_INCREMENT,
+    monto DOUBLE,
+    concepto text NOT NULL,
     fecha timestamp NOT NULL
 );
